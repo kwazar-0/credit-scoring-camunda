@@ -4,9 +4,13 @@
 
 **Vertex AI** (Vector Search + Gemini), **Camunda 8 / Zeebe**, **GKE (`europe-central2`)**, **Streamlit** dla analityków.
 
+**Документация:** единый индекс и дорожная карта инфраструктуры — **[doc/README.md](doc/README.md)** и **[doc/INFRA-IMPLEMENTATION.md](doc/INFRA-IMPLEMENTATION.md)** (Camunda + AI scoring: фазы, что читать в первую очередь).
+
 | Doc | Purpose |
 |-----|---------|
-| [doc/prompt.md](doc/prompt.md) | Handoff, plan, enterprise blueprint |
+| [doc/INFRA-IMPLEMENTATION.md](doc/INFRA-IMPLEMENTATION.md) | **Старт:** фазы внедрения облака и Camunda + AI |
+| [doc/README.md](doc/README.md) | Оглавление: треки A/B/C (infra, Git, governance) |
+| [doc/prompt.md](doc/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
 | [doc/git-workflow.md](doc/git-workflow.md) | Branches, `release/*`, tags |
 | [doc/branch-notes.md](doc/branch-notes.md) | Назначение веток, legacy `millennium-credit-v2` |
 | [doc/github-setup.md](doc/github-setup.md) | Branch protection, Environments (GitHub UI) |
@@ -14,7 +18,6 @@
 | [doc/cli-console.md](doc/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Tests, PR expectations |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
-| [infra/GCP-ACCESS.md](infra/GCP-ACCESS.md) | Чистовая схема GCP IAM (группы, SA, без секретов в git) |
 
 ## Layout
 
@@ -22,7 +25,6 @@
 |------|---------|
 | `infra/pulumi/` | **Основной IaC (Pulumi):** GCS, Artifact Registry, API |
 | `infra/ROLES.md` | Роли: DevOps/SRE, dev-developer, dev-tester, ref-tester, prod-tester, prod-user |
-| `infra/GCP-ACCESS.md` | IAM в GCP: матрица групп ↔ роли, CI SA (плейсхолдеры) |
 | `infra/ARCHITECTURE.md` | Изоляция сред и namespaces |
 | `infra/terraform/` | Справочный Terraform (legacy) |
 | `backend/` | FastAPI + LangGraph (`/analyze`) |
