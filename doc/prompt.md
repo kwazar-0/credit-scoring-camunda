@@ -34,6 +34,7 @@
 | **`infra/README.md`** | Обзор: Pulumi = основной путь; остальное — справочно. |
 | **`infra/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC вместо JSON-ключей; GitOps (Argo/Flux) — по желанию для приложений; Terraform в тексте исторически — для prod применять **Pulumi** как канон. |
 | **`infra/ROLES.md`** | 11 ролей, матрица GCP/Pulumi/K8s/Git и **пошаговая инструкция по созданию доступов** (группы IdP, IAM, GKE, GitHub). |
+| **[`doc/gcp-saas-access-matrix-11x6.md`](gcp-saas-access-matrix-11x6.md)** | **Чистовик:** 11 ролей × сервисы GCP + упаковка в **6 учёток**; связка с `prompt` §9 и GitHub Teams. |
 | **`infra/terraform/`** | **Справочный** HCL; не плодить второй источник правды с Pulumi на одних и тех же именах ресурсов без импорта. |
 | **`infra/cdktf/`**, **`config-connector/`**, **`crossplane/`** | Примеры/альтернативы, опционально. |
 
