@@ -134,6 +134,30 @@
 * **Data-Engineer:** `BigQuery Admin` и `Storage Admin`. Доступ к пайплайнам миграции данных из SQL в Data Lake.
 * **ML-Engineer:** Доступ к **Vertex AI**, **Vector Search** и бакетам с эмбеддингами. Право деплоить модели как Sidecar-контейнеры.
 
+#### 9.2.1. Управляемые сервисы (Vertex AI, BigQuery, Storage, Vector Search, Cloud SQL) — нужно ли прописывать в IaC?
+
+**Да.** Для **воспроизводимости, аудита и SoT** (см. §9.6) объявляйте в **IaC (Pulumi в этом репо)**:
+
+| Что | Зачем |
+|-----|--------|
+| Включение API | `aiplatform`, `bigquery`, `storage`, `sqladmin`, `notebooks` (по необходимости) — как ресурсы, а не вручную. |
+| Сами ресурсы | GCS buckets, BigQuery dataset, Vector Search index/endpoint, **Cloud SQL** instance, Artifact Registry. |
+| **IAM** | Привязки **ролей** к **сервисным аккаунтам** (workload, CI) и к **Google Groups**; не хранить в коде **личные** учётки. |
+| **Cloud SQL + IAM DB Auth** | Инстанс в IaC; пользователи БД с **входом через IAM** (без слабых паролей в git) — Pulumi-ресурсы `google_sql_user` / аналог и политика подключения из приложения через **Secret Manager** / Workload Identity. |
+| **Человеческий доступ** | Не дублировать «левые» `roles/owner` в репо: для людей — матрица в **[doc/gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)**; фактическое **назначение** — через **группы** в GCP IAM (§9.6). |
+
+**Сузить «Admin» из §9.2.D** под hardening: проектные `BigQuery Admin` / `Storage Admin` Human-аккаунтам **не** давать без необходимости; предпочтительно **на уровне ресурса** (dataset, bucket) роли вроде `bigquery.dataEditor` + `bigquery.jobUser`, `storage.objectAdmin` **на префикс/бакет**. Vertex / Vector Search: `roles/aiplatform.user` (и узкий custom) в **dev**; в **prod** — в основном **SA** воркеров и CI, люди — через break-glass/viewer по политике.
+
+| Сервис | Типичный субъект в IaC | Кто из логических ролей (§9.2 A–D) **использует** (не «вешать всё на одного») |
+|--------|------------------------|-----------------------------------------------------------------------------|
+| **Vertex AI** (обучение/инференс, эндпоинты) | SA `vertex-*` / `ml-*` + IAM; люди — группа ML/Data | **ML Engineer** (дев), **Data**; прод — в основном **SA**, не консоль |
+| **BigQuery** (datasets, jobs) | IAM на dataset/таблицы; SA для ETL/CI | **Data-Engineer**; аналитика — read-only роли, без Admin на весь проект |
+| **Cloud Storage** (raw PDF, embeddings, артефакты) | `Bucket` + `IAMMember` per bucket/SA | **Data-Engineer** (ingest), **ML** (эмбеддинги) |
+| **Vector Search** (index, deployed index) | Ресурсы Vertex + доступ к GCS с индексом; IAM как у Vertex + Storage read | **ML Engineer** |
+| **Cloud SQL (PostgreSQL) + IAM Auth** | `Instance`, `Database`, **IAM-включение** и пользователи БД для SA; пароли только Secret Manager if legacy | **DevOps/Platform** — создание/патч; приложение **Camunda/backend** — **SA** с `cloudsql.*` client; DBA-люди — отдельная группа, не в прикладном коде |
+
+**Итог:** доступы **к облачным API и данным** — в **IaC + IAM**; доступы **внутри GKE** — в **RBAC-манифестах**; §9.2 остаётся **логической** матрицей, детализация по 11 ролям и 6 учёткам — в `ROLES.md` / `gcp-saas-access-matrix-11x6.md`.
+
 ### 9.3. Deployment Lifecycle (GitOps)
 Реализуй Pipeline в GitHub Actions со следующей логикой (аутентификацию в GCP по возможности через **OIDC / Workload Identity Federation**, а не долгоживущие JSON-ключи — см. `infra/ARCHITECTURE.md`):
 
