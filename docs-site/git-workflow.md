@@ -9,12 +9,10 @@
 | Ветка / шаблон | Назначение |
 |----------------|------------|
 | **`main`** | **Production** — защищённая линия; в прод выкатывается только согласованный код (см. Environments в github-setup). |
-| **`develop`** | **Интеграция** — основной поток разработки Millennium; сюда мержатся фичи. Рекомендуемая **default branch** на GitHub после настройки (см. branch-notes). |
+| **`develop`** | **Интеграция** — основной поток разработки; сюда мержатся фичи. **Default** на GitHub — **`main`**; `develop` — отдельная линия (см. branch-notes). |
 | **`feature/<issue>-<slug>`** | Фичи и рефакторинг; от `develop`, merge в `develop` через PR. |
 | **`release/<major.minor.patch>`** | Стабилизация перед релизом; от `develop`; после релиза — merge в `main` и обратно в `develop`, тег **`v*`** (по политике команды). |
 | **`hotfix/<issue>-<slug>`** | Срочный патч от тега **`v*`** в проде; merge в `main` и `develop`. |
-
-**Legacy:** ветка **`millennium-credit-v2`** — см. удаление в **[branch-notes.md](branch-notes.md)**.
 
 ---
 

@@ -8,8 +8,8 @@
 
 | Ветка | Назначение | Примечания |
 |--------|------------|------------|
-| **`main`** | **Production** — код, согласованный для прода; merge только через PR по политике (см. github-setup). | Прямой push по возможности запрещён; деплой в `production` environment. |
-| **`develop`** | **Интеграция** — сюда сливаются фичи; nightly / dev-контуры обычно отсюда. | Рекомендуемая **default branch** на GitHub после миграции (см. ниже). |
+| **`main`** | **Production** — код для прода; merge только через PR (см. github-setup). | **Default branch** на GitHub; прямой push отключён по политике; деплой в `production` environment. |
+| **`develop`** | **Интеграция** — сюда сливаются фичи; dev-контуры обычно отсюда. | Не default; merge из `feature/*` / обратно после релизов — см. git-workflow. |
 
 ---
 
@@ -20,20 +20,6 @@
 | **`feature/<issue>-<slug>`** | `develop` | Новая функциональность; короткий срок жизни. |
 | **`release/<major.minor.patch>`** | `develop` | Стабилизация перед релизом; только фиксы регресса/доков. |
 | **`hotfix/<issue>-<slug>`** | тег **`v*`** в проде | Срочный патч; затем merge в `main` и `develop`, новый тег. |
-
----
-
-## Legacy: `millennium-credit-v2`
-
-Ветка **`millennium-credit-v2`** ранее использовалась как основная линия Millennium. В корпоративной схеме её **заменяют** `main` + `develop`. Пока она остаётся **default branch** на GitHub, **удалить** её с remote нельзя.
-
-**Шаги для владельца репозитория (один раз):**
-
-1. **Settings → General → Default branch:** выбрать **`main`** или **`develop`** (рекомендуется **`develop`** для ежедневных клонов интеграционной линии).
-2. Удалить ветку на сервере:  
-   `git push origin --delete millennium-credit-v2`
-
-После этого в репозитории остаются только согласованные долгоживущие ветки плюс рабочие `feature/*`, `release/*`, `hotfix/*` по мере появления.
 
 ---
 

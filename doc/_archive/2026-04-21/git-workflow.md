@@ -14,8 +14,6 @@
 | **`release/<major.minor.patch>`** | Стабилизация перед релизом; от `develop`; после релиза — merge в `main` и обратно в `develop`, тег **`v*`** (по политике команды). |
 | **`hotfix/<issue>-<slug>`** | Срочный патч от тега **`v*`** в проде; merge в `main` и `develop`. |
 
-**Legacy:** ветка **`millennium-credit-v2`** — см. удаление в **[doc/branch-notes.md](branch-notes.md)**.
-
 ---
 
 ## 2. Теги и GitHub Releases
