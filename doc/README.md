@@ -1,46 +1,15 @@
-# Документация — оглавление
+# Документация
 
-**Начните с:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — единая дорожная карта: Camunda + AI scoring, фазы, что читать, что отложить.
+Исходные `.md` из корня `doc/` перенесены в **снимок** [`_archive/2026-04-21/`](_archive/2026-04-21/) (git).
 
----
+## Актуальная копия для чтения и сайта
 
-## Трек A — инфраструктура и облако (основной фокус)
+- **VitePress** (сборка, навигация по разделам): каталог **[`../docs-site/`](../docs-site/)**  
+  - Из **корня репозитория:** `npm install && npm run docs:dev` → dev-сервер (порт в консоли, обычно 5173).  
+  - Сборка: `npm run docs:build` → `docs-site/.vitepress/dist` (в `.gitignore`; при необходимости выкладывайте на GitHub Pages / статический хост).
 
-| Документ | Назначение |
-|----------|------------|
-| [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Фазы, порядок работ, ссылки — **точка входа** |
-| [prompt.md](prompt.md) §1–8 | Handoff, продукт, план, пути в репо |
-| [../infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md) | Проекты, namespaces, OIDC, state |
-| [../infra/pulumi/README.md](../infra/pulumi/README.md) | Pulumi: запуск, экспорты |
-| [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
-| [ml-data-rag.md](ml-data-rag.md) | Vertex, эмбеддинги, env backend |
-| [../scripts/gcp-enable-apis-iam.sh](../scripts/gcp-enable-apis-iam.sh) | Включение GCP API (CLI) |
+- Локальные заметки (не в git): **`accounts.local.md`** в этой папке по-прежнему уместен; шаблон — `docs-site/accounts-local-example.md`.
 
-## Трек B — Git, GitHub, соглашения
+## Почему так
 
-| Документ | Назначение |
-|----------|------------|
-| [git-workflow.md](git-workflow.md) | Ветки `develop` / `main`, `release/*`, теги |
-| [github-setup.md](github-setup.md) | Branch protection, Environments |
-| [branch-notes.md](branch-notes.md) | Legacy-ветки, пояснения |
-| [naming.md](naming.md) | Имена репо, теги |
-
-## Трек C — governance, роли, доступ (после MVP или по запросу аудита)
-
-| Документ | Назначение |
-|----------|------------|
-| [../infra/ROLES.md](../infra/ROLES.md) | 11 ролей, GCP/Pulumi/K8s/Git, пошаговые этапы |
-| [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 ролей × сервисы GCP, 6 учёток |
-| [github-codeowners-matrix.md](github-codeowners-matrix.md) | Роли ↔ GitHub, CODEOWNERS |
-| [accounts.md](accounts.md) | Канонический remote; local PII в `accounts.local.md` (gitignore) |
-| [prompt.md](prompt.md) §9+ | Enterprise blueprint, hardening (EN), SoD |
-
-## Прочее
-
-| Документ | Назначение |
-|----------|------------|
-| [prompt.md](prompt.md) | **Длинный:** §1–8 = handoff; §9+ = расширенная спека — не читать подряд при старте инфраструктуры |
-
----
-
-**Корневой [README.md](../README.md)** даёт краткий обзор репозитория и ссылку сюда.
+Сайт (Hugo-альтернатива) — **VitePress**: markdown-first, поиск, боковое меню, без дублирования логики в PHP/Hugo-шаблонах. Содержимое страниц — те же разделы, ссылки на код ведут в GitHub.

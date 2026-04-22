@@ -9,7 +9,7 @@
 
 ## Documentation
 
-Project layout, runbooks, and naming are summarized in [README.md](README.md) and under `doc/` (e.g. [doc/git-workflow.md](doc/git-workflow.md), [doc/github-setup.md](doc/github-setup.md), [infra/ROLES.md](infra/ROLES.md)).
+Project layout, runbooks, and naming are summarized in [README.md](README.md) and under **`docs-site/`** (e.g. [docs-site/git-workflow.md](docs-site/git-workflow.md), [docs-site/github-setup.md](docs-site/github-setup.md), [infra/ROLES.md](infra/ROLES.md)).
 
 ## Response times
 

@@ -2,7 +2,7 @@
 
 Инфраструктура как код: **Pulumi** (`infra/pulumi/`). Остальное в `infra/` — справочные/legacy примеры.
 
-Ниже — **рекомендуемая матрица** (GCP IAM + Pulumi + K8s + Git). **Чистовой вариант для GCP IAM: 11 логических ролей и 6 людей (U1…U6)** с типовыми `roles/…` — в **[doc/gcp-iam-11roles-6users.md](../doc/gcp-iam-11roles-6users.md)**. Подстройте названия групп в **Google Workspace / Cloud Identity** и в **GitHub/GitLab Teams**. Практическое создание объектов доступа — раздел **«Пошаговая инструкция по созданию доступов»**.
+Ниже — **рекомендуемая матрица** (GCP IAM + Pulumi + K8s + Git). Подстройте названия групп в **Google Workspace / Cloud Identity** и в **GitHub/GitLab Teams**. Практическое создание объектов доступа — раздел **«Пошаговая инструкция по созданию доступов»**.
 
 ---
 
@@ -53,7 +53,7 @@
 
 ## Пошаговая инструкция по созданию доступов
 
-Цель: из **11 логических ролей** получить **конкретные объекты** в IdP, GCP, GKE, Git и приложении. **Не нужно** создавать **11 команд GitHub** — обычно **4 группы** на git + **группы Google** + **IAM** (см. **[doc/github-setup.md](../doc/github-setup.md)**).
+Цель: из **11 логических ролей** получить **конкретные объекты** в IdP, GCP, GKE, Git и приложении. **Не нужно** создавать **11 команд GitHub** — обычно **4 группы** на git + **группы Google** + **IAM** (см. **[docs-site/github-setup.md](../docs-site/github-setup.md)**).
 
 ### Этап 0. Пререквизиты
 
@@ -100,10 +100,10 @@
 
 ### Этап 4. GitHub: Teams и доступ к репозиторию
 
-1. В **GitHub Organization** создайте **Teams** по **[doc/github-setup.md](../doc/github-setup.md)** (обычно: `platform-admin`, `engineers`, `quality-gate`, `compliance`).
+1. В **GitHub Organization** создайте **Teams** по **[docs-site/github-setup.md](../docs-site/github-setup.md)** (обычно: `platform-admin`, `engineers`, `quality-gate`, `compliance`).
 2. Назначьте членов: вручную или через **SCIM** из IdP (если настроено).
 3. На репозитории `credit-scoring-camunda`: **Team → роль** (Read / Write / Maintain / Admin) по матрице в github-setup.
-4. Включите **branch protection** на `main` и `develop`, заполните **CODEOWNERS** (пути `/infra/` → platform). Матрица **11 ролей** и **6 учёток** GitHub для ревью: **[doc/github-codeowners-matrix.md](../doc/github-codeowners-matrix.md)**.
+4. Включите **branch protection** на `main` и `develop`, заполните **CODEOWNERS** (пути `/infra/` → platform). Матрица **11 ролей** и **6 учёток** GitHub для ревью: **[docs-site/github-codeowners-matrix.md](../docs-site/github-codeowners-matrix.md)**.
 5. Создайте **Environments** `development`, `reference` (или `staging`), `production` с **Required reviewers** на production.
 
 ### Этап 5. CI/CD: OIDC / Workload Identity Federation

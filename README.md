@@ -4,18 +4,18 @@
 
 **Vertex AI** (Vector Search + Gemini), **Camunda 8 / Zeebe**, **GKE (`europe-central2`)**, **Streamlit** dla analityków.
 
-**Документация:** единый индекс и дорожная карта инфраструктуры — **[doc/README.md](doc/README.md)** и **[doc/INFRA-IMPLEMENTATION.md](doc/INFRA-IMPLEMENTATION.md)** (Camunda + AI scoring: фазы, что читать в первую очередь).
+**Документация (VitePress):** каталог **[`docs-site/`](docs-site/)** — навигация, поиск, сборка: `npm install && npm run docs:dev` (см. [doc/README.md](doc/README.md)). **Старт по инфраструктуре:** [docs-site/INFRA-IMPLEMENTATION.md](docs-site/INFRA-IMPLEMENTATION.md). **Снимок** старых путей `doc/*.md` — [doc/\_archive/2026-04-21/](doc/_archive/2026-04-21/).
 
-| Doc | Purpose |
+| Doc (источник в `docs-site/`) | Purpose |
 |-----|---------|
-| [doc/INFRA-IMPLEMENTATION.md](doc/INFRA-IMPLEMENTATION.md) | **Старт:** фазы внедрения облака и Camunda + AI |
-| [doc/README.md](doc/README.md) | Оглавление: треки A/B/C (infra, Git, governance) |
-| [doc/prompt.md](doc/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
-| [doc/git-workflow.md](doc/git-workflow.md) | Branches, `release/*`, tags |
-| [doc/branch-notes.md](doc/branch-notes.md) | Назначение веток, legacy `millennium-credit-v2` |
-| [doc/github-setup.md](doc/github-setup.md) | Branch protection, Environments (GitHub UI) |
-| [doc/naming.md](doc/naming.md) | Repo / branch / tag naming (avoid `Credit-Scoring-V2` as brand) |
-| [doc/cli-console.md](doc/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
+| [docs-site/INFRA-IMPLEMENTATION.md](docs-site/INFRA-IMPLEMENTATION.md) | **Старт:** фазы внедрения облака и Camunda + AI |
+| [docs-site/toc.md](docs-site/toc.md) | Оглавление: треки A/B/C (infra, Git, governance) |
+| [docs-site/prompt.md](docs-site/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
+| [docs-site/git-workflow.md](docs-site/git-workflow.md) | Branches, `release/*`, tags |
+| [docs-site/branch-notes.md](docs-site/branch-notes.md) | Назначение веток, legacy `millennium-credit-v2` |
+| [docs-site/github-setup.md](docs-site/github-setup.md) | Branch protection, Environments (GitHub UI) |
+| [docs-site/naming.md](docs-site/naming.md) | Repo / branch / tag naming (avoid `Credit-Scoring-V2` as brand) |
+| [docs-site/cli-console.md](docs-site/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Tests, PR expectations |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
 
@@ -34,7 +34,7 @@
 | `bpmn/`, `dmn/` | `millennium-loan-process.bpmn`, `scoring-rules.dmn` |
 | `k8s/millennium/` | Deployments, Services, HPA, Secret example |
 | `docker-compose.yml` | Local: Zeebe + backend + worker + UI |
-| `doc/prompt.md` | Plan realizacji (skrócony) |
+| `docs-site/` + `doc/_archive/` | Документация, VitePress |
 | `scripts/` | `create-release-branch.sh` — ветка `release/X.Y.Z` |
 | `.github/workflows/ci.yml` | CI: `pytest` backend + worker (Python 3.11 / 3.12) |
 
