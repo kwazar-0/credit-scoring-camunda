@@ -70,6 +70,18 @@ pulumi stack output --json
 
 Экспорты: `gcp_project`, `gcp_region`, `artifact_repository_id`, `artifact_registry_url`, `vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset` — см. `infra/pulumi/__main__.py`.
 
+### Включить API (и IAM-зависимые сервисы) в проекте
+
+Один раз **до** или **параллельно** с Pulumi: скрипт включает **Service Management** API, **IAM/STS/Resource Manager** (для WIF и привязок ролей), **aiplatform, bigquery, storage, artifactregistry, sql, container, compute, servicenetworking, secretmanager, logging, monitoring** — в одном `gcloud services enable`.
+
+```bash
+cd "$(git rev-parse --show-toplevel)"
+chmod +x scripts/gcp-enable-apis-iam.sh   # при необходимости
+./scripts/gcp-enable-apis-iam.sh my-camunda8-project
+```
+
+После запуска скрипт печатает **подсказки** по `gcloud projects add-iam-policy-binding` (группы, SA) — **не** хранить личные email в репо; SoT в IaC по [`doc/prompt.md`](prompt.md) §9.2.1, §9.6.
+
 ---
 
 ## GCP и kubectl
