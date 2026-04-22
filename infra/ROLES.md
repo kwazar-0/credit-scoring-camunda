@@ -2,9 +2,7 @@
 
 Инфраструктура как код: **Pulumi** (`infra/pulumi/`). Остальное в `infra/` — справочные/legacy примеры.
 
-**Чистовая схема IAM в GCP** (группы, проекты, SA для CI, без реальных id в git): **[GCP-ACCESS.md](GCP-ACCESS.md)**.
-
-Ниже — **рекомендуемая матрица** (GCP IAM + Pulumi + K8s + Git). Подстройте названия групп в **Google Workspace / Cloud Identity** и в **GitHub/GitLab Teams**. Практическое создание объектов доступа — раздел **«Пошаговая инструкция по созданию доступов»**.
+Ниже — **рекомендуемая матрица** (GCP IAM + Pulumi + K8s + Git). **Чистовой вариант для GCP IAM: 11 логических ролей и 6 людей (U1…U6)** с типовыми `roles/…` — в **[doc/gcp-iam-11roles-6users.md](../doc/gcp-iam-11roles-6users.md)**. Подстройте названия групп в **Google Workspace / Cloud Identity** и в **GitHub/GitLab Teams**. Практическое создание объектов доступа — раздел **«Пошаговая инструкция по созданию доступов»**.
 
 ---
 
