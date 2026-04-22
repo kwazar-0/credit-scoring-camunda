@@ -1,6 +1,6 @@
 # Чистовая матрица: 11 ролей доступа к сервисам GCP и 6 учёток
 
-Согласовано с [`infra/ROLES.md`](../infra/ROLES.md), [`doc/prompt.md`](prompt.md) §9.1–9.2 и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
+Согласовано с [`infra/ROLES.md`](../infra/ROLES.md), [`doc/prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
 
 ## 1. Можно ли «11 ролей» при «6 пользователях»?
 
