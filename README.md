@@ -14,6 +14,7 @@
 | [doc/cli-console.md](doc/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Tests, PR expectations |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
+| [infra/GCP-ACCESS.md](infra/GCP-ACCESS.md) | Чистовая схема GCP IAM (группы, SA, без секретов в git) |
 
 ## Layout
 
@@ -21,6 +22,7 @@
 |------|---------|
 | `infra/pulumi/` | **Основной IaC (Pulumi):** GCS, Artifact Registry, API |
 | `infra/ROLES.md` | Роли: DevOps/SRE, dev-developer, dev-tester, ref-tester, prod-tester, prod-user |
+| `infra/GCP-ACCESS.md` | IAM в GCP: матрица групп ↔ роли, CI SA (плейсхолдеры) |
 | `infra/ARCHITECTURE.md` | Изоляция сред и namespaces |
 | `infra/terraform/` | Справочный Terraform (legacy) |
 | `backend/` | FastAPI + LangGraph (`/analyze`) |
