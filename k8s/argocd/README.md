@@ -1,6 +1,6 @@
 # Argo CD на GKE (GitOps)
 
-Argo CD ставится **в кластер** один раз; дальше он подтягивает манифесты из git (например `k8s/millennium/`). Инфраструктура GCP по-прежнему через **`infra/pulumi/`**, не через Argo, если не выбрана отдельная политика.
+Argo CD ставится **в кластер** один раз; дальше он подтягивает манифесты из git (например `k8s/hbg/`). Инфраструктура GCP по-прежнему через **`infra/pulumi/`**, не через Argo, если не выбрана отдельная политика.
 
 ## Требования
 
@@ -50,15 +50,15 @@ kubectl -n argocd port-forward svc/argocd-server 8080:443
 
 ## Подключение репозитория (приватный GitHub)
 
-Создайте **Secret** с учётными данными (token / deploy key) в namespace `argocd` по [документации Argo CD](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/), затем создайте `Application` (см. `application-millennium-sample.yaml`).
+Создайте **Secret** с учётными данными (token / deploy key) в namespace `argocd` по [документации Argo CD](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/), затем создайте `Application` (см. `application-hbg-sample.yaml`).
 
 ## Применение примера Application
 
-1. Отредактируйте `application-millennium-sample.yaml`: `repoURL`, `targetRevision`, при необходимости `path`.
+1. Отредактируйте `application-hbg-sample.yaml`: `repoURL`, `targetRevision`, при необходимости `path`.
 2. Примените:
 
 ```bash
-kubectl apply -f k8s/argocd/application-millennium-sample.yaml
+kubectl apply -f k8s/argocd/application-hbg-sample.yaml
 ```
 
 Проверка: `kubectl -n argocd get applications.argoproj.io`.

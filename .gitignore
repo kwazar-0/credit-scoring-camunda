@@ -22,8 +22,6 @@ htmlcov/
 node_modules/
 docs-site/.vitepress/cache
 docs-site/.vitepress/dist
-infra/cdktf/cdktf.out/
-infra/cdktf/.gen/
 
 # Local identity / fork notes (may contain personal email)
 doc/accounts.local.md
@@ -33,3 +31,7 @@ infra/ROLES.gke-rbac.local.md
 infra/pulumi/venv/
 infra/pulumi/.venv/
 infra/pulumi/.pulumi/
+
+# Camunda Helm: large `helm get values --all` / manifest dumps (optional; review before commit)
+k8s/camunda/camunda-platform-all-values.yaml
+k8s/camunda/camunda-platform-manifest.yaml

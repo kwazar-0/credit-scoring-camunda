@@ -78,6 +78,6 @@ git push -u origin feature/123-short-desc
 git switch develop && git pull
 git switch -c release/1.2.0
 # фиксы, затем PR в main + develop по процессу
-git tag -a v1.2.0 -m "Millennium release 1.2.0"
+git tag -a v1.2.0 -m "HBG release 1.2.0"
 git push origin v1.2.0
 ```

@@ -21,7 +21,7 @@ CI runs the same on Python **3.11** and **3.12** (`.github/workflows/ci.yml`).
 ## Code style
 
 - Python: match existing modules; comments in **English** (see `.cursorrules`).
-- Infra: **`infra/pulumi/`** is the primary IaC path; avoid duplicating resource names with legacy Terraform without import.
+- Infra: **`infra/pulumi/`** is the only checked-in IaC path; avoid duplicating GCP resource names across stacks without a deliberate import/plan.
 
 ## Security
 

@@ -1,4 +1,4 @@
-# CLI / console — Millennium Credit
+# CLI / console — Example Bank
 
 Копируемые команды. Значения ниже соответствуют целевой конфигурации репозитория и активному GCP-проекту **`my-camunda8-project`**.
 
@@ -6,12 +6,12 @@
 |----------|-----------|
 | **GCP project** | `my-camunda8-project` |
 | **Регион данных (Vertex, GCS, BQ, Artifact Registry в манифестах)** | `europe-central2` |
-| **Имя репозитория Docker (Pulumi `credit-scoring:clusterName`)** | `millennium-credit-gke` → образы: `…/millennium-credit-gke-docker/…` |
-| **Kubernetes namespace** | `millennium-credit` |
+| **Имя репозитория Docker (Pulumi `credit-scoring:clusterName`)** | `example-bank-gke` → образы: `…/example-bank-gke-docker/…` |
+| **Kubernetes namespace** | `example-bank` |
 | **Job type Zeebe** | `ai-loan-analysis` |
 | **GKE в проекте (существующий кластер)** | `camunda-stable`, зона `europe-west3-c` |
 
-Путь к клону: **корень репозитория** (ниже — `$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")` или ваша папка, напр. `~/src/millennium-credit`).
+Путь к клону: **корень репозитория** (ниже — `$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")` или ваша папка, напр. `~/src/example-bank`).
 
 Дополнительно: `doc/prompt.md`, `doc/git-workflow.md`, `doc/naming.md`, `doc/ml-data-rag.md`, `infra/pulumi/README.md`.
 
@@ -61,7 +61,7 @@ export PULUMI_CONFIG_PASSPHRASE='changeme'
 pulumi stack init dev
 pulumi config set gcp:project my-camunda8-project
 pulumi config set credit-scoring:region europe-central2
-pulumi config set credit-scoring:clusterName millennium-credit-gke
+pulumi config set credit-scoring:clusterName example-bank-gke
 gcloud auth application-default login
 pulumi preview
 pulumi up
@@ -103,11 +103,11 @@ kubectl config current-context
 kubectl get ns
 ```
 
-Манифесты Millennium (`k8s/millennium/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. Отдельный кластер в **`europe-central2`** под этот стек нужно создать и настроить (IaC / консоль); кластер **`camunda-stable`** находится в **`europe-west3-c`**.
+Манифесты примера банка (`k8s/example-bank/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. Отдельный кластер в **`europe-central2`** под этот стек нужно создать и настроить (IaC / консоль); кластер **`camunda-stable`** находится в **`europe-west3-c`**.
 
 ---
 
-## Kubernetes: `k8s/millennium/`
+## Kubernetes: `k8s/example-bank/`
 
 В `deployment-*.yaml` замените плейсхолдер **`PROJECT_ID`** на **`my-camunda8-project`** (или примените через `envsubst` / правку в редакторе).
 
@@ -115,15 +115,15 @@ kubectl get ns
 
 ```bash
 cd "$(git rev-parse --show-toplevel)"
-kubectl apply -f k8s/millennium/namespace.yaml
-kubectl apply -f k8s/millennium/secret-env.yaml
-kubectl apply -f k8s/millennium/serviceaccount-backend.yaml
-kubectl apply -f k8s/millennium/deployment-backend.yaml
-kubectl apply -f k8s/millennium/deployment-worker.yaml
-kubectl apply -f k8s/millennium/deployment-ui.yaml
-kubectl -n millennium-credit get pods,svc
-kubectl -n millennium-credit logs deploy/credit-worker -f
-kubectl -n millennium-credit logs deploy/credit-backend -f
+kubectl apply -f k8s/example-bank/namespace.yaml
+kubectl apply -f k8s/example-bank/secret-env.yaml
+kubectl apply -f k8s/example-bank/serviceaccount-backend.yaml
+kubectl apply -f k8s/example-bank/deployment-backend.yaml
+kubectl apply -f k8s/example-bank/deployment-worker.yaml
+kubectl apply -f k8s/example-bank/deployment-ui.yaml
+kubectl -n example-bank get pods,svc
+kubectl -n example-bank logs deploy/credit-worker -f
+kubectl -n example-bank logs deploy/credit-backend -f
 ```
 
 ---
@@ -135,7 +135,7 @@ kubectl -n millennium-credit logs deploy/credit-backend -f
 ```bash
 export REGION=europe-central2
 export PROJECT_ID=my-camunda8-project
-export REPO=millennium-credit-gke-docker
+export REPO=example-bank-gke-docker
 
 docker build -t credit-backend:latest "$(git rev-parse --show-toplevel)/backend"
 docker tag credit-backend:latest \
@@ -150,10 +150,10 @@ docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/credit-backend:latest
 
 ## GitOps: Argo CD
 
-Установка в кластер и пример `Application` для `k8s/millennium/`: **`k8s/argocd/README.md`**.
+Установка в кластер и пример `Application` для `k8s/example-bank/`: **`k8s/argocd/README.md`**.
 
 ---
 
 ## BPMN
 
-Процесс: `bpmn/millennium-loan-process.bpmn` — service task с типом **`ai-loan-analysis`**, затем DMN `scoring-rules`.
+Процесс: `bpmn/example-bank-loan-process.bpmn` — service task с типом **`ai-loan-analysis`**, затем DMN `scoring-rules`.

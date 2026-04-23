@@ -2,14 +2,12 @@
 
 ## Единый подход: **Pulumi**
 
-Основной IaC для этого репозитория — **`pulumi/`** (Python). Здесь же описаны **роли** и изоляция: **`ROLES.md`**, **`ARCHITECTURE.md`**.
-
-Каталог **`terraform/`** оставлен как **справочный** пример (HCL); новые изменения платформы ориентируйте на Pulumi, чтобы не плодить два источника правды.
+Основной IaC — **`pulumi/`** (Python), опционально песочница **`pulumi/gke-infra/`**. Роли и изоляция: **`ROLES.md`**, **`ARCHITECTURE.md`**.
 
 | Документ | Содержимое |
 |----------|------------|
 | **`ROLES.md`** | DevOps/SRE, dev-developer, dev-tester, ref-tester, prod-tester, prod-user + опциональные роли |
-| **`ARCHITECTURE.md`** | Уровни изоляции (project / state / namespace), GitOps |
+| **`ARCHITECTURE.md`** | Изоляция и GitOps (Pulumi как канон IaC) |
 
 ## Быстрый старт (Pulumi)
 
@@ -24,14 +22,10 @@ pulumi up
 
 Подробнее: **`pulumi/README.md`**.
 
-## Прочие каталоги (опционально)
+Приложения в кластере (GitOps): **`../k8s/argocd/README.md`** — установка Argo CD и пример `Application` для `k8s/hbg/`.
 
-| Каталог | Назначение |
-|---------|------------|
-| **`terraform/`** | Legacy / reference Terraform |
-| **`cdktf/`** | CDK for Terraform (пример) |
-| **`config-connector/`**, **`crossplane/`** | Примеры CR в K8s |
+### Опциональный стек `pulumi/gke-infra`
 
-Приложения в кластере (GitOps): **`../k8s/argocd/README.md`** — установка Argo CD и пример `Application` для `k8s/millennium/`.
+Отдельный Pulumi-проект (свой `Pulumi.yaml`): GKE, Cloud SQL, Artifact Registry и GCS в одном `pulumi up`. **Документация (сайт):** [docs-site/infra-pulumi-gke-sandbox.md](../docs-site/infra-pulumi-gke-sandbox.md) ([EN](../docs-site/en/infra-pulumi-gke-sandbox.md)); в репо — **[pulumi/gke-infra/manual.md](pulumi/gke-infra/manual.md)**. Это **не** замена основого **`pulumi/`** (GCS+BQ+AR для `hbg` в `europe-central2`). В gke-infra — регион **`europe-west1`** и имена `credit-scoring-*`; **не** применяйте оба стека к одному GCP project без согласования идентификаторов.
 
-Регион по умолчанию: **`europe-central2`**.
+Регион по умолчанию для продуктового стека: **`europe-central2`**.

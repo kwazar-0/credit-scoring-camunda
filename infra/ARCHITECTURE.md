@@ -11,7 +11,7 @@
 | Уровень | Что отделяется | Когда использовать |
 |---------|------------------|----------------------|
 | **A. Отдельный GCP project** на команду / «песочницу» | Квота, биллинг, IAM, полный blast radius | Enterprise, строгий compliance, отдельный billing |
-| **B. Один project, разные Terraform state** (`dev` / `staging` / `prod`) | Разный `terraform.tfvars` + backend prefix; разные SA в CI | Рекомендуемый минимум для prod vs non-prod |
+| **B. Один project, разные Pulumi stacks / backend state** (`dev` / `staging` / `prod`) | Разный конфиг и префикс state; разные SA в CI | Рекомендуемый минимум для prod vs non-prod |
 | **C. Один GKE, namespace на среду** (`dev`, `staging`, `prod`) | Рабочие нагрузки и секреты | Экономия; нужны NetworkPolicy / RBAC |
 | **D. Namespace на разработчика** `dev-<github>` | Изоляция preview/feature в shared dev-кластере | Быстрые итерации без второго кластера |
 
@@ -24,27 +24,24 @@
 ### Облако (GCP)
 
 - **Один project** `my-camunda8-project` (или `…-dev` и `…-prod` — если готовы платить за два проекта).
-- **Разные service account для CI:**
-  - `ci-terraform-dev@…` — только `roles/editor` или узкий набор на **non-prod** ресурсы.
-  - `ci-terraform-prod@…` — минимальные роли, **только** из protected branch + approval.
-- **State Terraform:**
-  - backend GCS: префиксы `env/dev/terraform.tfstate`, `env/prod/terraform.tfstate` (или **отдельные buckets**).
+- **Разные service account для CI** (пример имён): `ci-pulumi-dev@…` / `ci-pulumi-prod@…` — узкие роли на non-prod vs prod; prod — только из protected branch + approval.
+- **State Pulumi:** `pulumi login` (SaaS или self-hosted) или backend в **GCS/S3** с префиксами по среде (`dev` / `prod`).
 - **Не один ключ на всё:** GitHub Actions / Cloud Build → **OIDC → Workload Identity Federation**, без JSON в репо.
 
-### IaC (Terraform в `infra/terraform/`)
+### IaC (Pulumi в `infra/pulumi/`)
 
-- Переменные **`environment`** (например `dev`, `staging`, `prod`) и опционально **`developer_id`** — попадают в **labels** ресурсов (учёт, фильтры в консоли).
-- **`k8s_namespace`**: для общего dev — `millennium-credit-dev`; для персонального песочника — `millennium-credit-dev-<github>`.
-- **Workload Identity** в `workload_identity.tf` должен совпадать с **реальным** namespace в манифестах (`k8s/millennium/`).
+- Конфиг стека: `pulumi config` (`gcp:project`, `credit-scoring:region`, `credit-scoring:clusterName`, …).
+- Опционально **`k8s_namespace`** / labels с **`environment`**, **`developer_id`** — учёт и фильтры в консоли (см. доки Pulumi и `ROLES.md`).
+- **Workload Identity** для приложений (GSA ↔ K8s SA) — согласовать с namespace в манифестах (`k8s/hbg/`). Референс по идее: `workload_identity_github.py`, Terraform в репо **не** хранится.
 
 ### Приложения (K8s)
 
 - **Kustomize overlays:** `overlays/dev`, `overlays/prod` — только отличия (image tag, replicas, env).
-- **Не применять prod из feature-ветки:** в CI — `plan` на PR, `apply` в prod только с `main` + review.
+- **Не применять prod из feature-ветки:** в CI — `pulumi preview` на PR, apply в prod только с `main` + review.
 
 ### GitOps (по желанию)
 
-- **Argo CD / Flux** — только манифесты приложений; Terraform по-прежнему для **GKE / сеть / IAM / GCS / AR**.
+- **Argo CD / Flux** — манифесты приложений; базовая платформа (GKE, сеть, GCS, AR) — **Pulumi** (`infra/pulumi/`, при необходимости `infra/pulumi/gke-infra/`).
 
 ---
 
@@ -55,11 +52,9 @@
 
 ---
 
-## 4. Связь с переменными Terraform
+## 4. Конфигурация Pulumi
 
-См. `terraform/variables.tf`: `environment`, `developer_id`, `common_labels`.
-
-Примеры значений: `terraform/envs/README.md`.
+См. **`infra/pulumi/README.md`**, `pulumi config` в `Pulumi.*.yaml.example`, экспорты в `__main__.py`. Песочница GKE+SQL: **`infra/pulumi/gke-infra/`** и [docs-site/infra-pulumi-gke-sandbox.md](../docs-site/infra-pulumi-gke-sandbox.md).
 
 ---
 
@@ -67,6 +62,6 @@
 
 1. Раздельный **state** для prod и non-prod.  
 2. Разные **SA** / роли CI для dev и prod.  
-3. **Branch protection** + обязательный `terraform plan` в PR.  
+3. **Branch protection** + обязательный **`pulumi preview`** в PR.  
 4. **Namespace + RBAC + ResourceQuota** в shared GKE.  
 5. Секреты — **Secret Manager** / External Secrets, не в Git.

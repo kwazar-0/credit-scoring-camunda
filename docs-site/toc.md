@@ -11,7 +11,7 @@
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Фазы, порядок работ, ссылки — **точка входа** |
 | [prompt.md](prompt.md) §1–8 | Handoff, продукт, план, пути в репо |
 | [../infra/ARCHITECTURE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ARCHITECTURE.md) | Проекты, namespaces, OIDC, state |
-| [../infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md) | Pulumi: запуск, экспорты |
+| [../infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md) | Pulumi: запуск, экспорты; опц. [gke-infra (сайт →)](infra-pulumi-gke-sandbox.md), [исходник в `infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/manual.md) (GKE+SQL, `europe-west1`) |
 | [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
 | [ml-data-rag.md](ml-data-rag.md) | Vertex, эмбеддинги, env backend |
 | [../scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Включение GCP API (CLI) |
@@ -44,3 +44,5 @@
 ---
 
 **Корневой [README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/README.md)** даёт краткий обзор репозитория и ссылку сюда.
+
+> Другие языки: [English (table of contents)](/en/toc) · [Polski (spis treści)](/pl/toc)

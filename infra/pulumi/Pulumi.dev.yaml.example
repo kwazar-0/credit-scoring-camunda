@@ -2,4 +2,4 @@
 config:
   gcp:project: my-gcp-project
   credit-scoring:region: europe-central2
-  credit-scoring:clusterName: millennium-credit-gke
+  credit-scoring:clusterName: hbg-gke

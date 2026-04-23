@@ -49,7 +49,7 @@ def provision(
         "github_wif_pool",
         workload_identity_pool_id=pool_id,
         display_name="GitHub Actions",
-        description="OIDC federation for GitHub Actions (Millennium Credit)",
+        description="OIDC federation for GitHub Actions (HBG)",
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[iam_api]),
     )
 

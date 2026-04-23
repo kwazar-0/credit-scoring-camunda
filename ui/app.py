@@ -35,7 +35,7 @@ def fetch_tasks_mock() -> list[dict[str, Any]]:
         {
             "id": "demo-1",
             "name": "Weryfikacja analityka",
-            "processName": "Millennium — kredyt",
+            "processName": "HBG — kredyt",
             "creationDate": "2026-04-20T10:00:00Z",
             "variables": {
                 "final_decision": "MANUAL",
@@ -60,7 +60,7 @@ def fetch_tasks_live() -> list[dict[str, Any]]:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Millennium — decyzje kredytowe", layout="wide")
+    st.set_page_config(page_title="HBG — decyzje kredytowe", layout="wide")
     st.title("Portal wewnętrzny — obsługa wniosków")
     st.caption("Region danych: europe-central2 (Warszawa). Język interfejsu: polski.")
 

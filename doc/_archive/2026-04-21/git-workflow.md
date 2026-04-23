@@ -9,7 +9,7 @@
 | Ветка / шаблон | Назначение |
 |----------------|------------|
 | **`main`** | **Production** — защищённая линия; в прод выкатывается только согласованный код (см. Environments в github-setup). |
-| **`develop`** | **Интеграция** — основной поток разработки Millennium; сюда мержатся фичи. Рекомендуемая **default branch** на GitHub после настройки (см. branch-notes). |
+| **`develop`** | **Интеграция** — основной поток разработки; сюда мержатся фичи. Рекомендуемая **default branch** на GitHub после настройки (см. branch-notes). |
 | **`feature/<issue>-<slug>`** | Фичи и рефакторинг; от `develop`, merge в `develop` через PR. |
 | **`release/<major.minor.patch>`** | Стабилизация перед релизом; от `develop`; после релиза — merge в `main` и обратно в `develop`, тег **`v*`** (по политике команды). |
 | **`hotfix/<issue>-<slug>`** | Срочный патч от тега **`v*`** в проде; merge в `main` и `develop`. |
@@ -78,6 +78,6 @@ git push -u origin feature/123-short-desc
 git switch develop && git pull
 git switch -c release/1.2.0
 # фиксы, затем PR в main + develop по процессу
-git tag -a v1.2.0 -m "Millennium release 1.2.0"
+git tag -a v1.2.0 -m "Example Bank release 1.2.0"
 git push origin v1.2.0
 ```

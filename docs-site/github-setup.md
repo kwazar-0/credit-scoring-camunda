@@ -1,10 +1,10 @@
-# GitHub Setup & Governance: Millennium Credit Enterprise
+# GitHub Setup & Governance: Handlowy Bank Galicyjski (HBG) enterprise
 
-Этот документ описывает техническую реализацию 11 ролей и процессов управления доступом в репозитории **Millennium Credit** (ветки и legacy: **[branch-notes.md](branch-notes.md)**).
+Этот документ описывает техническую реализацию 11 ролей и процессов управления доступом в репозитории **Handlowy Bank Galicyjski (HBG)** (ветки и legacy: **[branch-notes.md](branch-notes.md)**).
 
-**Замена плейсхолдеров:** везде `@org/...` замените на реальное имя **GitHub Organization** (например `@MillenniumBank/platform-admin`).
+**Замена плейсхолдеров:** везде `@org/...` замените на реальное имя **GitHub Organization** (например `@HBG-Org/platform-admin`).
 
-**Ветки:** **`main`** — production, **`develop`** — интеграция. Рекомендуемая **default branch** на GitHub: **`develop`**. Поток Git: **[git-workflow.md](git-workflow.md)**.
+**Ветки:** **`main`** — production (и **default branch** на GitHub); **`develop`** — интеграция. Поток Git: **[git-workflow.md](git-workflow.md)**.
 
 ## 1. Структура Команд (Teams)
 Вместо настройки прав для каждого пользователя, мы используем группы. Один сотрудник может состоять в нескольких командах.

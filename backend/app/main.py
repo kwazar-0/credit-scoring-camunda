@@ -16,7 +16,7 @@ setup_logging(get_settings().log_level)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Millennium Credit Agent",
+    title="HBG Agent",
     version="0.1.0",
     description="Agentic RAG backend (internal). Responses include Polish officer-facing fields.",
 )

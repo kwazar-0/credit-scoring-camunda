@@ -35,7 +35,7 @@
 | **security / compliance** | Контроль IAM, Audit Logs, организационные политики, evidence для аудита (SOC2/RODO и т.д.); **не** меняют прод без процесса | Без Owner: `roles/logging.viewer`, `roles/cloudasset.viewer`, `roles/iam.securityReviewer` / `roles/orgpolicy.policyViewer` (по модели); **нет** `container.admin` если не согласовано | **Нет** `pulumi up` в prod; read-only артефакты / политики | **Нет** prod `kubectl` без break-glass | Review security PR (политики, секреты); без merge в `main` без второй пары глаз при необходимости |
 | **break-glass (инцидент)** | Временный доступ выше обычного при **SEV**-инциденте: восстановление, отладка прод, по **runbook** и тикету | Только **ограниченное окно** и **учётка под инцидент**: временный `roles/owner` / break-glass SA или elevation через **Privileged Access Manager** / аналог; всё в **Cloud Audit Log** | **Нет** «на каждый день»; в инциденте — по политике (например только DevOps on-call + approval security) | `kubectl` / `cluster-admin` на **prod** **временно**, с записью команд / postmortem | Не заменяет CI: после инцидента — отзыв прав, разбор (RCA) |
 | **release-manager** | Утверждает **production release**: чеклист (тесты, безопасность, изменения), согласование окна | Обычно **без** прямого GCP или `roles/viewer` на prod для чтения версий/артефактов | **Нет** `pulumi up`; может видеть `preview` из CI | **Нет** | **Approve** environment / release job в CI; теги `v*`; не обязан писать Pulumi |
-| **data-engineer** | Сырые PDF → GCS, пайплайн `data/ingest.py`, JSONL в бакет эмбеддингов, метаданные, загрузки в **BigQuery** (`millennium_analytics`) без сырого PII | `roles/storage.objectAdmin` на data-бакеты (или префиксы), `roles/bigquery.dataEditor` + `roles/bigquery.jobUser`; **без** `container.admin` и без секретов приложения | Согласует имена ресурсов с Pulumi; **не** GKE | **Нет** | PR на пайплайны данных; без deploy инфраструктуры кластера |
+| **data-engineer** | Сырые PDF → GCS, пайплайн `data/ingest.py`, JSONL в бакет эмбеддингов, метаданные, загрузки в **BigQuery** (`hbg_analytics`) без сырого PII | `roles/storage.objectAdmin` на data-бакеты (или префиксы), `roles/bigquery.dataEditor` + `roles/bigquery.jobUser`; **без** `container.admin` и без секретов приложения | Согласует имена ресурсов с Pulumi; **не** GKE | **Нет** | PR на пайплайны данных; без deploy инфраструктуры кластера |
 
 ---
 
@@ -59,7 +59,7 @@
 
 1. Зафиксировать **модель окружений**: отдельные GCP-проекты и/или папки (см. **[ARCHITECTURE.md](ARCHITECTURE.md)**): хотя бы **dev**, **staging/ref**, **prod**.
 2. Иметь роль **Organization Admin** (или эквивалент) в **Google Cloud** и **GitHub Organization** для создания групп и политик.
-3. Согласовать **префикс имён** групп (например `millennium-…`) и список людей по ролям (таблица выше).
+3. Согласовать **префикс имён** групп (например `hbg-…`) и список людей по ролям (таблица выше).
 
 ### Этап 1. Группы в Google Workspace / Cloud Identity
 

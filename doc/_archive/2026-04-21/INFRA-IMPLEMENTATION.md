@@ -12,7 +12,7 @@
 |---|------|---------------------|--------------|
 | **1** | **Облако + IaC (dev)** | API включены, Pulumi `pulumi up` на **dev**, есть GCS, BQ dataset, Artifact Registry, экспорты стека | [infra/pulumi/README.md](../infra/pulumi/README.md), [cli-console.md](cli-console.md), [scripts/gcp-enable-apis-iam.sh](../scripts/gcp-enable-apis-iam.sh) |
 | **2** | **CI → GCP (OIDC)** | GitHub Actions может аутентифицироваться в GCP без JSON-ключей (WIF при необходимости) | `infra/pulumi/workload_identity_github.py`, [.github/workflows/pulumi-preview.yml](../.github/workflows/pulumi-preview.yml) |
-| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md), `k8s/millennium/` |
+| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md), `k8s/hbg/` |
 | **4** | **Данные RAG** | PDF → GCS → ingest → эмбеддинги → Vertex Vector Search; backend без мока векторной БД | [ml-data-rag.md](ml-data-rag.md), `data/` |
 | **5** | **Camunda в контуре** | BPMN/DMN задеплоены, секреты Zeebe/Tasklist из Secret Manager, worker `ai-loan-analysis` стабильно зовёт backend | `bpmn/`, `worker/`, процессы |
 | **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [infra/ROLES.md](../infra/ROLES.md) |

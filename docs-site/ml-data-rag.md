@@ -15,7 +15,7 @@
 | **Векторный индекс** | **Vertex AI Vector Search** (Matching Engine) | Семантический поиск + фильтры по метаданным |
 | **Гибридный поиск** | metadata `product_type`, `source`, `section` | Ограничение домена (Hipoteka vs Pożyczka) |
 | **LLM** | **Gemini 1.5 Pro** (Vertex) | Рассуждение с ограничением по контексту RAG |
-| **Аналитика / eval** | **BigQuery** dataset `millennium_analytics` | Логи запросов, offline-оценка качества, стоимость токенов |
+| **Аналитика / eval** | **BigQuery** dataset `hbg_analytics` | Логи запросов, offline-оценка качества, стоимость токенов |
 | **Оркестрация приложения** | LangGraph в `backend/` | Mask PII → retrieve → rules → LLM → reflect |
 
 ---

@@ -1,1 +1,1 @@
-# Millennium Bank Credit Decision — Agentic RAG backend (FastAPI).
+# Handlowy Bank Galicyjski (HBG) Credit Decision — Agentic RAG backend (FastAPI).

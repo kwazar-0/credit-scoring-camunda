@@ -1,0 +1,27 @@
+# Sample Argo CD Application for HBG workloads (k8s/hbg/).
+# 1. Set repoURL and targetRevision to your Git remote and branch.
+# 2. Configure a Repository credential in Argo CD if the repo is private.
+# 3. Ensure Secret hbg-env exists in the destination namespace (not committed).
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hbg
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/OlehKondratow/credit-scoring-camunda.git
+    targetRevision: develop
+    path: k8s/hbg
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hbg
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

@@ -3,4 +3,4 @@ runtime:
   name: python
   options:
     virtualenv: venv
-description: GCP infra sample (Pulumi) — alternative to infra/terraform
+description: GCP infra (Pulumi) — GCS, BigQuery, Artifact Registry, optional GitHub WIF

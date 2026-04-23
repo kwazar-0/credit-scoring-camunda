@@ -1,8 +1,8 @@
-# GitHub Setup & Governance: Millennium Credit Enterprise
+# GitHub Setup & Governance: Handlowy Bank Galicyjski (HBG) enterprise
 
-Этот документ описывает техническую реализацию 11 ролей и процессов управления доступом в репозитории **Millennium Credit** (ветки и legacy: **[doc/branch-notes.md](branch-notes.md)**).
+Этот документ описывает техническую реализацию 11 ролей и процессов управления доступом в репозитории **Handlowy Bank Galicyjski (HBG)** (ветки и legacy: **[doc/branch-notes.md](branch-notes.md)**).
 
-**Замена плейсхолдеров:** везде `@org/...` замените на реальное имя **GitHub Organization** (например `@MillenniumBank/platform-admin`).
+**Замена плейсхолдеров:** везде `@org/...` замените на реальное имя **GitHub Organization** (например `@HBG-Org/platform-admin`).
 
 **Ветки:** **`main`** — production, **`develop`** — интеграция. Рекомендуемая **default branch** на GitHub: **`develop`**. Поток Git: **[doc/git-workflow.md](git-workflow.md)**.
 

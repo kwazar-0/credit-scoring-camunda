@@ -39,7 +39,7 @@ project_id = gcp_cfg.require("project")
 # Namespace matches README / Pulumi.*.yaml: `pulumi config set credit-scoring:region ...`
 cfg = pulumi.Config("credit-scoring")
 region = cfg.get("region") or "europe-central2"
-cluster_name = cfg.get("clusterName") or "millennium-credit-gke"
+cluster_name = cfg.get("clusterName") or "hbg-gke"
 repo_id = cluster_name.replace("_", "-") + "-docker"
 
 provider = gcp.Provider("gcp", **_gcp_provider_args(project_id, region))
@@ -105,11 +105,11 @@ raw_pdfs_bucket = gcp.storage.Bucket(
 )
 
 bq_dataset = gcp.bigquery.Dataset(
-    "millennium_analytics",
-    dataset_id="millennium_analytics",
+    "hbg_analytics",
+    dataset_id="hbg_analytics",
     project=project_id,
     location=region,
-    friendly_name="Millennium loan / RAG analytics",
+    friendly_name="HBG loan / RAG analytics (sample)",
     description="Query logs, offline eval exports, token/cost aggregates (no raw PII).",
     opts=pulumi.ResourceOptions(provider=provider, depends_on=[bigquery_api]),
 )

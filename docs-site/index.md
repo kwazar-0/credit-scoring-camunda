@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Millennium Credit
+  name: Handlowy Bank Galicyjski (HBG)
   text: Camunda 8 + AI credit scoring
   tagline: Собираемая документация репозитория (VitePress). Регион облака по умолчанию — europe-central2.
   actions:
@@ -23,3 +23,5 @@ features:
 ---
 
 Навигация: **[Оглавление (toc)](/toc)** — полный список материалов.
+
+> Другие языки: [English](/en/) · [Polski](/pl/)

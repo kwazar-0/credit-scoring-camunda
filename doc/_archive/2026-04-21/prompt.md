@@ -1,4 +1,4 @@
-# Millennium Bank AI Loan Officer — контекст для продолжения работы
+# Example Bank (вымышленный пример) — контекст для продолжения работы
 
 Краткий handoff для нового чата: что за проект, как устроен **`infra/`**, Git, ограничения и что делать дальше.
 
@@ -31,16 +31,15 @@
 
 | Путь | Назначение |
 |------|------------|
-| **`infra/pulumi/`** | **Основной IaC (Python).** GCS (embeddings + raw PDF), BigQuery `millennium_analytics`, Artifact Registry; включение API: **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Конфиг: `pulumi config set gcp:project …`, `credit-scoring:region`, `credit-scoring:clusterName`. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
+| **`infra/pulumi/`** | **Основной IaC (Python).** GCS (embeddings + raw PDF), BigQuery `examplebank_analytics`, Artifact Registry; включение API: **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Конфиг: `pulumi config set gcp:project …`, `credit-scoring:region`, `credit-scoring:clusterName`. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
 | **`infra/pulumi/README.md`** | Запуск, экспорты (`vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset`, `artifact_registry_url`), отладка `pulumi preview`. |
 | **`infra/README.md`** | Обзор: Pulumi = основной путь; остальное — справочно. |
-| **`infra/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC вместо JSON-ключей; GitOps (Argo/Flux) — по желанию для приложений; Terraform в тексте исторически — для prod применять **Pulumi** как канон. |
+| **`infra/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC; GitOps; канон IaC — **Pulumi**. |
 | **`infra/ROLES.md`** | 11 ролей, матрица GCP/Pulumi/K8s/Git и **пошаговая инструкция по созданию доступов** (группы IdP, IAM, GKE, GitHub). |
 | **[`doc/gcp-saas-access-matrix-11x6.md`](gcp-saas-access-matrix-11x6.md)** | **Чистовик:** 11 ролей × сервисы GCP + упаковка в **6 учёток**; связка с `prompt` §9 и GitHub Teams. |
-| **`infra/terraform/`** | **Справочный** HCL; не плодить второй источник правды с Pulumi на одних и тех же именах ресурсов без импорта. |
-| **`infra/cdktf/`**, **`config-connector/`**, **`crossplane/`** | Примеры/альтернативы, опционально. |
+| **`infra/pulumi/gke-infra/`** | Опционально: GKE+SQL+GCS+AR. |
 
-**Кластер:** планируется **GKE Standard** (не **Autopilot**) — совместимость с Camunda Platform / Zeebe. Сам кластер в этом репо описан концептуально; создание — отдельный слой (раньше Terraform/GKE модули, в продолжении — согласовать с Pulumi или отдельным модулем).
+**Кластер:** **GKE Standard**; в `infra/pulumi/` GKE не в основом стеке; при необходимости — `gke-infra/`.
 
 ---
 
@@ -52,8 +51,8 @@
 | `worker/` | PyZeebe, job type **`ai-loan-analysis`**, таймаут → BPMN error **`AI_SERVICE_TIMEOUT`**. |
 | `ui/` | Streamlit. |
 | `data/` | `ingest.py`, `eval_rag.py`; зависимости: `pip install -r ../backend/requirements.txt -r requirements.txt` для eval. |
-| `bpmn/`, `dmn/` | `millennium-loan-process.bpmn`, `scoring-rules.dmn`. |
-| `k8s/millennium/` | Манифесты K8s. |
+| `bpmn/`, `dmn/` | `example-bank-loan-process.bpmn`, `scoring-rules.dmn`. |
+| `k8s/example-bank/` | Манифесты K8s. |
 | `docker-compose.yml` | Локально: Zeebe + backend + worker + UI. |
 | `doc/ml-data-rag.md` | ML/Data/RAG и env backend. |
 
@@ -110,7 +109,7 @@
 Это итоговый, детальный промпт для настройки enterprise-инфраструктуры: облако, Kubernetes, безопасность и процессы вокруг Camunda. Используйте для Pulumi/Terraform (отдельные стеки) или как инструкцию архитекторам.
 
 ### 9.1. Context & Governance
-**Project:** Millennium Credit Scoring (Camunda-based).
+**Project:** Example Bank credit scoring (Camunda-based).
 **Stack:** GCP, GKE, Pulumi (IaC), Camunda 8 (Zeebe + при необходимости self-managed Platform на Java), Google Identity (SSO) — по политике организации.
 **Principle:** Least Privilege, GitOps-only changes, Zero Trust for Production.
 
@@ -181,7 +180,7 @@
 2.  **GKE:** Региональный кластер с 3 пулами узлов:
     * `pool-dev`: Spot-инстансы (экономия).
     * `pool-prod`: Стандартные инстансы с включенным Shielded GKE.
-3.  **Namespaces:** например `credit-dev`, `credit-ref`, `credit-prod` (в репо сейчас пример — `millennium-credit`; согласуйте имена).
+3.  **Namespaces:** например `credit-dev`, `credit-ref`, `credit-prod` (в репо сейчас пример — `example-bank`; согласуйте имена).
 4.  **RBAC Bindings:** Маппинг Google-групп (напр. `devs@company.com`) на роли внутри неймспейсов.
 5.  **Secrets:** Интеграция с **GCP Secret Manager** через `ExternalSecrets` Operator.
 
@@ -200,14 +199,14 @@
 
 ---
 
-# System Prompt: Millennium Credit Infrastructure & Governance
+# System Prompt: Example Bank infrastructure & Governance
 
 **Context:** Ты — Lead Cloud Architect & DevSecOps Engineer. Твоя задача — спроектировать и реализовать инфраструктуру для кредитного конвейера на базе Camunda (remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`).
 
 ## 1. Технический Стек
 * **Cloud:** GCP (Google Cloud Platform).
 * **IaC:** Pulumi (**Python** — как в `infra/pulumi/`; TypeScript только как отдельный стек, если команда согласует).
-* **Orchestration:** GKE Standard; неймспейсы согласовать с кластером (например `credit-dev` / `credit-ref` / `credit-prod` или `millennium-credit` в манифестах — единообразно в Pulumi и `k8s/`).
+* **Orchestration:** GKE Standard; неймспейсы согласовать с кластером (например `credit-dev` / `credit-ref` / `credit-prod` или `example-bank` в манифестах — единообразно в Pulumi и `k8s/`).
 * **CI/CD:** GitHub Actions + Workload Identity Federation.
 * **Auth:** Google OAuth2 (SSO) для Camunda и RBAC для GKE.
 
@@ -241,7 +240,7 @@
 
 ### 9.6. Спецификация hardening (EN) для ИИ / генерации конфигов
 
-Ниже — **строгий англоязычный промпт** для генерации политик, IaC и CI/CD (SoT через группы, без JSON-ключей, supply chain). Согласуйте имена неймспейсов (`credit-*` vs `millennium-credit`) с `k8s/` и §9.4.
+Ниже — **строгий англоязычный промпт** для генерации политик, IaC и CI/CD (SoT через группы, без JSON-ключей, supply chain). Согласуйте имена неймспейсов (`credit-*` vs `example-bank`) с `k8s/` и §9.4.
 
 ---
 You are a senior DevSecOps engineer designing a production-grade, security-hardened cloud platform on GCP with GKE, GitHub, and OIDC-based CI/CD.

@@ -1,0 +1,40 @@
+/**
+ * Widen layout: default VitePress doc column is ~688px with aside; nav caps at 1440px.
+ * Target: use ~full viewport for main content and tables.
+ */
+:root {
+  /* Outer shell (nav, sidebar padding math) — full browser width */
+  --vp-layout-max-width: 100vw;
+}
+
+/* Main article column: remove 688px cap when right outline (aside) is shown */
+.VPDoc.has-aside .content-container {
+  max-width: 100% !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Pages without doc outline */
+@media (min-width: 960px) {
+  .VPDoc:not(.has-sidebar) .container,
+  .VPDoc:not(.has-sidebar) .content {
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .VPDoc:not(.has-sidebar) .container,
+  .VPDoc:not(.has-sidebar) .content {
+    max-width: 100% !important;
+  }
+}
+
+/* Wide tables use column width; horizontal scroll for overflow without breaking table layout */
+.vp-doc table {
+  width: 100%;
+  max-width: 100%;
+}
+
+.VPDoc .main {
+  overflow-x: auto;
+}

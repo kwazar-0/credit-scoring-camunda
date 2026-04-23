@@ -1,6 +1,6 @@
 # Pulumi (Python) — основной IaC
 
-Стек: **GCS** (бакет эмбеддингов + **raw PDF**), **BigQuery** dataset `millennium_analytics`, **Artifact Registry**, API **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Экспорты: `gcp_project`, `gcp_region`, `cluster_name`, `artifact_repository_id`, `vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset`, `artifact_registry_url`.
+Стек: **GCS** (бакет эмбеддингов + **raw PDF**), **BigQuery** dataset `hbg_analytics`, **Artifact Registry**, API **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Экспорты: `gcp_project`, `gcp_region`, `cluster_name`, `artifact_repository_id`, `vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset`, `artifact_registry_url`.
 
 **Кто что делает:** стеки `dev` / `staging` / `prod` и роли — **`../ROLES.md`**.
 
@@ -24,11 +24,17 @@ pulumi preview
 pulumi up
 ```
 
-`pulumi config set credit-scoring:clusterName millennium-credit-gke` — имя репозитория Artifact Registry (см. `__main__.py`).
+`pulumi config set credit-scoring:clusterName hbg-gke` — имя репозитория Artifact Registry (см. `__main__.py`).
 
 Для **prod** используйте отдельный stack и backend state; `up` — из CI после approval (см. `ROLES.md`).
 
-Не смешивайте с **Terraform** на те же имена ресурсов в одном GCP-проекте без осознанного импорта.
+Не создавайте второй источник правды по тем же именам GCP-ресурсов в другом стеке Pulumi / другом tool без осознанного импорта.
+
+## Опционально: `gke-infra/` (второй Pulumi-проект)
+
+Папка **[`gke-infra/`](gke-infra/)** — отдельный стек (свой `Pulumi.yaml`): GKE, Cloud SQL (PostgreSQL), GCS, Artifact Registry. **Документация на сайте:** [../../docs-site/infra-pulumi-gke-sandbox.md](../../docs-site/infra-pulumi-gke-sandbox.md) / [EN](../../docs-site/en/infra-pulumi-gke-sandbox.md); в каталоге — **[`gke-infra/manual.md`](gke-infra/manual.md)**.
+
+**Канон** для эмбеддингов, BQ и AR этого репозитория — **этот** каталог (`__main__.py`, `hbg` / `europe-central2`). `gke-infra` в коде ориентирован на **`europe-west1`** и другие ID ресурсов (`credit-scoring-repo` и т.д.); параллельный `up` в том же project может **конфликтовать** с основым стеком. Используйте **другой** GCP project либо осознанно переименуйте/импортируйте ресурсы.
 
 ## Опционально: GitHub Actions → GCP (OIDC / Workload Identity)
 

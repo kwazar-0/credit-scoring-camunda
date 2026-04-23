@@ -81,7 +81,7 @@ async def _llm_reason(state: AgentState) -> AgentState:
             location=settings.google_cloud_region,
         )
         system = (
-            "Jesteś analitykiem kredytowym Banku Millennium. Odpowiadaj po polsku. "
+            "Jesteś analitykiem kredytowym wymyślonego przykładowego banku (Handlowy Bank Galicyjski (HBG)). Odpowiadaj po polsku. "
             "Uwzględnij Rekomendację S KNF oraz polskie Prawo bankowe tylko jako ogólne zasady etyki kredytu. "
             "Korzystaj wyłącznie z podanego kontekstu dokumentów wewnętrznych."
         )

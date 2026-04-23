@@ -1,4 +1,4 @@
-# Millennium Bank — automated credit decision (RAG + Camunda 8)
+# Handlowy Bank Galicyjski (HBG) — automated credit decision (RAG + Camunda 8)
 
 [![CI](https://github.com/OlehKondratow/credit-scoring-camunda/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/OlehKondratow/credit-scoring-camunda/actions/workflows/ci.yml)
 
@@ -12,7 +12,7 @@
 | [docs-site/toc.md](docs-site/toc.md) | Оглавление: треки A/B/C (infra, Git, governance) |
 | [docs-site/prompt.md](docs-site/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
 | [docs-site/git-workflow.md](docs-site/git-workflow.md) | Branches, `release/*`, tags |
-| [docs-site/branch-notes.md](docs-site/branch-notes.md) | Назначение веток, legacy `millennium-credit-v2` |
+| [docs-site/branch-notes.md](docs-site/branch-notes.md) | Ветки `main` / `develop`, заметки по релизам |
 | [docs-site/github-setup.md](docs-site/github-setup.md) | Branch protection, Environments (GitHub UI) |
 | [docs-site/naming.md](docs-site/naming.md) | Repo / branch / tag naming (avoid `Credit-Scoring-V2` as brand) |
 | [docs-site/cli-console.md](docs-site/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
@@ -26,13 +26,12 @@
 | `infra/pulumi/` | **Основной IaC (Pulumi):** GCS, Artifact Registry, API |
 | `infra/ROLES.md` | Роли: DevOps/SRE, dev-developer, dev-tester, ref-tester, prod-tester, prod-user |
 | `infra/ARCHITECTURE.md` | Изоляция сред и namespaces |
-| `infra/terraform/` | Справочный Terraform (legacy) |
 | `backend/` | FastAPI + LangGraph (`/analyze`) |
 | `worker/` | PyZeebe (`ai-loan-analysis`) |
 | `ui/` | Streamlit |
 | `data/` | `ingest.py` — PDF → chunks → `text-embedding-004` |
-| `bpmn/`, `dmn/` | `millennium-loan-process.bpmn`, `scoring-rules.dmn` |
-| `k8s/millennium/` | Deployments, Services, HPA, Secret example |
+| `bpmn/`, `dmn/` | `hbg-loan-process.bpmn`, `scoring-rules.dmn` |
+| `k8s/hbg/` | Deployments, Services, HPA, Secret example |
 | `docker-compose.yml` | Local: Zeebe + backend + worker + UI |
 | `docs-site/` + `doc/_archive/` | Документация, VitePress |
 | `scripts/` | `create-release-branch.sh` — ветка `release/X.Y.Z` |
@@ -58,4 +57,4 @@ Service task type: **`ai-loan-analysis`**, process variable: **`application`** (
 
 ## Region
 
-Default: **`europe-central2` (Warsaw)** — config, Terraform, manifests.
+Default: **`europe-central2` (Warsaw)** — Pulumi config and manifests.

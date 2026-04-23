@@ -1,16 +1,16 @@
 # Имена: репозиторий, ветки, папка
 
-**`Credit-Scoring-V2`** не используем как «официальное» имя продукта — это устаревший технический ярлык. Публичное имя контура: **Millennium Credit** (см. `doc/prompt.md`).
+**`Credit-Scoring-V2`** не используем как «официальное» имя продукта — это устаревший технический ярлык. Публичное имя контура: **Handlowy Bank Galicyjski (HBG)** (см. `doc/prompt.md`).
 
 ## Что считать каноном
 
 | Сущность | Рекомендуемое имя |
 |----------|-------------------|
-| **Продукт / документация** | Millennium Bank AI Loan Officer / Millennium Credit |
+| **Продукт / документация** | **Handlowy Bank Galicyjski** (скорочено **HBG**, вымышленный банк-пример) |
 | **Default branch на GitHub** | **`main`**; **`develop`** — интеграция (не использовать имя `Credit-Scoring-V2` для default) |
-| **Remote** | `git@github.com:OlehKondratow/credit-scoring-camunda.git` — имя **репозитория** на GitHub можно сменить в *Settings → General → Repository name* (например на `millennium-credit`); GitHub перенастроит URL, добавьте новый `remote url`. |
+| **Remote** | `git@github.com:OlehKondratow/credit-scoring-camunda.git` — имя **репозитория** на GitHub можно сменить в *Settings → General → Repository name* (например на `hbg`); GitHub перенастроит URL, добавьте новый `remote url`. |
 | **Релизные теги** | **`v1.0.0`**, `v1.1.0`, … (SemVer) |
-| **Локальная папка клона** | Любое удобное, напр. `~/src/millennium-credit` — на код не влияет. |
+| **Локальная папка клона** | Любое удобное, напр. `~/src/hbg-worktree` — на код не влияет. |
 
 ## Что убрать / не создавать повторно
 
@@ -25,7 +25,7 @@
 
 ## GitHub: смена имени репозитория
 
-1. *Repository → Settings → General → Repository name* — задать новое (например `millennium-credit`).
+1. *Repository → Settings → General → Repository name* — задать новое (например `hbg`).
 2. Обновить `git remote`:
 
    ```bash

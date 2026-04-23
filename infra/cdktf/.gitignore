@@ -1,6 +1,0 @@
-node_modules/
-cdktf.out/
-.gen/
-dist/
-.terraform/
-*.tfstate*
