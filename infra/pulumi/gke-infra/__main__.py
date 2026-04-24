@@ -1,52 +1,193 @@
+"""
+Sandbox: GKE + private Cloud SQL + GCS + Artifact Registry (отдельный Pulumi app).
+Политика репо: europe-central2, без публичного IP у Cloud SQL, Workload Identity, пустые oauth_scopes на нодах.
+"""
+
+from __future__ import annotations
+
 import pulumi
-from pulumi_gcp import container, artifactregistry, storage, sql
+import pulumi_gcp as gcp
+import pulumi_random as random
 
-# Конфигурация
-config_name = "credit-scoring"
-config_zone = "europe-west1-b"
-config_region = "europe-west1"
+cfg = pulumi.Config("gcp")
+project_id = cfg.require("project")
+region = cfg.get("region") or "europe-central2"
+# Региональный кластер (HA); private nodes + публичный endpoint мастера для kubectl с рабочей станции.
+stack_label = "cs-sandbox"
 
-# 1. ARTIFACT REGISTRY (Docker образы)
-repo = artifactregistry.Repository("ai-repo",
-    location=config_region,
-    repository_id=f"{config_name}-repo",
-    format="DOCKER")
+compute_api = gcp.projects.Service(
+    "compute_api",
+    project=project_id,
+    service="compute.googleapis.com",
+    disable_on_destroy=False,
+)
+servicenetworking_api = gcp.projects.Service(
+    "servicenetworking_api",
+    project=project_id,
+    service="servicenetworking.googleapis.com",
+    disable_on_destroy=False,
+)
+container_api = gcp.projects.Service(
+    "container_api",
+    project=project_id,
+    service="container.googleapis.com",
+    disable_on_destroy=False,
+)
+sqladmin_api = gcp.projects.Service(
+    "sqladmin_api",
+    project=project_id,
+    service="sqladmin.googleapis.com",
+    disable_on_destroy=False,
+)
+storage_api = gcp.projects.Service(
+    "storage_api",
+    project=project_id,
+    service="storage.googleapis.com",
+    disable_on_destroy=False,
+)
+ar_api = gcp.projects.Service(
+    "artifactregistry_api",
+    project=project_id,
+    service="artifactregistry.googleapis.com",
+    disable_on_destroy=False,
+)
 
-# 2. CLOUD STORAGE (Данные для ML/Vertex)
-data_bucket = storage.Bucket("data-bucket",
-    name=f"{config_name}-app-data",
-    location=config_region,
-    force_destroy=True)
+network = gcp.compute.Network(
+    "vpc",
+    name=f"{stack_label}-vpc",
+    auto_create_subnetworks=False,
+    opts=pulumi.ResourceOptions(depends_on=[compute_api]),
+)
 
-# 3. CLOUD SQL (PostgreSQL для метаданных)
-db_instance = sql.DatabaseInstance("postgres-instance",
-    database_version="POSTGRES_15",
-    region=config_region,
-    settings=sql.DatabaseInstanceSettingsArgs(
-        tier="db-f1-micro", # Для тестов; для серьезного RAG берите db-g1-small
-        ip_configuration=sql.DatabaseInstanceSettingsIpConfigurationArgs(
-            ipv4_enabled=True,
+subnet = gcp.compute.Subnetwork(
+    "subnet",
+    name=f"{stack_label}-subnet-{region}",
+    ip_cidr_range="10.40.0.0/20",
+    region=region,
+    network=network.id,
+    private_ip_google_access=True,
+    secondary_ip_ranges=[
+        gcp.compute.SubnetworkSecondaryIpRangeArgs(
+            range_name="pods", ip_cidr_range="10.41.0.0/16"
         ),
-    ))
+        gcp.compute.SubnetworkSecondaryIpRangeArgs(
+            range_name="services", ip_cidr_range="10.44.0.0/20"
+        ),
+    ],
+    opts=pulumi.ResourceOptions(depends_on=[network]),
+)
 
-# 4. GKE CLUSTER (Мощные ноды для Camunda + AI)
-cluster = container.Cluster("gke-cluster",
-    name=f"{config_name}-cluster",
-    location=config_zone,
+peering_range = gcp.compute.GlobalAddress(
+    "psa_range",
+    name=f"{stack_label}-psa",
+    purpose="VPC_PEERING",
+    address_type="INTERNAL",
+    prefix_length=16,
+    network=network.id,
+    opts=pulumi.ResourceOptions(depends_on=[network]),
+)
+
+private_vpc_connection = gcp.servicenetworking.Connection(
+    "private_vpc_connection",
+    network=network.name,
+    service="servicenetworking.googleapis.com",
+    reserved_peering_ranges=[peering_range.name],
+    opts=pulumi.ResourceOptions(depends_on=[peering_range, servicenetworking_api]),
+)
+
+suffix = random.RandomString(
+    "suffix",
+    length=4,
+    lower=True,
+    upper=False,
+    numeric=True,
+    special=False,
+)
+
+data_bucket = gcp.storage.Bucket(
+    "data",
+    name=pulumi.Output.concat(project_id, "-", stack_label, "-data-", suffix.result),
+    location=region,
+    uniform_bucket_level_access=True,
+    versioning=gcp.storage.BucketVersioningArgs(enabled=True),
+    opts=pulumi.ResourceOptions(depends_on=[storage_api]),
+)
+
+ar_repo = gcp.artifactregistry.Repository(
+    "docker",
+    repository_id=f"{stack_label}-docker",
+    location=region,
+    format="DOCKER",
+    description="Sandbox images (credit-scoring)",
+    opts=pulumi.ResourceOptions(depends_on=[ar_api]),
+)
+
+db = gcp.sql.DatabaseInstance(
+    "postgres",
+    name=pulumi.Output.concat(stack_label, "-pg-", suffix.result),
+    database_version="POSTGRES_15",
+    region=region,
+    deletion_protection=False,
+    settings=gcp.sql.DatabaseInstanceSettingsArgs(
+        tier="db-f1-micro",
+        ip_configuration=gcp.sql.DatabaseInstanceSettingsIpConfigurationArgs(
+            ipv4_enabled=False,
+            private_network=network.self_link,
+        ),
+    ),
+    opts=pulumi.ResourceOptions(depends_on=[private_vpc_connection, sqladmin_api]),
+)
+
+cluster = gcp.container.Cluster(
+    "gke",
+    name=f"{stack_label}-cluster",
+    location=region,
     remove_default_node_pool=True,
     initial_node_count=1,
-    deletion_protection=False)
+    network=network.self_link,
+    subnetwork=subnet.self_link,
+    ip_allocation_policy=gcp.container.ClusterIpAllocationPolicyArgs(
+        cluster_secondary_range_name="pods",
+        services_secondary_range_name="services",
+    ),
+    private_cluster_config=gcp.container.ClusterPrivateClusterConfigArgs(
+        enable_private_nodes=True,
+        enable_private_endpoint=False,
+        master_ipv4_cidr_block="172.20.0.0/28",
+    ),
+    workload_identity_config=gcp.container.ClusterWorkloadIdentityConfigArgs(
+        workload_pool=f"{project_id}.svc.id.goog"
+    ),
+    opts=pulumi.ResourceOptions(depends_on=[container_api, subnet]),
+)
 
-nodes = container.NodePool("primary-nodes",
+gcp.container.NodePool(
+    "primary",
+    name="default",
+    location=region,
     cluster=cluster.name,
-    location=config_zone,
-    node_count=4,
-    node_config=container.ClusterNodeConfigArgs(
-        machine_type="e2-standard-4", # 16 vCPU / 64GB RAM итого
-        disk_size_gb=25, # Экономим квоту SSD
-        oauth_scopes=["https://www.googleapis.com/auth/cloud-platform"]))
+    node_count=1,
+    node_config=gcp.container.ClusterNodeConfigArgs(
+        machine_type="e2-standard-4",
+        oauth_scopes=[],
+    ),
+    opts=pulumi.ResourceOptions(depends_on=[cluster]),
+)
 
-# --- ЭКСПОРТЫ ---
-pulumi.export("connect_cmd", f"gcloud container clusters get-credentials {config_name}-cluster --zone {config_zone}")
-pulumi.export("db_ip", db_instance.first_ip_address)
-pulumi.export("bucket_name", data_bucket.url)
+pulumi.export("gcp_project", project_id)
+pulumi.export("gcp_region", region)
+pulumi.export(
+    "connect_cmd",
+    pulumi.Output.concat(
+        "gcloud container clusters get-credentials ",
+        cluster.name,
+        " --region ",
+        region,
+        " --project ",
+        project_id,
+    ),
+)
+pulumi.export("bucket_url", data_bucket.url)
+pulumi.export("artifact_registry_url", pulumi.Output.concat(region, "-docker.pkg.dev/", project_id, "/", ar_repo.repository_id))
+pulumi.export("cloud_sql_private_ip", db.private_ip_address)
+pulumi.export("cloud_sql_connection_name", db.connection_name)

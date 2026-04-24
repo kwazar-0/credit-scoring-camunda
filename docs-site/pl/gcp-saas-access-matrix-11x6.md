@@ -1,6 +1,6 @@
 # Czysta macierz: 11 ról vs usługi GCP i 6 kont
 
-Zgodne z [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md), [`prompt.md`](prompt.md) §9.1–9.2 (w tym **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) i hardening §9.6. Region domyślny: **`europe-central2`**.
+Zgodne z [`prompt.md`](prompt.md) §9.1–9.2 (w tym **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) i hardening §9.6. Region domyślny: **`europe-central2`**.
 
 ## 1. Czy 11 ról i „6 użytkowników”?
 
@@ -62,6 +62,5 @@ Jeden wiersz = jedna osoba. **Kolumny** — te same **sloty** co w §2. **•** 
 
 ## 6. Powiązane
 
-- [`../infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md)
 - [`github-codeowners-matrix.md`](github-codeowners-matrix.md)
-- [`../infra/ROLES.gke-rbac.example.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.gke-rbac.example.md)
+- Przykład RBAC K8s w repozytorium: `infra/ROLES.gke-rbac.local.md`

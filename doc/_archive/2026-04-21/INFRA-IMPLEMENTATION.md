@@ -12,10 +12,10 @@
 |---|------|---------------------|--------------|
 | **1** | **Облако + IaC (dev)** | API включены, Pulumi `pulumi up` на **dev**, есть GCS, BQ dataset, Artifact Registry, экспорты стека | [infra/pulumi/README.md](../infra/pulumi/README.md), [cli-console.md](cli-console.md), [scripts/gcp-enable-apis-iam.sh](../scripts/gcp-enable-apis-iam.sh) |
 | **2** | **CI → GCP (OIDC)** | GitHub Actions может аутентифицироваться в GCP без JSON-ключей (WIF при необходимости) | `infra/pulumi/workload_identity_github.py`, [.github/workflows/pulumi-preview.yml](../.github/workflows/pulumi-preview.yml) |
-| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md), `k8s/hbg/` |
+| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [doc/_archive/2026-04-20/ARCHITECTURE.md](../doc/_archive/2026-04-20/ARCHITECTURE.md), `k8s/hbg/` |
 | **4** | **Данные RAG** | PDF → GCS → ingest → эмбеддинги → Vertex Vector Search; backend без мока векторной БД | [ml-data-rag.md](ml-data-rag.md), `data/` |
 | **5** | **Camunda в контуре** | BPMN/DMN задеплоены, секреты Zeebe/Tasklist из Secret Manager, worker `ai-loan-analysis` стабильно зовёт backend | `bpmn/`, `worker/`, процессы |
-| **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [infra/ROLES.md](../infra/ROLES.md) |
+| **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [doc/_archive/2026-04-20/ROLES.md](../doc/_archive/2026-04-20/ROLES.md) |
 
 **MVP по продукту (из [prompt.md](prompt.md) §5):** фазы **1 → 4** (ingestion, индекс, выключить mock) → затем **5** и тесты worker ↔ backend.
 
@@ -24,7 +24,7 @@
 ## Минимальный набор чтения (1–2 часа, потом — код)
 
 1. **[prompt.md](prompt.md) — §1–5, §7–8** — продукт, структура репо, **план этапов**, E2E.  
-2. **[infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md)** — изоляция, OIDC, state.  
+2. **[doc/_archive/2026-04-20/ARCHITECTURE.md](../doc/_archive/2026-04-20/ARCHITECTURE.md)** — изоляция, OIDC, state.  
 3. **[infra/pulumi/README.md](../infra/pulumi/README.md) + `__main__.py`** — что уже создаётся в облаке.  
 4. **[cli-console.md](cli-console.md)** — Pulumi, `gcloud`, включение API.
 

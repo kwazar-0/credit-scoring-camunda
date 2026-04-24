@@ -1,8 +1,8 @@
 # Pulumi `gke-infra` stack (GKE, Cloud SQL, GCS, Artifact Registry)
 
-**Scope:** [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) is a **standalone** Pulumi project (its own `Pulumi.yaml`, separate from [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi)). The program [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) provisions **Artifact Registry**, a **GCS bucket**, **Cloud SQL (PostgreSQL 15)**, and a **GKE** cluster with a **dedicated node pool** in **europe-west1** / **europe-west1-b**. It is a sandbox / all-in-one stack. The **canonical** product IaC in this repository is **`infra/pulumi/`** (default **`europe-central2`**, `hbg-*` naming). **Do not** apply both projects to the same GCP project without a deliberate resource naming and state plan.
+**Scope:** [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) is a **standalone** Pulumi project (its own `Pulumi.yaml`, separate from [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi)). The program [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) provisions **Artifact Registry**, a **GCS bucket**, **private Cloud SQL (PostgreSQL 15)** and a **regional GKE** cluster in **europe-central2** (configurable as `gcp:region`, default `europe-central2`). It is a sandbox all-in-one stack. The **canonical** product IaC in this repository is still **`infra/pulumi/`** (default **`europe-central2`**, `hbg-*` naming). **Do not** apply both projects to the same GCP project without a deliberate resource naming and state plan.
 
-**Also:** [Russian version of this page →](/infra-pulumi-gke-sandbox) · copy in repo: [`manual.en.md` / `manual.md`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra).
+**Also:** [Russian version of this page →](/infra-pulumi-gke-sandbox) · in-repo: [`README.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
 
 ---
 
@@ -10,32 +10,32 @@
 
 | Pulumi resource | Google Cloud | Parameters in code | Purpose |
 |-----------------|--------------|--------------------|---------|
-| `artifactregistry.Repository` `"ai-repo"` | Artifact Registry (Docker) | `location = europe-west1`, `repository_id = credit-scoring-repo` | Push/pull container images. |
-| `storage.Bucket` `"data-bucket"` | GCS | `name = credit-scoring-app-data`, `location = europe-west1`, `force_destroy = true` | App / ML / general object storage (see security note on `force_destroy`). |
-| `sql.DatabaseInstance` `"postgres-instance"` | Cloud SQL | `POSTGRES_15`, region `europe-west1`, tier `db-f1-micro`, **public IPv4** enabled | PostgreSQL (metadata / Camunda-style workloads for experiments). **Not** sized for production. |
-| `container.Cluster` `"gke-cluster"` | GKE | `name = credit-scoring-cluster`, `location = europe-west1-b` (zonal), `remove_default_node_pool = true`, `deletion_protection = false` | Control plane; default node pool removed. |
-| `container.NodePool` `"primary-nodes"` | GKE node pool | `node_count = 4`, `e2-standard-4` per node, `disk_size_gb = 25`, `oauth_scopes = [cloud-platform]` | Workloads. **Total cluster:** **16 vCPUs, 64 GiB RAM** (4 × 4 vCPU, 4 × 16 GiB). |
+| `compute.Network` + `Subnetwork` | VPC, subnet, secondary IP ranges for pods/services | CIDRs `10.40.0.0/20` primary; `pods` / `services` secondaries; **europe-central2** | GKE and PSA routing. |
+| `compute.GlobalAddress` + `servicenetworking.Connection` | Private Service Access | `/16` range for peering | **Private IP** for Cloud SQL. |
+| `artifactregistry.Repository` | Artifact Registry (Docker) | `location = region`, `repository_id = cs-sandbox-docker` | Push/pull images (hostname `REGION-docker.pkg.dev`). |
+| `storage.Bucket` | GCS | Name `PROJECT-cs-sandbox-data-<suffix>`, `location = region`, versioning on, uniform access | Object storage. |
+| `sql.DatabaseInstance` | Cloud SQL | `POSTGRES_15`, `ipv4_enabled=False`, `private_network=…`, `db-f1-micro` | **No public IPv4**; reachable from VPC. |
+| `container.Cluster` | GKE | `name = cs-sandbox-cluster`, **regional** `location=region`, private nodes, public control plane endpoint, **Workload Identity** | Control plane. |
+| `container.NodePool` | GKE node pool | `e2-standard-4`, 1 node, **`oauth_scopes = []`**, GKE default SA | Prefer **Workload Identity** for GCP API access. |
 
-**Constants in code (not yet externalised to `pulumi config`):** `config_name = "credit-scoring"`, `config_region = "europe-west1"`, `config_zone = "europe-west1-b"`.
-
-**Stack exports:** `connect_cmd` (kubectl credentials command), `db_ip` (first instance IP), `bucket_name` (GCS URL).
+**Stack exports:** `gcp_project`, `gcp_region`, `connect_cmd`, `bucket_url`, `artifact_registry_url`, `cloud_sql_private_ip`, `cloud_sql_connection_name` (for proxy / connector; **no** public DB IP is exported by design).
 
 ---
 
 ## 2. Region and project layout
 
-- **Zonal** GKE: **europe-west1-b**. **Regional** services: **europe-west1**.
-- The monorepo default for product data is **`europe-central2`** (see [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)). This stack is intentionally **europe-west1**; align networking and policy if you merge paths.
-- `Pulumi.dev.yaml` in the folder may use a **placeholder** project id; set `gcp:project` in your stack. `Pulumi.yaml` `name: my-gcp-infra` is still template text — rename when you own the project.
+- **Regional** GKE and regional Cloud SQL/AR/GCS: **`europe-central2`** (default) via `gcp:region` — same default as the monorepo policy in [.cursorrules](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.cursorrules).
+- Resource name prefix in code: **`cs-sandbox-*`**, not `hbg-*` from the main Pulumi app — still a separate stack and state file.
+- `Pulumi.dev.yaml` in the folder may use a **placeholder** project id; set `gcp:project` in your stack.
 
 ---
 
 ## 3. Prerequisites
 
-- **Tools:** Pulumi CLI, `gcloud`, `kubectl`, Docker, `helm`, Python 3.7+.
-- **GCP:** billing, APIs (Container, SQL, Storage, Artifact Registry, etc.). From the repo root: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) `PROJECT_ID` (add SQL API if needed).
+- **Tools:** Pulumi CLI, `gcloud`, `kubectl`, Docker, `helm` (if deploying apps), Python 3.10+.
+- **GCP:** billing, APIs enabled by the Pulumi `projects.Service` resources (compute, servicenetworking, container, sqladmin, storage, artifactregistry). You can also use: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) for baseline IAM/API enablement.
 - **Auth:** `gcloud auth application-default login` (or a service account key — do not commit).
-- **Python:** `cd infra/pulumi/gke-infra && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt`.
+- **Python:** `cd infra/pulumi/gke-infra && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt` (uses `pulumi-random` for bucket name suffix).
 
 ---
 
@@ -47,7 +47,7 @@ python3 -m venv venv && . venv/bin/activate
 pip install -r requirements.txt
 pulumi stack init dev
 pulumi config set gcp:project YOUR_GCP_PROJECT_ID
-pulumi config set gcp:zone europe-west1-b
+pulumi config set gcp:region europe-central2
 pulumi preview
 pulumi up
 ```
@@ -61,28 +61,28 @@ pulumi up
 ### kubectl
 
 ```bash
-gcloud container clusters get-credentials credit-scoring-cluster --zone europe-west1-b
+gcloud container clusters get-credentials cs-sandbox-cluster --region europe-central2
 ```
 
-Expect **4** nodes: `kubectl get nodes`.
+(Use `pulumi stack output connect_cmd` for the exact string including project.)
 
 ### Artifact Registry
 
-Pattern: `europe-west1-docker.pkg.dev/PROJECT_ID/credit-scoring-repo/IMAGE:TAG`
+Pattern: `europe-central2-docker.pkg.dev/PROJECT_ID/cs-sandbox-docker/IMAGE:TAG`
 
 ```bash
-gcloud auth configure-docker europe-west1-docker.pkg.dev
-docker tag my-app:latest europe-west1-docker.pkg.dev/PROJECT_ID/credit-scoring-repo/my-app:1.0.0
-docker push europe-west1-docker.pkg.dev/PROJECT_ID/credit-scoring-repo/my-app:1.0.0
+gcloud auth configure-docker europe-central2-docker.pkg.dev
+docker tag my-app:latest europe-central2-docker.pkg.dev/PROJECT_ID/cs-sandbox-docker/my-app:1.0.0
+docker push europe-central2-docker.pkg.dev/PROJECT_ID/cs-sandbox-docker/my-app:1.0.0
 ```
 
 ### Cloud SQL
 
-`db-f1-micro`, **public** IP in code — lab only. Use **`db_ip`** from `pulumi stack output`. Users/passwords/SSL: add via IaC or console (not in this `__main__.py`).
+Private IP only. Use `pulumi stack output cloud_sql_private_ip` and `cloud_sql_connection_name` (e.g. Cloud SQL Auth Proxy from a machine/Pod in the same VPC, or a connector from GKE / Cloud Run on the same network path). `db-f1-micro` is **lab** sizing, not production.
 
 ### GCS
 
-Bucket name **`credit-scoring-app-data`** (globally unique). `force_destroy: true` — ok for throwaway envs, not for regulated data.
+Bucket name is unique per run (random suffix on create). **No** `force_destroy` in the current `__main__.py` (destroy behavior follows Pulumi/defaults).
 
 ---
 
@@ -93,7 +93,9 @@ Bucket name **`credit-scoring-app-data`** (globally unique). `force_destroy: tru
 
 ---
 
-## 7. Camunda 8 (Helm)
+## 7. Camunda 8 (Helm) — example
+
+The sample node pool is small (**1 × e2-standard-4**). Size Elasticsearch and other components to fit available RAM. Point `worker/` `ZEEBE_ADDRESS` at your in-cluster gateway (see [`k8s/hbg/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/k8s/hbg)).
 
 ```bash
 kubectl create namespace camunda-8
@@ -101,13 +103,11 @@ helm repo add camunda https://helm.camunda.io
 helm repo update
 ```
 
-Size **Elasticsearch** and other components to fit **~64 GiB** cluster RAM (often **8–12+ GiB** for ES in small setups). Point `worker/` `ZEEBE_ADDRESS` at your in-cluster gateway (see [`k8s/hbg/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/k8s/hbg)).
-
 ---
 
-## 8. Vertex AI
+## 8. Vertex AI / GCP APIs from pods
 
-Nodes use `cloud-platform` scope — ADC for `google-cloud-aiplatform` in pods. For production, prefer **Workload Identity** (see main stack / [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md)). Enable `aiplatform.googleapis.com`.
+Node pools use **empty** `oauth_scopes`; do not rely on broad `cloud-platform` scope. Prefer **Workload Identity**–bound GSA for APIs such as Vertex (`google-cloud-aiplatform`) — see [infra-pulumi-iac](infra-pulumi-iac.md) and [matrix](gcp-saas-access-matrix-11x6.md). Enable `aiplatform.googleapis.com` if you use Vertex.
 
 ---
 
@@ -115,17 +115,18 @@ Nodes use `cloud-platform` scope — ADC for `google-cloud-aiplatform` in pods. 
 
 | | `gke-infra` | Main `infra/pulumi/` |
 |---|------------|------------------------|
-| Region | `europe-west1` | `europe-central2` (default) |
-| Artifact Registry | `credit-scoring-repo` | e.g. `hbg-gke-docker` |
-| Data | one GCS bucket; no BQ in this file | GCS + BQ `hbg_analytics`, etc. |
+| Default region | `europe-central2` (stack config) | `europe-central2` (default) |
+| Prefix / naming | `cs-sandbox-*` | e.g. `hbg-*` and stack roles |
+| Data | GCS + private SQL; no BQ in this file | GCS + BQ `hbg_analytics`, etc. (when enabled) |
 
-Use **separate GCP projects** or rename before running both.
+Use **separate GCP projects** or rename before running both, to avoid clashing **VPC, PSA, and SQL** resources.
 
 ---
 
 ## 10. Troubleshooting and security (short)
 
-- Quota: SSD, IPs, GKE CPU. APIs: wait after enable. Cloud SQL: slow to create.
-- Public SQL + `db-f1-micro` + `force_destroy` = **dev defaults** only. No SA JSON keys in Git; use WIF and [prompt](/prompt) §9 for hardening.
+- Quota: SSD, IPs, GKE CPU. Cloud SQL: slow to create. PSA: ensure peering is ready before the SQL instance.
+- **No** public SQL; access from the internet to the database requires a deliberate jump host / VPN / proxy path — by design.
+- No SA JSON keys in Git; use WIF and [prompt](/en/prompt) §9 for hardening.
 
 *Aligned with `infra/pulumi/gke-infra/__main__.py`; re-read the file if the code changes.*

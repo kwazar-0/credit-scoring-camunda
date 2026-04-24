@@ -1,0 +1,37 @@
+# Merge with: helm install|upgrade ... -f values-camunda-platform.user.yaml -f values-camunda-platform.gcp-pulumi.fragment.yaml
+# Replace __CLOUD_SQL_CONNECTION_NAME__ with `pulumi stack output` cloud_sql_connection_name (format PROJECT:REGION:INSTANCE).
+# Replace __CLOUDSQL_GCP_SA__ with `pulumi stack output` cloudsql_gcp_service_account (infra-runtime stack), e.g. hbg-camunda-csql@....iam.gserviceaccount.com
+#
+# K8s SA + WI: operate pods (and the sidecar) use the same service account. Bind that K8s principal in
+# credit-scoring:cloudSqlWorkloadIdentities = "<namespace>:<operate-ksa-name>" (see infra/pulumi/vertex_gcp.py).
+# JDBC to Postgres (e.g. camunda_dev) via localhost:5432 after proxy starts — Operate 8.6 in this profile still uses
+# Elasticsearch for primary state; the DB is for Identity/Modeler/forward paths or your apps.
+
+operate:
+  serviceAccount:
+    name: hbg-camunda-operate
+    annotations:
+      iam.gke.io/gcp-service-account: "__CLOUDSQL_GCP_SA__"
+  sidecars:
+    - name: cloud-sql-proxy
+      image: europe-docker.pkg.dev/cloud-sql-connectors/cloud-sql-proxy/cloud-sql-proxy:2.14.1
+      args:
+        - "--private-ip"
+        - "--port=5432"
+        - "__CLOUD_SQL_CONNECTION_NAME__"
+      securityContext:
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+      resources:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+
+zeebe:
+  persistence:
+    size: 20Gi
+
+elasticsearch:
+  master:
+    persistence:
+      size: 20Gi

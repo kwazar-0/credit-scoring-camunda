@@ -3,9 +3,17 @@ layout: home
 
 hero:
   name: Handlowy Bank Galicyjski (HBG)
-  text: Camunda 8 + AI credit scoring
-  tagline: Żywa dokumentacja tego repozytorium (VitePress). Domyślny region chmury — europe-central2.
+  text: Camunda 8 + pipeline AI
+  tagline: >-
+    Monorepo: FastAPI + LangGraph, PyZeebe, Streamlit, Pulumi (GCP, europe-central2), RAG, Vertex AI.
+    Poniżej skrót; pełna treść w Architekturze.
+  image:
+    src: /images/hbg-bf1.png
+    alt: Handlowy Bank Galicyjski
   actions:
+    - theme: brand
+      text: Architektura
+      link: /pl/architecture
     - theme: brand
       text: Mapa prac (infra)
       link: /pl/INFRA-IMPLEMENTATION
@@ -14,14 +22,37 @@ hero:
       link: /pl/toc
 
 features:
-  - title: Infrastruktura
-    details: Pulumi, GKE, OIDC, RAG, Vertex — zob. INFRA-IMPLEMENTATION i prompt.
-  - title: Źródła
-    details: Linki do kodu i infra prowadzą do repozytorium na GitHub.
-  - title: Archiwum
-    details: Zrzut doc/ z 2026-04-21 w doc/_archive/2026-04-21/
+  - icon: 🏦
+    title: Proces i orkiestracja
+    details: Zeebe, BPMN/DMN, workery w worker/ — deterministyczne kroki, nie „jeden chat”.
+  - icon: 🧠
+    title: Vertex AI i RAG
+    details: Embeddingi, wyszukiwanie, LLM w backend/; PII w kodzie. Zob. ml-data-rag, hbg-rag-dominance.
+  - icon: 🏛
+    title: Chmura i IaC
+    details: Pulumi, GKE, OIDC, split — INFRA-IMPLEMENTATION i infra-pulumi-iac (Źródło).
+  - icon: 🖥
+    title: API i UI
+    details: backend/, ui/ (Streamlit) — granice w .cursorrules.
+  - icon: 📋
+    title: Role i rekrutacja
+    details: U1–U6, RACI — hr-offers-hbg; macierz GCP — gcp-saas-access-matrix-11x6.
+  - icon: 🔗
+    title: Repozytorium
+    details: Źródła i CI na GitHub; witryna z docs-site/ (VitePress).
 ---
 
-**Nawigacja:** **[Spis treści (toc)](/pl/toc)** — pełna lista materiałów.
+## O projekcie
+
+**Szkoleniowy / demonstracyjny** przepływ kredytowy z **Camunda 8**, **Vertex AI** (RAG) i **GCP**. Domyślny region IaC: **europe-central2**. Warstwy, tabela, przepływ danych — **[Architektura](/pl/architecture)**.
+
+| Gdzie iść | Dokument |
+|-----------|----------|
+| Start | [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION) — fazy, Camunda+AI, linki |
+| Pulumi, GKE, OIDC | [infra-pulumi-iac](/pl/infra-pulumi-iac) |
+| ML, embeddingi, env | [ml-data-rag](/pl/ml-data-rag) |
+| Strategia HBG, role U* | [hbg-rag-dominance](/pl/hbg-rag-dominance) |
+| gcloud / kubectl | [cli-console](/pl/cli-console) |
+| Wszystkie strony | [toc](/pl/toc) |
 
 > Inne języki: [Русский](/) · [English](/en/)

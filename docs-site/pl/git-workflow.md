@@ -1,6 +1,6 @@
 # Git: gałęzie, release’y, środowiska
 
-Zgodne z `prompt.md` (§2), `infra/ROLES.md`, **[github-setup.md](github-setup.md)**, **[branch-notes.md](branch-notes.md)**. Domyślny remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Nazwa repozytorium, tagi, katalog klonu: **[naming.md](naming.md)**.
+Zgodne z [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (role), **[github-setup.md](github-setup.md)**, **[branch-notes.md](branch-notes.md)**. Domyślny remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Nazwa repozytorium, tagi, katalog klonu: **[naming.md](naming.md)**.
 
 ---
 
@@ -43,7 +43,7 @@ Odniesienia: **`v1.0.0`**, **`v1.1.0`**. Nadpisuj tagi na `origin` tylko świado
 | **staging / ref** | **`release/*`** lub commit + obraz `:rc` |
 | **prod** | **`main`** + tag **`v*`** + aprobata |
 
-CI: **`.github/workflows/ci.yml`** — push na **`develop`**, **`main`**, **`release/**`, itd. — zob. `infra/ARCHITECTURE.md`.
+CI: **`.github/workflows/ci.yml`** — push na **`develop`**, **`main`**, **`release/**`, itd. — zob. [infra-pulumi-iac.md](infra-pulumi-iac.md).
 
 ---
 

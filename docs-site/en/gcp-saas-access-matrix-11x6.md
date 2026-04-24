@@ -1,6 +1,6 @@
 # Polished matrix: 11 roles vs GCP services and 6 accounts
 
-Aligned with [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md), [`prompt.md`](prompt.md) §9.1–9.2 (including **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) and hardening §9.6. Default region: **`europe-central2`**.
+Aligned with [`prompt.md`](prompt.md) §9.1–9.2 (including **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) and hardening §9.6. Default region: **`europe-central2`**.
 
 ## 1. Can you have “11 roles” with “6 people”?
 
@@ -62,6 +62,5 @@ One row = one person. **•** = primary **logical** role; **○** = shared; **on
 
 ## 6. Related
 
-- [`../infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md)
 - [`github-codeowners-matrix.md`](github-codeowners-matrix.md)
-- [`../infra/ROLES.gke-rbac.example.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.gke-rbac.example.md)
+- K8s RBAC example in repo: `infra/ROLES.gke-rbac.local.md`

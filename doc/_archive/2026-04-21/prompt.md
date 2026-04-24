@@ -33,9 +33,9 @@
 |------|------------|
 | **`infra/pulumi/`** | **Основной IaC (Python).** GCS (embeddings + raw PDF), BigQuery `examplebank_analytics`, Artifact Registry; включение API: **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Конфиг: `pulumi config set gcp:project …`, `credit-scoring:region`, `credit-scoring:clusterName`. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
 | **`infra/pulumi/README.md`** | Запуск, экспорты (`vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset`, `artifact_registry_url`), отладка `pulumi preview`. |
-| **`infra/README.md`** | Обзор: Pulumi = основной путь; остальное — справочно. |
-| **`infra/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC; GitOps; канон IaC — **Pulumi**. |
-| **`infra/ROLES.md`** | 11 ролей, матрица GCP/Pulumi/K8s/Git и **пошаговая инструкция по созданию доступов** (группы IdP, IAM, GKE, GitHub). |
+| **`infra/README.md`** | Краткий индекс; архив: `infra/temp/README.md`. |
+| **`infra/temp/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC; GitOps; канон IaC — **Pulumi**. |
+| **`infra/temp/ROLES.md`** | 11 ролей, матрица GCP/Pulumi/K8s/Git и **пошаговая инструкция по созданию доступов** (группы IdP, IAM, GKE, GitHub). |
 | **[`doc/gcp-saas-access-matrix-11x6.md`](gcp-saas-access-matrix-11x6.md)** | **Чистовик:** 11 ролей × сервисы GCP + упаковка в **6 учёток**; связка с `prompt` §9 и GitHub Teams. |
 | **`infra/pulumi/gke-infra/`** | Опционально: GKE+SQL+GCS+AR. |
 
@@ -94,13 +94,13 @@
 
 ---
 
-*Документ обновлён для переноса контекста в новый диалог; детали IaC — в `infra/`, роли и выдача доступов — в `infra/ROLES.md`, RAG — в `doc/ml-data-rag.md`, шпаргалка CLI — в `doc/cli-console.md`, Git — в `doc/git-workflow.md`, имена репо/тегов — в `doc/naming.md`, GitHub governance — в `doc/github-setup.md`.*
+*Документ обновлён для переноса контекста в новый диалог; детали IaC — в `infra/`, роли и выдача доступов — в `infra/temp/ROLES.md`, RAG — в `doc/ml-data-rag.md`, шпаргалка CLI — в `doc/cli-console.md`, Git — в `doc/git-workflow.md`, имена репо/тегов — в `doc/naming.md`, GitHub governance — в `doc/github-setup.md`.*
 
 ---
 
 ## 9. Enterprise blueprint (расширенная цель)
 
-Ниже — **мастер-спецификация** для enterprise-контура (IAM, GitOps, сеть, GKE). Часть пунктов **ещё не реализована** в коде репозитория; сверяйте с §1–8 и с `infra/ROLES.md`. Типичные отличия от текущего кода:
+Ниже — **мастер-спецификация** для enterprise-контура (IAM, GitOps, сеть, GKE). Часть пунктов **ещё не реализована** в коде репозитория; сверяйте с §1–8 и с `infra/temp/ROLES.md`. Типичные отличия от текущего кода:
 
 - **Camunda:** в этом репо — **Camunda 8 / Zeebe** + воркеры **Python** (`worker/`), scoring — **FastAPI + LangGraph** (`backend/`). Стек **Spring Boot + Camunda** относится к **self-managed Camunda Platform** (Operate/Tasklist/Zeebe), если вы его разворачиваете отдельно, а не к прикладному коду scoring.
 - **IaC:** в репозитории Pulumi на **Python** (`infra/pulumi/`), не TypeScript. VPC / мульти-пул GKE — **отдельный слой**, не дублируйте имена ресурсов с текущим `__main__.py` без импорта.
@@ -160,7 +160,7 @@
 **Итог:** доступы **к облачным API и данным** — в **IaC + IAM**; доступы **внутри GKE** — в **RBAC-манифестах**; §9.2 остаётся **логической** матрицей, детализация по 11 ролям и 6 учёткам — в `ROLES.md` / `gcp-saas-access-matrix-11x6.md`.
 
 ### 9.3. Deployment Lifecycle (GitOps)
-Реализуй Pipeline в GitHub Actions со следующей логикой (аутентификацию в GCP по возможности через **OIDC / Workload Identity Federation**, а не долгоживущие JSON-ключи — см. `infra/ARCHITECTURE.md`):
+Реализуй Pipeline в GitHub Actions со следующей логикой (аутентификацию в GCP по возможности через **OIDC / Workload Identity Federation**, а не долгоживущие JSON-ключи — см. `infra/temp/ARCHITECTURE.md`):
 
 1.  **Branch `develop` → env `DEV`:**
     * Trigger: Push.

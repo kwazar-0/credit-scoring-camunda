@@ -1,6 +1,6 @@
 # Git: branches, releases, and environments
 
-Aligned with `prompt.md` (§2), `infra/ROLES.md`, **[github-setup.md](github-setup.md)**, and **[branch-notes.md](branch-notes.md)**. Default remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Repository name, tags, and clone path: **[naming.md](naming.md)**.
+Aligned with [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (roles), **[github-setup.md](github-setup.md)**, and **[branch-notes.md](branch-notes.md)**. Default remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Repository name, tags, and clone path: **[naming.md](naming.md)**.
 
 ---
 
@@ -43,7 +43,7 @@ Current examples: **`v1.0.0`** / **`v1.1.0`**. Rewrite tags on remote only when 
 | **staging / ref** | **`release/*`** or commit + image `:rc` |
 | **prod** | **`main`** + tag **`v*`** + approval |
 
-CI: **`.github/workflows/ci.yml`** — push on **`develop`**, **`main`**, **`release/**`, **`feature/**`, **`hotfix/**`, tags `v*`; PR to **`develop`**, **`main`**, **`release/**` OIDC/WIF — see `infra/ARCHITECTURE.md`.
+CI: **`.github/workflows/ci.yml`** — push on **`develop`**, **`main`**, **`release/**`, **`feature/**`, **`hotfix/**`, tags `v*`; PR to **`develop`**, **`main`**, **`release/**` OIDC/WIF — see [infra-pulumi-iac.md](infra-pulumi-iac.md).
 
 ---
 

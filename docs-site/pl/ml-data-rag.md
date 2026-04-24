@@ -45,7 +45,7 @@ PDF → GCS (raw) → chunk → embed (text-embedding-004) → JSONL / batch →
 
 ## 4. Role (rozszerzenie)
 
-Zob. **`infra/ROLES.md`**: **ML Engineer**, **Data Engineer** — dostęp do Vertex, BigQuery, bucketów; bez `container.admin`, jeśli GKE nie jest wymagany.
+Zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt](prompt.md) §9: **ML Engineer**, **Data Engineer** — dostęp do Vertex, BigQuery, bucketów; bez `container.admin`, jeśli GKE nie jest wymagany.
 
 ---
 

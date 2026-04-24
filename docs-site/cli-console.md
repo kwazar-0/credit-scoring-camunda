@@ -9,11 +9,11 @@
 | **Имя репозитория Docker (Pulumi `credit-scoring:clusterName`)** | `hbg-gke` → образы: `…/hbg-gke-docker/…` |
 | **Kubernetes namespace** | `hbg` |
 | **Job type Zeebe** | `ai-loan-analysis` |
-| **GKE в проекте (существующий кластер)** | `camunda-stable`, зона `europe-west3-c` |
+| **GKE в проекте (существующий кластер)** | `camunda-stable`, регион `europe-central2` |
 
 Путь к клону: **корень репозитория** (ниже — `$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")` или ваша папка, напр. `~/src/hbg-worktree`).
 
-Дополнительно: `prompt.md`, `git-workflow.md`, `naming.md`, `ml-data-rag.md`, `infra/pulumi/README.md`.
+Дополнительно: [prompt](prompt.md), [git-workflow](git-workflow.md), [naming](naming.md), [ml-data-rag](ml-data-rag.md), [infra-pulumi-iac](infra-pulumi-iac.md).
 
 ---
 
@@ -52,7 +52,7 @@ python3 -m venv venv && . venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Локальный backend state Pulumi (если `pulumi: command not found` — CLI не в `PATH`, см. `infra/pulumi/README.md`):
+Локальный backend state Pulumi (если `pulumi: command not found` — CLI не в `PATH`, см. [infra-pulumi-iac](infra-pulumi-iac.md)):
 
 ```bash
 export PATH="${HOME}/.pulumi/bin:${PATH}"
@@ -97,13 +97,13 @@ Kubeconfig для **текущего** кластера Camunda в этом пр
 
 ```bash
 gcloud container clusters get-credentials camunda-stable \
-  --zone=europe-west3-c \
+  --region=europe-central2 \
   --project=my-camunda8-project
 kubectl config current-context
 kubectl get ns
 ```
 
-Манифесты примера банка (`k8s/hbg/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. Отдельный кластер в **`europe-central2`** под этот стек нужно создать и настроить (IaC / консоль); кластер **`camunda-stable`** находится в **`europe-west3-c`**.
+Манифесты примера банка (`k8s/hbg/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. При необходимости разверните отдельный кластер в **`europe-central2`** (IaC / консоль). Для zonal-кластера укажите `--zone` (например `europe-central2-a`) вместо `--region`.
 
 ---
 

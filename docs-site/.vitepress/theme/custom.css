@@ -1,10 +1,218 @@
 /**
+ * HBG (Handlowy Bank Galicyjski) — firm colors: navy + gold (fictional brand for this repo).
  * Widen layout: default VitePress doc column is ~688px with aside; nav caps at 1440px.
- * Target: use ~full viewport for main content and tables.
  */
 :root {
   /* Outer shell (nav, sidebar padding math) — full browser width */
   --vp-layout-max-width: 100vw;
+
+  /* Brand palette */
+  --hbg-navy-deep: #0a1a2e;
+  --hbg-navy: #153a5c;
+  --hbg-navy-soft: #1e4a6e;
+  --hbg-gold: #c5a14a;
+  --hbg-gold-bright: #e4d4a0;
+  --hbg-paper: #f7f4ec;
+  --hbg-paper-2: #ebe6dc;
+
+  /* Map to VitePress accent (links, brand button) */
+  --vp-c-brand-1: #c5a14a;
+  --vp-c-brand-2: #a6852e;
+  --vp-c-brand-3: #153a5c;
+  --vp-c-brand-soft: rgba(197, 161, 74, 0.16);
+}
+
+.dark {
+  --hbg-paper: #121a24;
+  --hbg-paper-2: #0e1520;
+  --vp-c-brand-1: #d4b96a;
+  --vp-c-brand-2: #c5a14a;
+  --vp-c-brand-3: #7a9ec4;
+  --vp-c-brand-soft: rgba(212, 185, 106, 0.12);
+}
+
+/* Top bar: subtle bank strip */
+.VPNav {
+  background: linear-gradient(
+    180deg,
+    var(--hbg-navy-deep) 0%,
+    color-mix(in srgb, var(--hbg-navy-deep) 92%, var(--hbg-navy)) 100%
+  ) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--hbg-gold) 28%, transparent);
+}
+
+.VPNavBarTitle .title,
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .button {
+  color: var(--hbg-paper) !important;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--hbg-gold-bright) !important;
+}
+
+/* GitHub icon + search: keep readable on navy */
+.VPNavBarExtra {
+  --vp-c-text-1: var(--hbg-paper);
+}
+
+/* Nav logo (single img via themeConfig.logo) */
+.VPNavBarTitle .logo {
+  min-height: 2.25rem;
+}
+.VPNavBarTitle .logo img {
+  height: 2.25rem;
+  width: auto;
+  max-width: 8rem;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+/* --- Home (layout: home) --- */
+.VPHome .VPHero {
+  margin: 0 0 2rem;
+  padding: 2.5rem 1.5rem 3rem;
+  background: linear-gradient(
+    165deg,
+    var(--hbg-paper) 0%,
+    var(--hbg-paper-2) 42%,
+    color-mix(in srgb, var(--hbg-navy) 6%, var(--hbg-paper-2)) 100%
+  );
+  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(10, 26, 46, 0.06);
+  border: 1px solid color-mix(in srgb, var(--hbg-navy) 0.12, transparent);
+  border-top: none;
+}
+
+@media (min-width: 640px) {
+  .VPHome .VPHero {
+    padding: 3rem 2rem 3.5rem;
+  }
+}
+
+.VPHome .VPHero .image {
+  margin-bottom: 1.25rem;
+}
+
+/* Hero (frontmatter hero.image) */
+.VPHome .VPHero .image img {
+  max-height: 6.5rem;
+  max-width: min(24rem, 100%);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  filter: drop-shadow(0 4px 12px rgba(10, 26, 46, 0.2));
+}
+
+.VPHome .VPHero .name,
+.VPHome .VPHero .clip {
+  color: var(--hbg-navy-deep) !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.VPHome .VPHero .text {
+  color: var(--hbg-navy) !important;
+  font-weight: 600;
+}
+
+.VPHome .VPHero .tagline {
+  color: color-mix(in srgb, var(--hbg-navy-deep) 70%, #4a5a6a) !important;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+
+/* Primary CTA: gold on navy for distinction from default green */
+.VPHome .VPHero .actions .VPButton.brand {
+  background: linear-gradient(165deg, var(--hbg-navy-soft) 0%, var(--hbg-navy-deep) 100%) !important;
+  border: 1px solid color-mix(in srgb, var(--hbg-gold) 55%, var(--hbg-navy-deep)) !important;
+  color: var(--hbg-gold-bright) !important;
+  font-weight: 600;
+}
+
+.VPHome .VPHero .actions .VPButton.brand:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hbg-gold) 40%, transparent);
+}
+
+.VPHome .VPHero .actions .VPButton.alt {
+  border-color: color-mix(in srgb, var(--hbg-navy) 0.3, var(--hbg-paper-2)) !important;
+  color: var(--hbg-navy) !important;
+  background: color-mix(in srgb, var(--hbg-paper) 85%, white) !important;
+}
+
+/* Feature cards on home */
+.VPHome .VPFeatures {
+  margin-top: 0.5rem;
+}
+
+.VPHome .VPFeature {
+  background: color-mix(in srgb, var(--hbg-paper) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--hbg-navy) 0.1, var(--hbg-paper-2)) !important;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 12px rgba(10, 26, 46, 0.04);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.VPHome .VPFeature:hover {
+  border-color: color-mix(in srgb, var(--hbg-gold) 45%, var(--hbg-paper-2)) !important;
+  box-shadow: 0 6px 20px rgba(10, 26, 46, 0.08);
+}
+
+.VPHome .VPFeature .title {
+  color: var(--hbg-navy-deep) !important;
+  font-weight: 700;
+}
+
+.VPHome .VPFeature .details {
+  color: color-mix(in srgb, var(--hbg-navy-deep) 75%, #6a7a8a) !important;
+}
+
+.dark .VPHome .VPHero {
+  background: linear-gradient(
+    165deg,
+    var(--hbg-paper) 0%,
+    #151d28 50%,
+    #0c1218 100%
+  );
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
+  border-color: color-mix(in srgb, var(--hbg-gold) 0.12, transparent);
+}
+
+.dark .VPHome .VPHero .name,
+.dark .VPHome .VPHero .clip {
+  color: var(--hbg-bright, #e8ebf0) !important;
+}
+
+.dark .VPHome .VPHero .text {
+  color: #a8c4e0 !important;
+}
+
+.dark .VPHome .VPHero .tagline {
+  color: #8a9bb0 !important;
+}
+
+.dark .VPHome .VPFeature {
+  background: #151c26;
+  border-color: #2a3442 !important;
+}
+
+/* Feature emojis: soft gold tile */
+.VPHome .VPFeature .icon {
+  background: color-mix(in srgb, var(--hbg-gold) 18%, var(--hbg-paper-2));
+  border-radius: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  line-height: 3rem;
+  text-align: center;
+}
+
+.dark .VPHome .VPFeature .icon {
+  background: color-mix(in srgb, var(--hbg-gold) 12%, #1a222d);
 }
 
 /* Main article column: remove 688px cap when right outline (aside) is shown */

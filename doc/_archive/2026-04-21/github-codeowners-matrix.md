@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 ролей и 6 учётных записей GitHub
 
-Документ связывает **логические роли** из [`infra/ROLES.md`](../infra/ROLES.md) (полный список из 11 пунктов) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](../.github/CODEOWNERS).
+Документ связывает **логические роли** из [`doc/_archive/2026-04-20/ROLES.md`](../doc/_archive/2026-04-20/ROLES.md) (полный список из 11 пунктов) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](../.github/CODEOWNERS).
 
 Форк для примера: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Логины ниже должны совпадать с реальными `@username` на GitHub; при смене ника обновите и этот файл, и `CODEOWNERS`.
 

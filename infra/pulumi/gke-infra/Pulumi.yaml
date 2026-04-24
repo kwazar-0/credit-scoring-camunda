@@ -1,11 +1,7 @@
-name: my-gcp-infra
-description: My first Pulumi project
+name: credit-scoring-gke-infra
+description: GKE + private Cloud SQL + GCS + GAR (europe-central2, no public SQL IP)
 runtime:
   name: python
   options:
     toolchain: pip
     virtualenv: venv
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: gcp-python

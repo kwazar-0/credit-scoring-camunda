@@ -1,7 +1,7 @@
 # CODEOWNERS — https://github.com/kwazar-0/credit-scoring-camunda
 # Upstream: https://github.com/OlehKondratow/credit-scoring-camunda
 #
-# 11 логических ролей (infra/ROLES.md) маппятся на 6 GitHub-учёток; см. doc/github-codeowners-matrix.md
+# 11 логических ролей (infra/temp/ROLES.md) маппятся на 6 GitHub-учёток; см. doc/github-codeowners-matrix.md
 # Порядок строк важен: для пути действует последнее подходящее правило.
 #
 # U1 @kwazar-0          — devops/sre, владелец форка, release/infra

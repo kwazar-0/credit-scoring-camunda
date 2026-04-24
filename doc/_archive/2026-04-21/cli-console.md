@@ -9,7 +9,7 @@
 | **Имя репозитория Docker (Pulumi `credit-scoring:clusterName`)** | `example-bank-gke` → образы: `…/example-bank-gke-docker/…` |
 | **Kubernetes namespace** | `example-bank` |
 | **Job type Zeebe** | `ai-loan-analysis` |
-| **GKE в проекте (существующий кластер)** | `camunda-stable`, зона `europe-west3-c` |
+| **GKE в проекте (существующий кластер)** | `camunda-stable`, регион `europe-central2` |
 
 Путь к клону: **корень репозитория** (ниже — `$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")` или ваша папка, напр. `~/src/example-bank`).
 
@@ -97,13 +97,13 @@ Kubeconfig для **текущего** кластера Camunda в этом пр
 
 ```bash
 gcloud container clusters get-credentials camunda-stable \
-  --zone=europe-west3-c \
+  --region=europe-central2 \
   --project=my-camunda8-project
 kubectl config current-context
 kubectl get ns
 ```
 
-Манифесты примера банка (`k8s/example-bank/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. Отдельный кластер в **`europe-central2`** под этот стек нужно создать и настроить (IaC / консоль); кластер **`camunda-stable`** находится в **`europe-west3-c`**.
+Манифесты примера банка (`k8s/example-bank/`) рассчитаны на образы в **`europe-central2-docker.pkg.dev`**. При необходимости разверните отдельный кластер в **`europe-central2`** (IaC / консоль). Для zonal-кластера укажите `--zone` (например `europe-central2-a`) вместо `--region`.
 
 ---
 

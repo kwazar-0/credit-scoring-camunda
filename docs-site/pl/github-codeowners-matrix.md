@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 ról i 6 kont GitHub
 
-Dokument mapuje **role logiczne** z [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md) (11 punktów) na **sześć użytkowników** w recenzjach [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
+Dokument mapuje **role logiczne** (zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt.md](prompt.md) §9) na **sześć użytkowników** w recenzjach [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
 
 Fork przykładowy: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Loginy = rzeczywiste `@username`; przy zmianie nika zaktualizuj ten plik i `CODEOWNERS`.
 

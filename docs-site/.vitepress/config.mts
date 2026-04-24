@@ -2,12 +2,24 @@ import { defineConfig } from "vitepress";
 
 const githubRepo = "https://github.com/OlehKondratow/credit-scoring-camunda";
 
+/** For GitHub project Pages, set in CI, e.g. VITEPRESS_BASE=/credit-scoring-camunda/ (must end with /). */
+function vitepressBase(): string {
+  const v = (process.env.VITEPRESS_BASE || "").trim();
+  if (!v || v === "/") {
+    return "/";
+  }
+  const withSlashes = v.startsWith("/") ? v : `/${v}`;
+  return withSlashes.endsWith("/") ? withSlashes : `${withSlashes}/`;
+}
+
 const sidebarRu = [
   {
     text: "Старт",
     items: [
       { text: "Оглавление (все страницы)", link: "/toc" },
+      { text: "Архитектура (обзор)", link: "/architecture" },
       { text: "Implementation track", link: "/INFRA-IMPLEMENTATION" },
+      { text: "Pulumi: основной IaC", link: "/infra-pulumi-iac" },
       { text: "CLI / console", link: "/cli-console" },
       { text: "Pulumi: gke-infra (песочница)", link: "/infra-pulumi-gke-sandbox" },
     ],
@@ -17,6 +29,8 @@ const sidebarRu = [
     items: [
       { text: "prompt (handoff + §9)", link: "/prompt" },
       { text: "ML / Data / RAG", link: "/ml-data-rag" },
+      { text: "HBG: стратегия RAG-DOMINANCE", link: "/hbg-rag-dominance" },
+      { text: "HBG: роли и вакансии (HR)", link: "/hr-offers-hbg" },
     ],
   },
   {
@@ -44,8 +58,11 @@ const sidebarEn = [
     text: "Start",
     items: [
       { text: "Table of contents", link: "/en/toc" },
+      { text: "Architecture (overview)", link: "/en/architecture" },
       { text: "Implementation track", link: "/en/INFRA-IMPLEMENTATION" },
+      { text: "Pulumi: main IaC", link: "/en/infra-pulumi-iac" },
       { text: "CLI / console", link: "/en/cli-console" },
+      { text: "Pulumi: gke-infra sandbox", link: "/en/infra-pulumi-gke-sandbox" },
     ],
   },
   {
@@ -53,6 +70,8 @@ const sidebarEn = [
     items: [
       { text: "prompt (handoff + §9)", link: "/en/prompt" },
       { text: "ML / Data / RAG", link: "/en/ml-data-rag" },
+      { text: "HBG: RAG-DOMINANCE strategy", link: "/en/hbg-rag-dominance" },
+      { text: "HBG: roles & hiring (HR)", link: "/en/hr-offers-hbg" },
     ],
   },
   {
@@ -80,7 +99,9 @@ const sidebarPl = [
     text: "Start",
     items: [
       { text: "Spis treści", link: "/pl/toc" },
+      { text: "Architektura (przegląd)", link: "/pl/architecture" },
       { text: "Implementation track", link: "/pl/INFRA-IMPLEMENTATION" },
+      { text: "Pulumi: główne IaC", link: "/pl/infra-pulumi-iac" },
       { text: "CLI / console", link: "/pl/cli-console" },
       { text: "Pulumi: piaskownica gke-infra", link: "/pl/infra-pulumi-gke-sandbox" },
     ],
@@ -90,6 +111,8 @@ const sidebarPl = [
     items: [
       { text: "prompt (handoff + §9)", link: "/pl/prompt" },
       { text: "ML / Data / RAG", link: "/pl/ml-data-rag" },
+      { text: "HBG: strategia RAG-DOMINANCE", link: "/pl/hbg-rag-dominance" },
+      { text: "HBG: role i rekrutacja (HR)", link: "/pl/hr-offers-hbg" },
     ],
   },
   {
@@ -113,6 +136,7 @@ const sidebarPl = [
 ];
 
 export default defineConfig({
+  base: vitepressBase(),
   cleanUrls: true,
   locales: {
     root: {
@@ -122,8 +146,10 @@ export default defineConfig({
       description:
         "Handlowy Bank Galicyjski (HBG) — Camunda 8 + AI credit scoring — документация (вымысел)",
       themeConfig: {
+        logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Главная", link: "/" },
+          { text: "Архитектура", link: "/architecture" },
           { text: "Infra track", link: "/INFRA-IMPLEMENTATION" },
           { text: "Оглавление", link: "/toc" },
         ],
@@ -143,8 +169,10 @@ export default defineConfig({
       title: "HBG",
       description: "Camunda 8 + AI credit scoring — documentation",
       themeConfig: {
+        siteTitle: false,
         nav: [
           { text: "Home", link: "/en/" },
+          { text: "Architecture", link: "/en/architecture" },
           { text: "Infra track", link: "/en/INFRA-IMPLEMENTATION" },
           { text: "Contents", link: "/en/toc" },
         ],
@@ -164,8 +192,10 @@ export default defineConfig({
       description:
         "Handlowy Bank Galicyjski (HBG) — Camunda 8 + AI (przykład fikcyjny) — dokumentacja",
       themeConfig: {
+        logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Strona główna", link: "/pl/" },
+          { text: "Architektura", link: "/pl/architecture" },
           { text: "Infra track", link: "/pl/INFRA-IMPLEMENTATION" },
           { text: "Spis treści", link: "/pl/toc" },
         ],

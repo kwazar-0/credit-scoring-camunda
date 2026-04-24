@@ -10,8 +10,8 @@
 |----------|------------|
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Фазы, порядок работ, ссылки — **точка входа** |
 | [prompt.md](prompt.md) §1–8 | Handoff, продукт, план, пути в репо |
-| [../infra/ARCHITECTURE.md](../infra/ARCHITECTURE.md) | Проекты, namespaces, OIDC, state |
-| [../infra/pulumi/README.md](../infra/pulumi/README.md) | Pulumi: запуск, экспорты |
+| [../2026-04-20/ARCHITECTURE.md](../2026-04-20/ARCHITECTURE.md) | Проекты, namespaces, OIDC, state |
+| [../../infra/README.md](../../infra/README.md) | Pulumi: каталог, ссылки |
 | [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
 | [ml-data-rag.md](ml-data-rag.md) | Vertex, эмбеддинги, env backend |
 | [../scripts/gcp-enable-apis-iam.sh](../scripts/gcp-enable-apis-iam.sh) | Включение GCP API (CLI) |
@@ -29,7 +29,7 @@
 
 | Документ | Назначение |
 |----------|------------|
-| [../infra/ROLES.md](../infra/ROLES.md) | 11 ролей, GCP/Pulumi/K8s/Git, пошаговые этапы |
+| [../2026-04-20/ROLES.md](../2026-04-20/ROLES.md) | 11 ролей, GCP/Pulumi/K8s/Git, пошаговые этапы |
 | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 ролей × сервисы GCP, 6 учёток |
 | [github-codeowners-matrix.md](github-codeowners-matrix.md) | Роли ↔ GitHub, CODEOWNERS |
 | [accounts.md](accounts.md) | Канонический remote; local PII в `accounts.local.md` (gitignore) |
@@ -43,4 +43,4 @@
 
 ---
 
-**Корневой [README.md](../README.md)** даёт краткий обзор репозитория и ссылку сюда.
+**Корневой [README.md](../../../README.md)** даёт краткий обзор репозитория и ссылку сюда.

@@ -1,3 +1,11 @@
+# Camunda Platform — user overrides (committed).
+# Reference install: chart camunda/camunda-platform 11.12.2, app images 8.6.1, namespace camunda.
+# Equivalent one-liner (all flags collapsed into this file):
+#   helm install camunda-platform camunda/camunda-platform --namespace camunda --create-namespace \
+#     --version 11.12.2 -f values-camunda-platform.user.yaml
+#
+# Identity/Keycloak off — dev/sandbox profile; not for production without auth.
+
 connectors:
   enabled: false
 elasticsearch:

@@ -7,7 +7,7 @@
 
 ## 🏗 Архитектура системы
 
-Инфраструктура развернута в регионе `europe-west1` (Бельгия) и включает следующие компоненты:
+Инфраструктура развернута в регионе `europe-central2` (Польша) и включает следующие компоненты:
 
 | Компонент | Технология | Характеристики | Назначение |
 | :--- | :--- | :--- | :--- |
@@ -36,18 +36,18 @@
 ### 1. Подключение к кластеру
 Чтобы использовать `kubectl`, необходимо получить учетные данные:
 ```bash
-gcloud container clusters get-credentials credit-scoring-cluster --zone europe-west1-b
+gcloud container clusters get-credentials credit-scoring-cluster --zone europe-central2-a
 ```
 
 ### 2. Работа с Artifact Registry
 Чтобы загрузить свой образ в облачный реестр:
 ```bash
 # Авторизация Docker
-gcloud auth configure-docker europe-west1-docker.pkg.dev
+gcloud auth configure-docker europe-central2-docker.pkg.dev
 
 # Тегирование и пуш
-docker tag my-app:latest europe-west1-docker.pkg.dev/[PROJECT_ID]/credit-scoring-repo/my-app:1.0
-docker push europe-west1-docker.pkg.dev/[PROJECT_ID]/credit-scoring-repo/my-app:1.0
+docker tag my-app:latest europe-central2-docker.pkg.dev/[PROJECT_ID]/credit-scoring-repo/my-app:1.0
+docker push europe-central2-docker.pkg.dev/[PROJECT_ID]/credit-scoring-repo/my-app:1.0
 ```
 
 ### 3. Обновление инфраструктуры
@@ -82,7 +82,8 @@ pulumi up -y
     ```bash
     pulumi destroy -y
     ```
-    *После удаления ресурсов рекомендуется проверить вкладку "Disks" в Compute Engine на наличие "осиротевших" дисков.*
+    *Если `pulumi destroy` падает на **Cloud SQL** с `deletion_protection is set to true`:* в `__main__.py` у инстанса должно быть `deletion_protection=False` (см. текущий файл), затем `pulumi up` — после этого снова `pulumi destroy`. Либо вручную: `gcloud sql instances patch INSTANCE --no-deletion-protection` (имя в консоли GCP / `pulumi stack`).*
+    *После удаления рекомендуется проверить "Disks" в Compute Engine на «осиротевшие» диски.*
 
 ---
 

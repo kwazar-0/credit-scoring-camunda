@@ -10,12 +10,12 @@
 
 | # | Фаза | Результат «готово» | Где смотреть |
 |---|------|---------------------|--------------|
-| **1** | **Облако + IaC (dev)** | API включены, Pulumi `pulumi up` на **dev**, есть GCS, BQ dataset, Artifact Registry, экспорты стека | [infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md), [cli-console.md](cli-console.md), [scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) |
+| **1** | **Облако + IaC (dev)** | API включены, Pulumi `pulumi up` на **dev**, есть GCS, BQ dataset, Artifact Registry, экспорты стека | [infra-pulumi-iac.md](infra-pulumi-iac.md), [cli-console.md](cli-console.md), [scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) |
 | **2** | **CI → GCP (OIDC)** | GitHub Actions может аутентифицироваться в GCP без JSON-ключей (WIF при необходимости) | `infra/pulumi/workload_identity_github.py`, [.github/workflows/pulumi-preview.yml](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/workflows/pulumi-preview.yml) |
-| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [infra/ARCHITECTURE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ARCHITECTURE.md), `k8s/hbg/` |
+| **3** | **GKE + образы** | Кластер (Standard), workload в namespace, образы из Artifact Registry, Workload Identity для подов | [infra-pulumi-iac.md](infra-pulumi-iac.md) (`stackRole: infra-runtime` при split), `k8s/hbg/` |
 | **4** | **Данные RAG** | PDF → GCS → ingest → эмбеддинги → Vertex Vector Search; backend без мока векторной БД | [ml-data-rag.md](ml-data-rag.md), `data/` |
 | **5** | **Camunda в контуре** | BPMN/DMN задеплоены, секреты Zeebe/Tasklist из Secret Manager, worker `ai-loan-analysis` стабильно зовёт backend | `bpmn/`, `worker/`, процессы |
-| **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [infra/ROLES.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md) |
+| **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) |
 
 **MVP по продукту (из [prompt.md](prompt.md) §5):** фазы **1 → 4** (ingestion, индекс, выключить mock) → затем **5** и тесты worker ↔ backend.
 
@@ -24,8 +24,8 @@
 ## Минимальный набор чтения (1–2 часа, потом — код)
 
 1. **[prompt.md](prompt.md) — §1–5, §7–8** — продукт, структура репо, **план этапов**, E2E.  
-2. **[infra/ARCHITECTURE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ARCHITECTURE.md)** — изоляция, OIDC, state.  
-3. **[infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md) + `__main__.py`** — что уже создаётся в облаке.  
+2. **[infra-pulumi-iac.md](infra-pulumi-iac.md)** — Pulumi, `stackRole`, OIDC, split стеков.  
+3. **`infra/pulumi/__main__.py`** (репо) — что выбирает стек.  
 4. **[cli-console.md](cli-console.md)** — Pulumi, `gcloud`, включение API.
 
 **Отложить до отдельной задачи** (чтобы не распыляться): детальная матрица 11 ролей × 6 учёток ([gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)), CODEOWNERS, [prompt.md](prompt.md) **§9.6** hardening — это про зрелый enterprise-контур, не блокирует **фазу 1–2**.
@@ -42,9 +42,9 @@
 
 **Документация в этом сайте (подробно, RU/EN/PL):** [infra-pulumi-gke-sandbox](infra-pulumi-gke-sandbox.md) / [EN](en/infra-pulumi-gke-sandbox.md) / [PL](pl/infra-pulumi-gke-sandbox.md).
 
-В репозитории — **второй** Pulumi-проект [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) (GKE, Cloud SQL, GCS, Artifact Registry в одном стеке). Копия ранбука в `infra`: [manual.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/manual.md).
+В репозитории — **второй** Pulumi-проект [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) (GKE, приватный Cloud SQL без публичного IP, GCS, Artifact Registry в одном стеке). Ранбук: [README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
 
-Регион в стеке — **`europe-west1`**, имена `credit-scoring-*` **не** совпадают с **`infra/pulumi/`** (`europe-central2`, `hbg-*`). **Не** смешивайте оба `pulumi up` в одном project без плана. См. [infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md).
+По умолчанию регион — **`europe-central2`**, префикс имён **`cs-sandbox-*`**, не **`infra/pulumi/`** (`hbg-*` и `stackRole`). **Не** смешивайте оба `pulumi up` в одном project без плана (пересечение VPC/PSA/SQL). См. [infra-pulumi-iac](infra-pulumi-iac.md) и [gke-infra (сайт)](infra-pulumi-gke-sandbox.md).
 
 ---
 

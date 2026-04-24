@@ -1,10 +1,10 @@
 # Pulumi: stos `gke-infra` (GKE, Cloud SQL, GCS, Artifact Registry)
 
-**Cel:** katalog [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) to **osobny** projekt Pulumi (własny `Pulumi.yaml`) — nie mylić z głównym [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi). Program [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) tworzy **Artifact Registry**, bucket **GCS**, **Cloud SQL (PostgreSQL 15)** i klaster **GKE** w **europe-west1** / **europe-west1-b** (piaskownica „wszystko w jednym”).
+**Cel:** katalog [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) to **osobny** projekt Pulumi (własny `Pulumi.yaml`) — nie mylić z głównym [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi). Program [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) tworzy **VPC + PSA**, **Artifact Registry**, bucket **GCS** (wersjonowanie), **prywatny** **Cloud SQL (PostgreSQL 15)** (bez publicznego IPv4) oraz **regionalny** klaster **GKE** w **europe-central2** (domyślnie; `gcp:region`).
 
-**Kanon** produkcyjnego IaC w tym repozytorium to **`infra/pulumi/`** (domyślnie **europe-central2**, prefiksy `hbg-*`). **Nie** uruchamiaj obu stosów w jednym projekcie GCP bez planu nazw i state.
+**Kanon** produkcyjnego IaC w tym repozytorium to **`infra/pulumi/`** (domyślnie **europe-central2**, prefiksy `hbg-*`). **Nie** uruchamiaj obu stosów w jednym projekcie GCP bez planu nazw, VPC i state.
 
-**Pełna specyfikacja techniczna (EN):** [infra-pulumi-gke-sandbox →](/en/infra-pulumi-gke-sandbox) · **wersja RU:** [infra-pulumi-gke-sandbox (RU) →](/infra-pulumi-gke-sandbox) · pliki w repo: [`manual.md` / `manual.en.md`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra).
+**Specyfikacja (EN, pełna):** [infra-pulumi-gke-sandbox →](/en/infra-pulumi-gke-sandbox) · **RU:** [→](/infra-pulumi-gke-sandbox) · w repo: [`README.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
 
 ---
 
@@ -12,12 +12,13 @@
 
 | Zasób | GCP | W kodzie |
 |-------|-----|----------|
-| Artifact Registry | Docker | `credit-scoring-repo`, `europe-west1` |
-| GCS | Bucket | `credit-scoring-app-data`, `force_destroy: true` |
-| Cloud SQL | PostgreSQL 15 | `db-f1-micro`, publiczny IPv4 (tylko lab) |
-| GKE | Klaster + pula | `credit-scoring-cluster`, 4×`e2-standard-4` w `europe-west1-b` (łącznie 16 vCPU, 64 GiB RAM) |
+| VPC + PSA | Peering, prywatny IP dla SQL | `10.40.0.0/20`, secondary pods/services |
+| Artifact Registry | Docker | `cs-sandbox-docker`, `europe-central2` |
+| GCS | Bucket | nazwa z sufiksem, versioning |
+| Cloud SQL | PostgreSQL 15 | tylko prywatny IP, `db-f1-micro` (lab) |
+| GKE | Klaster + pula | `cs-sandbox-cluster`, 1×`e2-standard-4`, `oauth_scopes=[]`, Workload Identity |
 
-**Eksporty Pulumi:** `connect_cmd`, `db_ip`, `bucket_name`.
+**Eksporty Pulumi:** `gcp_project`, `gcp_region`, `connect_cmd`, `bucket_url`, `artifact_registry_url`, `cloud_sql_private_ip`, `cloud_sql_connection_name`.
 
 ## Pierwsze kroki (skrót)
 
@@ -26,8 +27,10 @@ cd infra/pulumi/gke-infra
 python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt
 pulumi stack init dev
 pulumi config set gcp:project YOUR_GCP_PROJECT_ID
-pulumi config set gcp:zone europe-west1-b
+pulumi config set gcp:region europe-central2
 pulumi up
 ```
 
-`kubectl`: `gcloud container clusters get-credentials credit-scoring-cluster --zone europe-west1-b` — szczegóły i Camunda/Helm/Vertex: strona [EN →](/en/infra-pulumi-gke-sandbox). API: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh), mapa: [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION), role: [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md).
+`kubectl`: `gcloud container clusters get-credentials cs-sandbox-cluster --region europe-central2` — szczegóły: [EN →](/en/infra-pulumi-gke-sandbox). API: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh), mapa: [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION), role: [gcp-saas-access-matrix-11x6.md](/pl/gcp-saas-access-matrix-11x6) i [prompt](/pl/prompt) §9.
+
+Główne różnice wobec głównego `infra/pulumi/`: ten plik to **osobna** piaskownica z prefiksem `cs-sandbox-*` — nadal unikaj dwóch `pulumi up` w jednym projekcie bez planu (kolizje **VPC, PSA, SQL**).

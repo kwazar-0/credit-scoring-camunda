@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 ролей и 6 учётных записей GitHub
 
-Документ связывает **логические роли** из [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md) (полный список из 11 пунктов) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
+Документ связывает **логические роли** (см. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [prompt.md](prompt.md) §9) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
 
 Форк для примера: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Логины ниже должны совпадать с реальными `@username` на GitHub; при смене ника обновите и этот файл, и `CODEOWNERS`.
 

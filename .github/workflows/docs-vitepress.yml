@@ -1,25 +1,27 @@
-# Build VitePress documentation (optional deploy: add peaceiris/actions-gh-pages or GitHub Pages action).
-name: Docs (VitePress)
+# VitePress only: install dependencies and build the static site (separate from backend/worker CI).
+name: VitePress (install + build)
 
 on:
+  workflow_dispatch:
   push:
     branches: [develop, main]
     paths:
       - "docs-site/**"
       - "package.json"
       - "package-lock.json"
-      - ".github/workflows/docs.yml"
+      - ".github/workflows/docs-vitepress.yml"
   pull_request:
     paths:
       - "docs-site/**"
       - "package.json"
       - "package-lock.json"
+      - ".github/workflows/docs-vitepress.yml"
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  vitepress:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,5 +29,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - run: npm ci
-      - run: npm run docs:build
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run docs:build

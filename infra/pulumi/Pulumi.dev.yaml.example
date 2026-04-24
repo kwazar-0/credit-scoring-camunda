@@ -1,5 +1,17 @@
-# Copy to Pulumi.dev.yaml (or stack name you use) and set project.
+# Copy to Pulumi.dev.yaml (or your stack) and set project.
+# stackRole: legacy | infra-core | infra-data | infra-runtime
 config:
   gcp:project: my-gcp-project
   credit-scoring:region: europe-central2
+  credit-scoring:stackRole: legacy
   credit-scoring:clusterName: hbg-gke
+  # For infra-data with private Cloud SQL (after infra-core is up):
+  # credit-scoring:stackRole: infra-data
+  # credit-scoring:coreStackRef: myorg/credit-scoring-infra/dev-core
+  # credit-scoring:createCloudSql: "true"
+  # credit-scoring:cloudSqlInstanceName: postgres-instance
+  # For infra-runtime (GKE) after core — Vertex (Gemini) + Cloud SQL client GSAs and WI:
+  # credit-scoring:stackRole: infra-runtime
+  # credit-scoring:coreStackRef: myorg/credit-scoring-infra/dev-core
+  # credit-scoring:vertexWorkloadIdentities: hbg:backend-ksa,hbg:worker-ksa
+  # credit-scoring:cloudSqlWorkloadIdentities: camunda-dev:hbg-camunda-operate,camunda-ref:hbg-camunda-operate,camunda-prod:hbg-camunda-operate

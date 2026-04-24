@@ -6,5 +6,5 @@ set -euo pipefail
 
 echo "Break-glass access is not granted by this repository script." >&2
 echo "Use your organization's incident process: open SEV ticket, request time-bound elevation via GCP PAM," >&2
-echo "and record commands / postmortem per infra/ROLES.md." >&2
+echo "and record commands / postmortem per doc/_archive/2026-04-20/ROLES.md." >&2
 exit 1

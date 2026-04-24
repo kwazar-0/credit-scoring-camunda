@@ -1,6 +1,6 @@
 # Чистовая матрица: 11 ролей доступа к сервисам GCP и 6 учёток
 
-Согласовано с [`infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md), [`prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
+Согласовано с [`prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
 
 ## 1. Можно ли «11 ролей» при «6 пользователях»?
 
@@ -67,6 +67,5 @@
 
 ## 6. Связанные файлы
 
-- Детальная матрица GCP/Pulumi/K8s/Git: [`../infra/ROLES.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md)
 - Маппинг 11 → 6 для Git: [`github-codeowners-matrix.md`](github-codeowners-matrix.md)
-- K8S RBAC пример: [`../infra/ROLES.gke-rbac.example.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.gke-rbac.example.md)
+- Пример K8s RBAC в репозитории (локальная настройка): `infra/ROLES.gke-rbac.local.md` (см. репо, не путать с прод-политикой GitOps)

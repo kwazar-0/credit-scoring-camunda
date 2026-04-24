@@ -1,6 +1,6 @@
 # Чистовая матрица: 11 ролей доступа к сервисам GCP и 6 учёток
 
-Согласовано с [`infra/ROLES.md`](../infra/ROLES.md), [`doc/prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
+Согласовано с [`doc/_archive/2026-04-20/ROLES.md`](../doc/_archive/2026-04-20/ROLES.md), [`doc/prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
 
 ## 1. Можно ли «11 ролей» при «6 пользователях»?
 
@@ -65,6 +65,6 @@
 
 ## 6. Связанные файлы
 
-- Детальная матрица GCP/Pulumi/K8s/Git: [`../infra/ROLES.md`](../infra/ROLES.md)
+- Детальная матрица GCP/Pulumi/K8s/Git: [`../doc/_archive/2026-04-20/ROLES.md`](../doc/_archive/2026-04-20/ROLES.md)
 - Маппинг 11 → 6 для Git: [`github-codeowners-matrix.md`](github-codeowners-matrix.md)
-- K8S RBAC пример: [`../infra/ROLES.gke-rbac.example.md`](../infra/ROLES.gke-rbac.example.md)
+- K8S RBAC пример: [`../doc/_archive/2026-04-20/ROLES.gke-rbac.example.md`](../doc/_archive/2026-04-20/ROLES.gke-rbac.example.md)

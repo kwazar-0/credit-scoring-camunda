@@ -3,6 +3,7 @@
 - **Region:** default `europe-central2`; do not move workloads to non-EU regions without explicit intent.
 - **Stack:** FastAPI + LangGraph in `backend/`, PyZeebe in `worker/`, Streamlit in `ui/` — keep boundaries; no business logic only in UI.
 - **PII:** never log raw PESEL; mask before external LLM calls; align with `backend/app/services/pii.py`.
-- **Infra:** GKE is **Standard** (not Autopilot) for Camunda/Zeebe — primary IaC: **`infra/pulumi/`** (optional sandbox: `infra/pulumi/gke-infra/`); roles: `infra/ROLES.md`.
+- **Infra:** GKE is **Standard** (not Autopilot) for Camunda/Zeebe — primary IaC: **`infra/pulumi/`** (optional sandbox: `infra/pulumi/gke-infra/`). Access matrix (reading): **`docs-site/gcp-saas-access-matrix-11x6.md`**; `doc/_archive/` is **historical only**, not part of the VitePress doc set.
 - **Secrets:** use env / Kubernetes Secrets; never commit credentials.
+- **Documentation:** canonical copy lives under **`docs-site/`** (VitePress). Do **not** update documentation while **debugging** or fixing runtime issues unless the user explicitly asks to change docs in the same task.
 - Prefer small, focused changes; match existing style and English in code comments.

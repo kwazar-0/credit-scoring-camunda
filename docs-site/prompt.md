@@ -29,17 +29,17 @@
 
 ## 3. Каталог `infra/` (источник правды по IaC)
 
-| Путь | Назначение |
+| Путь / страница | Назначение |
 |------|------------|
-| **`infra/pulumi/`** | **Основной IaC (Python).** GCS (embeddings + raw PDF), BigQuery `hbg_analytics`, Artifact Registry; включение API: **storage**, **bigquery**, **aiplatform**, **artifactregistry**. Конфиг: `pulumi config set gcp:project …`, `credit-scoring:region`, `credit-scoring:clusterName`. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
-| **`infra/pulumi/README.md`** | Запуск, экспорты (`vector_embeddings_bucket`, `raw_regulations_bucket`, `bigquery_dataset`, `artifact_registry_url`), отладка `pulumi preview`. |
-| **`infra/README.md`** | Обзор: Pulumi (основной + опционально `gke-infra/`). |
-| **`infra/ARCHITECTURE.md`** | Изоляция: GCP project / state / namespace; OIDC вместо JSON-ключей; GitOps (Argo/Flux) — по желанию для приложений; канон IaC — **Pulumi**. |
-| **`infra/ROLES.md`** | 11 ролей, матрица GCP/Pulumi/K8s/Git и **пошаговая инструкция по созданию доступов** (группы IdP, IAM, GKE, GitHub). |
-| **[`gcp-saas-access-matrix-11x6.md`](gcp-saas-access-matrix-11x6.md)** | **Чистовик:** 11 ролей × сервисы GCP + упаковка в **6 учёток**; связка с `prompt` §9 и GitHub Teams. |
-| **`infra/pulumi/gke-infra/`** | **Опциональный** отдельный Pulumi-проект: GKE, Cloud SQL, GCS, Artifact Registry. Подробно: [на сайте](infra-pulumi-gke-sandbox.md) (см. также [EN](en/infra-pulumi-gke-sandbox.md)); копия в репо — [manual](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/manual.md). Регион/имена **не** совпадают с `infra/pulumi/`; не сливать `pulumi up` в одном project без плана. |
+| **[infra-pulumi-iac.md](infra-pulumi-iac.md)** | **Актуальная** документация Pulumi на этом сайте: `credit-scoring:stackRole`, split стеков, ссылки в код. |
+| **`infra/pulumi/`** (в репо) | **Основной IaC (Python).** Содержимое зависит от `stackRole` (см. [infra-pulumi-iac](infra-pulumi-iac.md)); регион по умолчанию **`europe-central2`**. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
+| **[gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)** | Матрица: 11 ролей × сервисы GCP + 6 учёток; согласовано с [prompt](prompt.md) §9. |
+| **[infra-pulumi-gke-sandbox.md](infra-pulumi-gke-sandbox.md)** | **Опциональный** отдельный Pulumi `gke-infra` (по умолчанию тот же **`europe-central2`**, другие имена; [EN](en/infra-pulumi-gke-sandbox.md)). **Не** смешивать `pulumi up` с основым стеком в одном project без плана (VPC/PSA/SQL). |
+| **`infra/README.md`** (в репо) | Один экран: ссылка на **этот** сайт и `pulumi/`. |
+| **[hbg-rag-dominance.md](hbg-rag-dominance.md)** | Оргмодель HBG: стратегия платформы, роли U1–U6 (вымысел; [EN](en/hbg-rag-dominance.md)). |
+| **[hr-offers-hbg.md](hr-offers-hbg.md)** | Вакансии, RACI, 11 этапов workflow, матрица 6×11 ([EN](en/hr-offers-hbg.md)). |
 
-**Кластер:** **GKE Standard** (не **Autopilot**). В основом стеке `infra/pulumi/` GKE **не** создаётся (GCS, BQ, AR). Кластер + SQL + бакет — опционально **`gke-infra/`** (см. [док. сайта](infra-pulumi-gke-sandbox.md), **`europe-west1`**; канон данных — **`europe-central2`**).
+**Кластер:** **GKE Standard** (не **Autopilot**). GKE в основом дереве Pulumi — при **`stackRole: infra-runtime`** (см. [infra-pulumi-iac](infra-pulumi-iac.md)) или песочница **[gke-infra](infra-pulumi-gke-sandbox.md)** (тоже по умолчанию **`europe-central2`**, отдельные имена `cs-sandbox-*`).
 
 ---
 
@@ -94,13 +94,13 @@
 
 ---
 
-*Документ обновлён для переноса контекста в новый диалог; детали IaC — в `infra/`, роли и выдача доступов — в `infra/ROLES.md`, RAG — в `ml-data-rag.md`, шпаргалка CLI — в `cli-console.md`, Git — в `git-workflow.md`, имена репо/тегов — в `naming.md`, GitHub governance — в `github-setup.md`.*
+*Детали IaC — [infra-pulumi-iac.md](infra-pulumi-iac.md) и `infra/`; роли в GCP — [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и §9 ниже. RAG — `ml-data-rag.md`, CLI — `cli-console.md`, Git — `git-workflow.md`, имена — `naming.md`, GitHub — `github-setup.md`.*
 
 ---
 
 ## 9. Enterprise blueprint (расширенная цель)
 
-Ниже — **мастер-спецификация** для enterprise-контура (IAM, GitOps, сеть, GKE). Часть пунктов **ещё не реализована** в коде репозитория; сверяйте с §1–8 и с `infra/ROLES.md`. Типичные отличия от текущего кода:
+Ниже — **мастер-спецификация** для enterprise-контура (IAM, GitOps, сеть, GKE). Часть пунктов **ещё не реализована** в коде репозитория; сверяйте с §1–8 и [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md). Типичные отличия от текущего кода:
 
 - **Camunda:** в этом репо — **Camunda 8 / Zeebe** + воркеры **Python** (`worker/`), scoring — **FastAPI + LangGraph** (`backend/`). Стек **Spring Boot + Camunda** относится к **self-managed Camunda Platform** (Operate/Tasklist/Zeebe), если вы его разворачиваете отдельно, а не к прикладному коду scoring.
 - **IaC:** в репозитории Pulumi на **Python** (`infra/pulumi/`), не TypeScript. VPC / мульти-пул GKE — **отдельный слой**, не дублируйте имена ресурсов с текущим `__main__.py` без импорта.
@@ -157,10 +157,10 @@
 | **Vector Search** (index, deployed index) | Ресурсы Vertex + доступ к GCS с индексом; IAM как у Vertex + Storage read | **ML Engineer** |
 | **Cloud SQL (PostgreSQL) + IAM Auth** | `Instance`, `Database`, **IAM-включение** и пользователи БД для SA; пароли только Secret Manager if legacy | **DevOps/Platform** — создание/патч; приложение **Camunda/backend** — **SA** с `cloudsql.*` client; DBA-люди — отдельная группа, не в прикладном коде |
 
-**Итог:** доступы **к облачным API и данным** — в **IaC + IAM**; доступы **внутри GKE** — в **RBAC-манифестах**; §9.2 остаётся **логической** матрицей, детализация по 11 ролям и 6 учёткам — в `ROLES.md` / `gcp-saas-access-matrix-11x6.md`.
+**Итог:** доступы **к облачным API и данным** — в **IaC + IAM**; доступы **внутри GKE** — в **RBAC-манифестах**; §9.2 остаётся **логической** матрицей, детализация по 11 ролям и 6 учёткам — в [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md).
 
 ### 9.3. Deployment Lifecycle (GitOps)
-Реализуй Pipeline в GitHub Actions со следующей логикой (аутентификацию в GCP по возможности через **OIDC / Workload Identity Federation**, а не долгоживущие JSON-ключи — см. `infra/ARCHITECTURE.md`):
+Реализуй Pipeline в GitHub Actions со следующей логикой (аутентификацию в GCP по возможности через **OIDC / Workload Identity Federation**, а не долгоживущие JSON-ключи — см. [infra-pulumi-iac.md](infra-pulumi-iac.md) и WIF в `infra/pulumi/workload_identity_github.py`):
 
 1.  **Branch `develop` → env `DEV`:**
     * Trigger: Push.

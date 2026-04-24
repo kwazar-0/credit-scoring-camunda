@@ -1,0 +1,58 @@
+# HBG RAG-DOMINANCE: CONTROL MATRIX
+# Version: 1.1 (Machiavelli Edition)
+# Purpose: Total Credit Risk Elimination via 6x11 Framework
+
+project_id: "hbg-rag-dominance"
+region: "europe-central2"
+
+# 11 Stages of Truth (Process Mapping)
+stages:
+  1: "Ingestion (U4)"
+  2: "Normalization (U4)"
+  3: "Embedding (U3)"
+  4: "Indexing (U4)"
+  5: "Orchestration (U2)"
+  6: "Retrieval (U3)"
+  7: "Reasoning (U3)"
+  8: "Risk Scoring (U1/U3)"
+  9: "Verification (U5 - Inquisitor)"
+  10: "Persistence (U2/U1)"
+  11: "Audit Trace (U6)"
+
+# The 6 Agents of the System
+agents:
+  - id: "u1_architect"
+    email: "ok-admin@gmail.com"
+    clearance: "GrandMaster"
+    gcp_roles: ["roles/owner"]
+    k8s_access: "cluster-admin"
+
+  - id: "u2_sre"
+    email: "gw-devops@gmail.com"
+    clearance: "Execution_Lead"
+    gcp_roles: ["roles/editor", "roles/container.admin"]
+    k8s_access: "edit"
+
+  - id: "u3_ml_designer"
+    email: "ux-dev@gmail.com"
+    clearance: "Cognitive_Designer"
+    gcp_roles: ["roles/aiplatform.user", "roles/storage.objectViewer"]
+    k8s_access: "edit"
+
+  - id: "u4_data_custodian"
+    email: "sh-dev@gmail.com"
+    clearance: "Resource_Master"
+    gcp_roles: ["roles/storage.objectAdmin", "roles/bigquery.dataEditor"]
+    k8s_access: "view"
+
+  - id: "u5_inquisitor"
+    email: "pk-qa@gmail.com"
+    clearance: "Truth_Verifier"
+    gcp_roles: ["roles/viewer"]
+    k8s_access: "edit"
+
+  - id: "u6_auditor"
+    email: "ok-audit@gmail.com"
+    clearance: "Legal_Shield"
+    gcp_roles: ["roles/bigquery.metadataViewer", "roles/viewer"]
+    k8s_access: "view"

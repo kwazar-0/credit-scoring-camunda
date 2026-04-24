@@ -1,77 +1,47 @@
-# Pulumi GCP Python Storage Bucket Template
+# gke-infra (Pulumi) — GKE, private Cloud SQL, GCS, Artifact Registry
 
- A minimal Pulumi template for provisioning a Google Cloud Storage bucket using Python.
+Pulumi app for a **sandbox** stack in **europe-central2** per repo policy: **Cloud SQL has no public IPv4** (private IP + PSA), GKE with **Workload Identity** and **empty** node `oauth_scopes`, regional GKE with private nodes and a public control plane endpoint (kubectl from a workstation with network access to the API).
 
- This template helps you get started with Pulumi and the `pulumi-gcp` provider to create a simple storage bucket and export its URL.
+## Prerequisites
 
- ## When to Use
+- Pulumi CLI, Python 3.10+, `gcloud` and GCP project with billing
+- `pulumi login` and `gcloud config set project <id>`
 
- - You need a quick example of using Pulumi with Google Cloud in Python.
- - You want to manage a Google Cloud Storage bucket as code.
- - You’re looking for a minimal scaffold to build more complex GCP infrastructure.
+## Config
 
- ## Prerequisites
+- `gcp:project` — required
+- `gcp:region` — default `europe-central2` (do not set a legacy zone; cluster is **regional**)
 
- - A Google Cloud account and a target GCP project.
- - Authentication set up via `gcloud auth login` or the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
- - Python 3.7 or later installed on your machine.
- - Pulumi CLI installed and logged in to your Pulumi account.
+Example (`Pulumi.dev.yaml` is a template; adjust project ID):
 
- ## Usage
+```yaml
+config:
+  gcp:project: your-gcp-project-id
+  gcp:region: europe-central2
+```
 
- Run the following command to scaffold a new project from this template:
+## Deploy
 
- ```bash
- pulumi new gcp-python
- ```
+```bash
+cd infra/pulumi/gke-infra
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+pulumi stack select dev   # or create: pulumi stack init dev
+pulumi up
+```
 
- Follow the interactive prompts:
- - **Project Name**: Your project name.
- - **Project Description**: A short description of your project.
- - **gcp:project**: The ID of the Google Cloud project where resources will be created.
+## Outputs
 
- After the project is generated, navigate into your project directory and deploy:
+- `connect_cmd` — `gcloud container clusters get-credentials ... --region europe-central2 ...`
+- `bucket_url` — GCS data bucket
+- `artifact_registry_url` — `REGION-docker.pkg.dev/PROJECT/REPO`
+- `cloud_sql_private_ip` — private DB IP (reachable from VPC/GKE, not the internet)
+- `cloud_sql_connection_name` — for Cloud SQL Auth Proxy or connector
 
- ```bash
- cd <project-name>
- pulumi up
- ```
+## Migrating from an older stack (e.g. public SQL, different region)
 
- Confirm the changes to provision your storage bucket.
+Re-pointing the same Pulumi stack at this program may **replace** VPC, SQL, and cluster. Run `pulumi preview` and plan for one-time migration (new stack name, or destroy + recreate, or manual import) if you need zero disruption.
 
- ## Project Layout
+## Layout
 
- ```
- .
- ├── __main__.py        # Pulumi program defining resources
- ├── Pulumi.yaml        # Project configuration and template metadata
- └── requirements.txt   # Python dependencies for Pulumi and GCP
- ```
-
- ## Configuration
-
- - **gcp:project**: (Required) The Google Cloud project ID where resources will be created.
-
- ## Resources Created
-
- - **Storage Bucket** (`pulumi_gcp.storage.Bucket`): A bucket named `my-bucket` in the `US` location.
-
- ## Outputs
-
- - **bucket_name**: The URL of the created storage bucket.
-
- ## Next Steps
-
- - Modify `__main__.py` to customize the bucket:
-   - Change the bucket name.
-   - Adjust the `location` or add bucket labels and IAM policies.
- - Add more GCP resources such as Pub/Sub topics, Compute instances, or BigQuery datasets.
- - Integrate with CI/CD pipelines using `pulumi preview` and `pulumi up --yes`.
- - Explore the [Pulumi GCP Provider Documentation](https://www.pulumi.com/registry/packages/gcp/) for more examples.
-
- ## Need Help?
-
- - Pulumi Docs: https://www.pulumi.com/docs/
- - GCP Provider Docs: https://www.pulumi.com/registry/packages/gcp/
- - Community Slack: https://slack.pulumi.com/
- - GitHub Issues: https://github.com/pulumi/pulumi/issues
+- `__main__.py` — single-file stack (VPC, PSA, Cloud SQL, GKE, GCS, Artifact Registry, APIs)

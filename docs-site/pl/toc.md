@@ -8,12 +8,15 @@
 
 | Dokument | Zastosowanie |
 |----------|--------------|
+| [architecture.md](architecture.md) | **Architektura repozytorium:** warstwy, stos, przepływ, układ monorepo |
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Fazy, kolejność, linki — **punkt wejścia** |
 | [prompt.md](prompt.md) §1–8 | Handoff, produkt, plan, ścieżki w repo |
-| [../infra/ARCHITECTURE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ARCHITECTURE.md) | Projekty, namespace, OIDC, state |
-| [../infra/pulumi/README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/README.md) | Pulumi: uruchomienie, eksporty; opcjonalnie [gke-infra (dok. →)](infra-pulumi-gke-sandbox.md), [katalog w `infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) |
+| [infra-pulumi-iac.md](infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC, stosy — **kanon IaC** w tej witrynie |
+| [piaskownica gke →](infra-pulumi-gke-sandbox.md) | Osobny Pulumi (ten sam region domyślnie; nie łącz VPC/state z głównym stosem) |
 | [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
 | [ml-data-rag.md](ml-data-rag.md) | Vertex, embeddingi, env backendu |
+| [hbg-rag-dominance.md](hbg-rag-dominance.md) | HBG: strategia platformy, role U1–U6 |
+| [hr-offers-hbg.md](hr-offers-hbg.md) | HBG: oferty, RACI, 11 etapów, macierz 6×11 |
 | [../scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Włączanie API GCP (CLI) |
 
 ## Tor B — Git, GitHub, konwencje
@@ -29,8 +32,7 @@
 
 | Dokument | Zastosowanie |
 |----------|----------------|
-| [../infra/ROLES.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/ROLES.md) | 11 ról, GCP/Pulumi/K8s/Git, kroki |
-| [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 ról × GCP, 6 kont |
+| [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 ról × GCP, 6 kont; szczegóły — [prompt](prompt.md) §9 |
 | [github-codeowners-matrix.md](github-codeowners-matrix.md) | Role ↔ GitHub, CODEOWNERS |
 | [accounts.md](accounts.md) | Kanoniczny remote; lokalne PII w `accounts.local.md` (gitignore) |
 | [prompt.md](prompt.md) §9+ | Enterprise, hardening, SoD |

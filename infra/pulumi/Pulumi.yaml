@@ -3,4 +3,4 @@ runtime:
   name: python
   options:
     virtualenv: venv
-description: GCP infra (Pulumi) — GCS, BigQuery, Artifact Registry, optional GitHub WIF
+description: GCP (Pulumi) — stackRole legacy | infra-core | infra-data | infra-runtime; EU; Secure v2

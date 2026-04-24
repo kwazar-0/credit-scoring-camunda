@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="hbgTitle">
+  <title id="hbgTitle">Handlowy Bank Galicyjski</title>
+  <defs>
+    <linearGradient id="hbgGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e4d4a0"/>
+      <stop offset="50%" stop-color="#c5a14a"/>
+      <stop offset="100%" stop-color="#8a7028"/>
+    </linearGradient>
+    <linearGradient id="hbgNavy" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#153a5c"/>
+      <stop offset="100%" stop-color="#0a1a2e"/>
+    </linearGradient>
+    <filter id="hbgSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="b"/>
+      <feOffset dx="0" dy="1" result="o"/>
+      <feMerge>
+        <feMergeNode in="o"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Shield -->
+  <path fill="url(#hbgNavy)" stroke="url(#hbgGold)" stroke-width="3" d="M64 8 L112 28 V64 C112 96 88 112 64 120 C40 112 16 96 16 64 V28 Z"/>
+  <!-- Column lines (banking metaphor) -->
+  <path fill="none" stroke="url(#hbgGold)" stroke-width="1.5" opacity="0.45" d="M44 38 V96 M64 32 V104 M84 38 V96"/>
+  <!-- HBG monogram -->
+  <text x="64" y="78" text-anchor="middle" fill="url(#hbgGold)" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="0.04em" filter="url(#hbgSoft)">HBG</text>
+  <text x="64" y="100" text-anchor="middle" fill="#c5a14a" font-family="system-ui, sans-serif" font-size="9" letter-spacing="0.35em" opacity="0.9">GALICJA</text>
+</svg>

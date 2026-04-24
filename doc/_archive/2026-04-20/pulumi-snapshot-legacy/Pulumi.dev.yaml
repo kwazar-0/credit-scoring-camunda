@@ -1,0 +1,8 @@
+encryptionsalt: v1:JjHyBq9HpLE=:v1:aOVjXn5xAUYoE0aY:2LhHc1Pbs7OF34pbwF29zHcGe2pBEA==
+config:
+  gcp:project: my-camunda8-project
+  credit-scoring:region: europe-central2
+  credit-scoring:clusterName: hbg-gke
+  credit-scoring:enableGithubWif: "true"
+  credit-scoring:githubOwner: OlehKondratow
+  credit-scoring:githubRepo: credit-scoring-camunda

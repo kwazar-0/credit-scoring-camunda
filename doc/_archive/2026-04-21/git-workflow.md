@@ -1,6 +1,6 @@
 # Git: ветки, релизы и окружения
 
-Согласовано с `doc/prompt.md` (§2), `infra/ROLES.md`, **[doc/github-setup.md](github-setup.md)** и **[doc/branch-notes.md](branch-notes.md)**. Remote по умолчанию: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Имена репозитория, тегов и папки клона: **[doc/naming.md](naming.md)**.
+Согласовано с `doc/prompt.md` (§2), `doc/_archive/2026-04-20/ROLES.md`, **[doc/github-setup.md](github-setup.md)** и **[doc/branch-notes.md](branch-notes.md)**. Remote по умолчанию: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Имена репозитория, тегов и папки клона: **[doc/naming.md](naming.md)**.
 
 ---
 
@@ -43,7 +43,7 @@
 | **staging / ref** | **`release/*`** или коммит + образ `:rc` |
 | **prod** | **`main`** + тег **`v*`** + approval |
 
-CI: **`.github/workflows/ci.yml`** — push на **`develop`**, **`main`**, **`release/**`, **`feature/**`, **`hotfix/**`, теги `v*`; PR в **`develop`**, **`main`**, **`release/**` OIDC/WIF — см. `infra/ARCHITECTURE.md`.
+CI: **`.github/workflows/ci.yml`** — push на **`develop`**, **`main`**, **`release/**`, **`feature/**`, **`hotfix/**`, теги `v*`; PR в **`develop`**, **`main`**, **`release/**` OIDC/WIF — см. `doc/_archive/2026-04-20/ARCHITECTURE.md`.
 
 ---
 

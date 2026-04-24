@@ -1,0 +1,55 @@
+# Publish VitePress to GitHub Pages (Settings → Pages → Source: GitHub Actions).
+# Project site URL: https://<user>.github.io/credit-scoring-camunda/ — base path must match VITEPRESS_BASE below.
+name: VitePress → GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs-site/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/vitepress-gh-pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Build
+        env:
+          # Must match repository name for https://<user>.github.io/<repo>/
+          VITEPRESS_BASE: /credit-scoring-camunda/
+        run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

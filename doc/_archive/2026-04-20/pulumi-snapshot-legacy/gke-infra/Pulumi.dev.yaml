@@ -1,0 +1,7 @@
+config:
+  gcp:project: my-camunda8-project
+  gcp:zone: europe-central2-a
+  credit-scoring:region: europe-central2
+  credit-scoring:stackRole: legacy
+  my-gcp-infra:createCloudSql: "true"
+encryptionsalt: v1:8fVRKsZYQz4=:v1:zIFADjykwmom7vq+:iPQVCy6dWEY3fYPY8Jo6RFqN0AzSew==
