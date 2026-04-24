@@ -39,7 +39,8 @@
 | `doc/_archive/` | Архив, не путать с сайтом |
 | `scripts/` | `create-release-branch.sh` — ветка `release/X.Y.Z` |
 | `.github/workflows/ci.yml` | CI: `pytest` backend + worker (Python 3.11 / 3.12) |
-| `.github/workflows/docs-vitepress.yml` | VitePress: `npm ci` + `docs:build` (отдельно от Python CI) |
+| `.github/workflows/docs-vitepress.yml` | VitePress: `npm ci` + `docs:build` (PR / `develop` / `main`) |
+| `.github/workflows/vitepress-gh-pages.yml` | VitePress → **GitHub Pages** (только `main`, `VITEPRESS_BASE` под `/<repo>/`) |
 
 ## Local run
 

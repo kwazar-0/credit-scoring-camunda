@@ -1,5 +1,5 @@
-# VitePress only: install dependencies and build the static site (separate from backend/worker CI).
-name: VitePress (install + build)
+# VitePress: установка зависимостей и сборка (без публикации). Отдельно от Python CI.
+name: Docs (VitePress build)
 
 on:
   workflow_dispatch:
@@ -20,8 +20,12 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: docs-vitepress-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  vitepress:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,5 +35,5 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Build
+      - name: Build (site root base, как локально)
         run: npm run docs:build

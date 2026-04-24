@@ -1,6 +1,6 @@
-# Publish VitePress to GitHub Pages (Settings → Pages → Source: GitHub Actions).
-# Project site URL: https://<user>.github.io/credit-scoring-camunda/ — base path must match VITEPRESS_BASE below.
-name: VitePress → GitHub Pages
+# Публикация VitePress на GitHub Pages (Settings → Pages → Source: GitHub Actions).
+# URL project site: https://<user>.github.io/<repo>/ — путь должен совпадать с VITEPRESS_BASE.
+name: Docs (VitePress → GitHub Pages)
 
 on:
   workflow_dispatch:
@@ -32,9 +32,9 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Build
+      - name: Build (base для /.github.io/<repo>/)
         env:
-          # Must match repository name for https://<user>.github.io/<repo>/
+          # Имя репозитория на GitHub; при переименовании репо — обновить.
           VITEPRESS_BASE: /credit-scoring-camunda/
         run: npm run docs:build
       - uses: actions/upload-pages-artifact@v3
