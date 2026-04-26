@@ -1,30 +1,17 @@
 ---
-layout: home
-
-hero:
-  name: HBG
-  text: Documentation
-  tagline: >-
-    Канон репозитория в Git: архитектура, IaC, роли и доступ.
-    Język domyślny witryny: polski (/pl/); poniżej — ta sama struktura RU / EN / PL.
-  image:
-    src: /images/hbg-bf1.png
-    alt: Handlowy Bank Galicyjski
-  actions:
-    - theme: brand
-      text: Polski
-      link: /pl/
-    - theme: brand
-      text: Русский
-      link: /ru/
-    - theme: brand
-      text: English
-      link: /en/
+layout: page
+title: ADR (сводка по сайту)
+description: Инженерные решения, мультиязычные оглавления
+outline: [2, 3]
 ---
 
-## Назначение витрины
+# ADR — сводка по репозиторию
 
-Здесь собрана **актуальная** документация монорепозитория (учебно-демонстрационный контур кредитного решения). Источник правды — каталог **`docs-site/`** вместе с кодом и **`infra/`**; материалы в **`doc/_archive/`** исторические и **не** входят в эту сборку VitePress.
+Канон в Git: архитектура, IaC, роли и доступ. Документация в `docs-site/`, код и `infra/` — в репозитории; `doc/_archive/` в сборку не входит. Языки: [PL](/pl/) (по умолчанию), [RU](/ru/), [EN](/en/).
+
+## Назначение
+
+Здесь собрана актуальная документация монорепозитория (учебно-демонстрационный контур). Источник правды — каталог **`docs-site/`** вместе с кодом и **`infra/`**; материалы в **`doc/_archive/`** исторические и не входят в эту сборку VitePress.
 
 ---
 
@@ -59,3 +46,5 @@ Witryna to **kanoniczna** dokumentacja monorepo (VitePress), spójna z kodem i `
 ---
 
 **Оглавления:** [Русский](/ru/toc) · [English](/en/toc) · [Polski](/pl/toc)
+
+**Действия (язык):** [Polski](/pl/) · [Русский](/ru/) · [English](/en/)

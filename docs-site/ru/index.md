@@ -1,108 +1,33 @@
 ---
-layout: home
-
-hero:
-  name: Handlowy Bank Galicyjski (HBG)
-  text: Camunda 8 + AI credit pipeline
-  tagline: >-
-    Монорепо: FastAPI + LangGraph, PyZeebe, Streamlit, Pulumi (GCP, europe-central2), RAG и Vertex AI.
-    Ниже — быстрый обзор; детальная схема в разделе «Архитектура».
-  image:
-    src: /images/hbg-bf1.png
-    alt: Handlowy Bank Galicyjski
-  actions:
-    - theme: brand
-      text: Архитектура
-      link: /ru/architecture
-    - theme: brand
-      text: Дорожная карта (infra)
-      link: /ru/INFRA-IMPLEMENTATION
-    - theme: alt
-      text: Оглавление
-      link: /ru/toc
-
-features:
-  - icon: 🏦
-    title: Процесс и оркестрация
-    details: Zeebe, BPMN/DMN, воркеры в worker/ — детерминизм бизнес-шагов вместо «одного чата».
-  - icon: 🧠
-    title: Vertex AI и RAG
-    details: Эмбеддинги, поиск, LLM (Gemini) в backend/; политика PII в коде. См. ml-data-rag, hbg-rag-dominance.
-  - icon: 🏛
-    title: Облако и IaC
-    details: Pulumi, GKE, OIDC, split-стеки, CLI — INFRA-IMPLEMENTATION и infra-pulumi-iac (канон).
-  - icon: 🖥
-    title: API и UI
-    details: backend/ (HTTP, граф), ui/ (Streamlit) — граница ответственности по .cursorrules.
-  - icon: 📋
-    title: Роли и найм
-    details: Матрица U1–U6, вакансии и RACI — hr-offers-hbg; матрица GCP — gcp-saas-access-matrix-11x6.
-  - icon: 🔗
-    title: Репозиторий
-    details: Исходники и CI на GitHub; витринная документация собирается из docs-site/ (VitePress).
+layout: page
+title: Техническая документация
+description: Монорепо Credit Scoring / HBG — VitePress
+outline: [2, 3]
 ---
 
-## Философия проекта
+# Credit Scoring / HBG
 
-Кратко **три опоры** (каждая — про снижение хаоса и риска):
+Документация в `docs-site/`; код: `backend/`, `worker/`, `ui/`; IaC: `infra/`. Регион по умолчанию: `europe-central2`. Стек и потоки: [architecture](/ru/architecture).
 
-1. **GitHub** — ветки и правила merge соответствуют реальным ролям и зонам ответственности.  
-2. **Роли и 11×6** — «кто за что» в продукте связан с тем, **какие** сервисы GCP может трогать та или иная учётка.  
-3. **Split облака** — сеть, данные и кластер меняются **разным темпом**, без лишнего «всё в одном стеке».
+## Быстрые ссылки
 
-**Как это читать с позиции старшего инженера:** три опоры задают **проверяемые инварианты** — «ветка → ревьюер», «роль → IAM», «стек Pulumi → область state и скорость изменений» — а не лозунги. Цель одна: сузить **неопределённость владения** и **радиус поражения** при ошибке или компрометации учётки.
+- [INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION) — дорожная карта (фазы, ссылки)  
+- [architecture](/ru/architecture) — обзор архитектуры  
+- [infra-pulumi-iac](/ru/infra-pulumi-iac) — Pulumi, `stackRole`, OIDC  
+- [ml-data-rag](/ru/ml-data-rag) — ML, RAG, env backend  
+- [cli-console](/ru/cli-console) — `gcloud`, Pulumi, `kubectl`  
+- [toc](/ru/toc) — оглавление
 
-### GitHub: принцип «роль — ветка — доступ»
+## Роли и доступ (опционально, после MVP)
 
-**Аннотация раздела:** одна линия ответственности — от политики репозитория до фактического доступа к merge и деплою.
+- [gcp-saas-access-matrix-11x6](/ru/gcp-saas-access-matrix-11x6) — 11 ролей × GCP, 6 учёток  
+- [team-11x6-organization](/ru/team-11x6-organization) — команда 11×6, персоны, SDLC  
+- [github-codeowners-matrix](/ru/github-codeowners-matrix) — CODEOWNERS
 
-Идея — чтобы **политика репозитория** (ветки, релизы, защита веток, окружения) совпадала с тем, **кто** может менять код и **какой** уровень доступа к merge/deploy. Опорные страницы:
+## Репозиторий
 
-- [git-workflow](git-workflow) — `main` / `develop`, `release/*`, теги. **Кратко:** когда и как код попадает в стабильные ветки и как оформляются релизы.  
-- [github-setup](github-setup) — branch protection, Environments. **Кратко:** кто может мержить куда и какие окружения участвуют в поставке.  
-- [github-codeowners-matrix](github-codeowners-matrix) — роли ↔ CODEOWNERS / владение областями кода. **Кратко:** автоматические ревью и блокировки по зонам репозитория.  
-- [naming](naming) — имена репозитория, веток и каталога клона. **Кратко:** единые имена, чтобы не путать проекты, ветки и локальные клоны.
-
-### «Отделы», функции и матрица 11×6
-
-**Аннотация раздела:** связка «функция в команде / банке» ↔ «доступ к облаку», без размытой «у всех Owner».
-
-В документации HBG заложены **роли уровня организации** (U1–U6: облако, эксплуатация, ML/промпты, данные, качество, аудит) и связка с **матрицей доступа к сервисам GCP** (11 ролей × учётки):
-
-- [hbg-rag-dominance](hbg-rag-dominance) — стратегия платформы, контуры, роли U1–U6. **Кратко:** зачем три контура (оркестрация / AI+RAG / облако) и как они стыкуются.  
-- [hr-offers-hbg](hr-offers-hbg) — вакансии, RACI, этапы внедрения. **Кратко:** кто по ролям ведёт внедрение и как это ложится на RACI.  
-- [gcp-saas-access-matrix-11x6](gcp-saas-access-matrix-11x6) — **матрица 11×6** (роли × GCP / SaaS). **Кратко:** минимально достаточные права на сервисы, без «всем Editor».
-
-### Облако: ответственность и жизненный цикл (split Pulumi)
-
-**Аннотация раздела:** инфраструктура как три слоя с разной скоростью изменений и разным кругом владельцев.
-
-Платформа в GCP намеренно разнесена по **ролям стека** `credit-scoring:stackRole`, чтобы **сеть**, **данные** и **среда выполнения приложений** эволюционировали **раздельно** и с меньшим *blast radius*:
-
-| Слой | `stackRole` | Смысл | Кратко |
-|------|-------------|--------|--------|
-| Фундамент сети | `infra-core` | VPC, подсети, PSA для приватного доступа к данным | Меняется редко; основа для всего остального |
-| Данные | `infra-data` | GCS, BigQuery, при необходимости Cloud SQL | Долгоживущие данные; не пересоздавать при каждом деплое кластера |
-| Runtime | `infra-runtime` | GKE, Artifact Registry, Workload Identity под поды | Среда приложений; чаще всего точка обновлений и масштабирования |
-
-**Отвергнутые упрощения (осознанно):** один монолитный Pulumi-стек «одним `up` на всё» — выше риск затронуть данные при смене кластера; **GKE Autopilot** как универсальный дефолт под Zeebe — часто хуже по предсказуемости сети и операционному контролю для Camunda; канон только во внешней wiki — расхождение с версией в git и с IaC.
-
-- [infra-pulumi-iac](infra-pulumi-iac) — канон по `stackRole`, split-стекам и OIDC на сайте. **Кратко:** «что в коде Pulumi и как это читать».  
-- [`infra/README.md`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md) — пошаговый pet-runbook в репозитории. **Кратко:** billing, state bucket, `coreStackRef`, IAM и типовые ошибки из практики.
+Код и CI: [github.com/kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) (канонический remote: [naming](/ru/naming)).
 
 ---
 
-## О проекте
-
-Репозиторий — **учебно-демонстрационный** контур **кредитного решения** с **Camunda 8** (оркестрация), **Vertex AI** (RAG, генерация) и **GCP**. Регион по умолчанию для IaC: **europe-central2**. Полный разбор слоёв, таблица компонентов и поток данных — на странице **[Архитектура](/ru/architecture)**.
-
-| Куда пойти | Документ |
-|------------|----------|
-| С чего начать внедрение | [INFRA-IMPLEMENTATION](INFRA-IMPLEMENTATION) — фазы, Camunda+AI, ссылки |
-| Pulumi, GKE, OIDC | [infra-pulumi-iac](infra-pulumi-iac) |
-| ML, эмбеддинги, env | [ml-data-rag](ml-data-rag) |
-| Стратегия HBG, роли U* | [hbg-rag-dominance](hbg-rag-dominance) |
-| Команды gcloud / kubectl | [cli-console](cli-console) |
-| Полный список страниц | [toc](toc) |
-
-> Другие языки: [Polski (по умолчанию)](/pl/) · [English](/en/) · [ADR (сводка)](/adr)
+**Языки:** [Polski (по умолчанию)](/pl/) · [English](/en/) · [ADR](/adr)

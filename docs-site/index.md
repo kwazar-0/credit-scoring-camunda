@@ -1,6 +1,7 @@
 ---
 layout: page
-title: HBG
+title: Home
+description: Przekierowanie na dokumentację (PL)
 outline: false
 head:
   - - meta
@@ -23,6 +24,6 @@ onMounted(() => {
 });
 </script>
 
-**Domyślny język dokumentacji: polski.** Trwa przekierowanie na [/pl/](/pl/).
+Dokumentacja techniczna (domyślnie język polski) — [przejdź do /pl/](/pl/).
 
-Jeśli przeglądarka nie przekieruje: [Polski →](/pl/) · [Русский →](/ru/) · [English →](/en/) · [ADR (wielojęzycznie) →](/adr)
+Ręcznie: [PL](/pl/) · [EN](/en/) · [RU](/ru/) · [ADR](/adr)

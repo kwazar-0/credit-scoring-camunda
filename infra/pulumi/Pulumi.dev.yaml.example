@@ -13,5 +13,8 @@ config:
   # For infra-runtime (GKE) after core — Vertex (Gemini) + Cloud SQL client GSAs and WI:
   # credit-scoring:stackRole: infra-runtime
   # credit-scoring:coreStackRef: myorg/credit-scoring-infra/dev-core
+  # Optional GKE node boot disk (pet defaults: 25 GB pd-standard — low SSD quota use):
+  # credit-scoring:gkeNodeDiskGb: "25"
+  # credit-scoring:gkeNodeDiskType: pd-standard
   # credit-scoring:vertexWorkloadIdentities: hbg:backend-ksa,hbg:worker-ksa
   # credit-scoring:cloudSqlWorkloadIdentities: camunda-dev:hbg-camunda-operate,camunda-ref:hbg-camunda-operate,camunda-prod:hbg-camunda-operate

@@ -45,36 +45,53 @@ echo "Setting active project: ${PROJECT_ID}"
 gcloud config set project "${PROJECT_ID}"
 
 # One batch — fewer round trips than separate enables.
-# Aligned with infra/pulumi/__main__.py + workload_identity_github.py + prompt.md §9.2.1
+# Aligned with infra/pulumi/__main__.py + workload_identity_github.py + prompt.md (API list).
+# Console names (for search in APIs & Services): map service id → title.
 APIS=(
-  # IAM & admin (required for gcloud to manage IAM, folders, and WIF/STS)
-  cloudresourcemanager.googleapis.com
-  iam.googleapis.com
-  iamcredentials.googleapis.com
-  sts.googleapis.com
-  serviceusage.googleapis.com
-  servicemanagement.googleapis.com
-  # Pulumi stack: storage, BQ, Vertex, GAR, WIF
-  aiplatform.googleapis.com
-  bigquery.googleapis.com
-  storage.googleapis.com
-  artifactregistry.googleapis.com
-  # Cloud SQL, GKE, VPC peering (private services)
-  sqladmin.googleapis.com
-  container.googleapis.com
-  compute.googleapis.com
-  servicenetworking.googleapis.com
+  # IAM & admin
+  cloudresourcemanager.googleapis.com # Cloud Resource Manager API
+  iam.googleapis.com                    # Identity and Access Management (IAM) API
+  iamcredentials.googleapis.com         # IAM Service Account Credentials API
+  sts.googleapis.com                    # Security Token Service API
+  serviceusage.googleapis.com           # Service Usage API
+  servicemanagement.googleapis.com      # Service Management API
+  # Data / ML / registry
+  aiplatform.googleapis.com             # Vertex AI API
+  bigquery.googleapis.com               # BigQuery API
+  storage.googleapis.com                # Cloud Storage API
+  artifactregistry.googleapis.com       # Artifact Registry API
+  # Cloud SQL, GKE, VPC (private services / PSA)
+  sqladmin.googleapis.com               # Cloud SQL Admin API
+  container.googleapis.com              # Kubernetes Engine API
+  compute.googleapis.com                # Compute Engine API
+  servicenetworking.googleapis.com      # Service Networking API
   # Secrets and observability
-  secretmanager.googleapis.com
-  logging.googleapis.com
-  monitoring.googleapis.com
+  secretmanager.googleapis.com          # Secret Manager API
+  logging.googleapis.com                # Cloud Logging API
+  monitoring.googleapis.com             # Cloud Monitoring API
 )
 
 echo "Enabling ${#APIS[@]} APIs (this may take 1–2 minutes)…"
 gcloud services enable "${APIS[@]}" --project="${PROJECT_ID}"
 
 echo
-echo "Done. Verify:"
-echo "  gcloud services list --enabled --project=${PROJECT_ID} | head -30"
+echo "Verifying enabled APIs…"
+enabled_list="$(gcloud services list --enabled --project="${PROJECT_ID}" --format='value(config.name)')"
+missing=()
+for api in "${APIS[@]}"; do
+  if ! grep -qxF "${api}" <<<"${enabled_list}"; then
+    missing+=("${api}")
+  fi
+done
+if [[ "${#missing[@]}" -gt 0 ]]; then
+  echo "ERROR: still not enabled after gcloud services enable:" >&2
+  printf '  %s\n' "${missing[@]}" >&2
+  exit 1
+fi
+echo "All ${#APIS[@]} APIs are enabled (including Kubernetes Engine: container.googleapis.com)."
+
+echo
+echo "Done. Optional manual check:"
+echo "  gcloud services list --enabled --project=${PROJECT_ID} --filter='config.name:container.googleapis.com'"
 echo
 print_iam_hint

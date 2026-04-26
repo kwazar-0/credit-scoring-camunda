@@ -25,6 +25,8 @@ def provision() -> None:
     master_cidr = cfg.get("gkeMasterIpv4Cidr") or "172.16.0.0/28"
     min_nodes = int(cfg.get("gkeMinNodes") or "1")
     max_nodes = int(cfg.get("gkeMaxNodes") or "3")
+    node_disk_gb = int(cfg.get("gkeNodeDiskGb") or "25")
+    node_disk_type = cfg.get("gkeNodeDiskType") or "pd-standard"
     use_autoscaling = cfg.get_bool("gkeAutoscaling")
     if use_autoscaling is None:
         use_autoscaling = True
@@ -65,6 +67,14 @@ def provision() -> None:
     scopes: list[str] = []
     reject_cloud_platform_oauth_scopes(scopes)
 
+    def _node_config() -> gcp.container.ClusterNodeConfigArgs:
+        return gcp.container.ClusterNodeConfigArgs(
+            machine_type=machine_type,
+            disk_size_gb=node_disk_gb,
+            disk_type=node_disk_type,
+            oauth_scopes=scopes,
+        )
+
     cluster = gcp.container.Cluster(
         "primary",
         name=cluster_name,
@@ -73,6 +83,8 @@ def provision() -> None:
         initial_node_count=1,
         network=network,
         subnetwork=subnetwork,
+        # Default pool exists briefly before removal; same disks as real pool (GKE defaults hit SSD quota).
+        node_config=_node_config(),
         private_cluster_config=gcp.container.ClusterPrivateClusterConfigArgs(
             enable_private_nodes=True,
             enable_private_endpoint=False,
@@ -87,12 +99,6 @@ def provision() -> None:
         ),
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[container_api]),
     )
-
-    def _node_config() -> gcp.container.ClusterNodeConfigArgs:
-        return gcp.container.ClusterNodeConfigArgs(
-            machine_type=machine_type,
-            oauth_scopes=scopes,
-        )
 
     if use_autoscaling:
         gcp.container.NodePool(
@@ -121,6 +127,8 @@ def provision() -> None:
     pulumi.export("gcp_project", project_id)
     pulumi.export("gcp_region", region)
     pulumi.export("cluster_name", cluster_name)
+    pulumi.export("gke_node_disk_gb", node_disk_gb)
+    pulumi.export("gke_node_disk_type", node_disk_type)
     pulumi.export("cluster_endpoint", cluster.endpoint)
     pulumi.export("artifact_repository_id", repo_id)
     pulumi.export("artifact_registry_url", pulumi.Output.concat(region, "-docker.pkg.dev/", project_id, "/", repo_id))

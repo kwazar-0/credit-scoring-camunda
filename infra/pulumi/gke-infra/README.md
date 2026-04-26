@@ -22,6 +22,8 @@ config:
 
 ## Deploy
 
+Use the same `pulumi-gcp` major version as `../requirements.txt` (shared `venv` under `infra/pulumi/` is fine).
+
 ```bash
 cd infra/pulumi/gke-infra
 python3 -m venv venv && source venv/bin/activate

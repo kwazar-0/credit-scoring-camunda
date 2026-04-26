@@ -14,6 +14,9 @@ project_id = cfg.require("project")
 region = cfg.get("region") or "europe-central2"
 # Региональный кластер (HA); private nodes + публичный endpoint мастера для kubectl с рабочей станции.
 stack_label = "cs-sandbox"
+# Pet: small boot disk + pd-standard — lower SSD_TOTAL_GB quota use than GKE defaults.
+GKE_NODE_DISK_GB = 25
+GKE_NODE_DISK_TYPE = "pd-standard"
 
 compute_api = gcp.projects.Service(
     "compute_api",
@@ -146,6 +149,12 @@ cluster = gcp.container.Cluster(
     initial_node_count=1,
     network=network.self_link,
     subnetwork=subnet.self_link,
+    node_config=gcp.container.ClusterNodeConfigArgs(
+        machine_type="e2-standard-4",
+        disk_size_gb=GKE_NODE_DISK_GB,
+        disk_type=GKE_NODE_DISK_TYPE,
+        oauth_scopes=[],
+    ),
     ip_allocation_policy=gcp.container.ClusterIpAllocationPolicyArgs(
         cluster_secondary_range_name="pods",
         services_secondary_range_name="services",
@@ -169,6 +178,8 @@ gcp.container.NodePool(
     node_count=1,
     node_config=gcp.container.ClusterNodeConfigArgs(
         machine_type="e2-standard-4",
+        disk_size_gb=GKE_NODE_DISK_GB,
+        disk_type=GKE_NODE_DISK_TYPE,
         oauth_scopes=[],
     ),
     opts=pulumi.ResourceOptions(depends_on=[cluster]),
@@ -176,6 +187,8 @@ gcp.container.NodePool(
 
 pulumi.export("gcp_project", project_id)
 pulumi.export("gcp_region", region)
+pulumi.export("gke_node_disk_gb", GKE_NODE_DISK_GB)
+pulumi.export("gke_node_disk_type", GKE_NODE_DISK_TYPE)
 pulumi.export(
     "connect_cmd",
     pulumi.Output.concat(

@@ -1,5 +1,7 @@
 """
-Pulumi: GCP infrastructure — stackRole legacy | infra-core | infra-data | infra-runtime; specs in doc/_archive/2026-04-20/.
+Pulumi: GCP infrastructure — stackRole legacy | infra-core | infra-data | infra-runtime.
+
+Canonical docs: docs-site (e.g. infra-pulumi-iac). Historical notes: doc/_archive/.
 
 - legacy (default): GCS (raw, processed, embeddings) + BQ + Artifact Registry + optional GitHub WIF
 - infra-core: VPC, Private Service Access, optional GitHub WIF
