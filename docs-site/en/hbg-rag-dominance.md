@@ -6,7 +6,7 @@
 | **Related** | [hr-offers-hbg](/en/hr-offers-hbg) — job specs, RACI, 11-stage workflow, 6×11 matrix |
 | **Default region (IaC)** | `europe-central2` (see repo `.cursorrules`, `access_matrix` in [hr-offers-hbg](/en/hr-offers-hbg)) |
 
-**Other languages:** [Русский](/hbg-rag-dominance) · [Polski](/pl/hbg-rag-dominance)
+**Other languages:** [Русский](/ru/hbg-rag-dominance) · [Polski](/pl/hbg-rag-dominance)
 
 ---
 

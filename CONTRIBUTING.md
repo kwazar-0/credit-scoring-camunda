@@ -2,7 +2,7 @@
 
 ## Branches and releases
 
-See **[docs-site/git-workflow.md](docs-site/git-workflow.md)** (integration **`develop`**, production **`main`**, tags **`v*`**). Branch notes: **[docs-site/branch-notes.md](docs-site/branch-notes.md)**. GitHub UI: **[docs-site/github-setup.md](docs-site/github-setup.md)**.
+See **[docs-site/ru/git-workflow.md](docs-site/ru/git-workflow.md)** (integration **`develop`**, production **`main`**, tags **`v*`**). Branch notes: **[docs-site/ru/branch-notes.md](docs-site/ru/branch-notes.md)**. GitHub UI: **[docs-site/ru/github-setup.md](docs-site/ru/github-setup.md)**.
 
 Release branch helper: `./scripts/create-release-branch.sh 1.2.0` or `make release-branch VERSION=1.2.0`.
 

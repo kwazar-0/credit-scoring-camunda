@@ -1,6 +1,6 @@
 # Git: ветки, релизы и окружения
 
-Согласовано с [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (роли), **[github-setup.md](github-setup.md)** и **[branch-notes.md](branch-notes.md)**. Remote по умолчанию: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Имена репозитория, тегов и папки клона: **[naming.md](naming.md)**.
+Согласовано с [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (роли), **[github-setup.md](github-setup.md)** и **[branch-notes.md](branch-notes.md)**. Remote по умолчанию: `git@github.com:kwazar-0/credit-scoring-camunda.git`. Имена репозитория, тегов и папки клона: **[naming.md](naming.md)**.
 
 ---
 

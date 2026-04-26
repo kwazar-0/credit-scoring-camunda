@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 roles and 6 GitHub accounts
 
-This doc maps **logical roles** (see [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) and [prompt.md](prompt.md) §9) to **six GitHub users** in [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS) reviews.
+This doc maps **logical roles** (see [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) and [prompt.md](prompt.md) §9) to **six GitHub users** in [`.github/CODEOWNERS`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.github/CODEOWNERS) reviews. Full lifecycle by **persona** (ok-admin, gw-devops, …): [team-11x6-organization](/en/team-11x6-organization).
 
 Example fork: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Logins must match real `@username` values; if you rename, update this file and `CODEOWNERS`.
 
@@ -19,7 +19,7 @@ The other **8 roles** (1–4, 7, 9–11) are spread across **six people** — re
 | Account | Which of the 11 roles (example) |
 |---------|----------------------------------|
 | **U1** `@kwazar-0` | **1** devops/sre, part of **7** (with U4), **8** on-call, part of **9** (release with U2) |
-| **U2** `@OlehKondratow` | **2** dev-developer, **11** ML, part of **9** release, part of **10** data (with U5) |
+| **U2** `@kwazar-0` | **2** dev-developer, **11** ML, part of **9** release, part of **10** data (with U5) |
 | **U3** `@tempb59-commits` | **3** dev-tester, **4** ref-tester |
 | **U4** `@geraltwilkbialy-cloud` | **7** security / compliance (policies) |
 | **U5** `@olehkondracki-prog` | **10** data engineer, help on **2** and **11** in data area |
@@ -32,7 +32,7 @@ If **release** and **security** must be *strictly* different (SOX, etc.), move *
 | # | GitHub | Typical focus in the role matrix |
 |---|--------|-----------------------------------|
 | U1 | `@kwazar-0` | Platform, fork owner, IaC incidents |
-| U2 | `@OlehKondratow` | App dev, ML/RAG, release-related code |
+| U2 | `@kwazar-0` | App dev, ML/RAG, release-related code |
 | U3 | `@tempb59-commits` | QA (dev/ref), BPMN/DMN from testing |
 | U4 | `@geraltwilkbialy-cloud` | Security / compliance |
 | U5 | `@olehkondracki-prog` | Data / pipelines, dev support |

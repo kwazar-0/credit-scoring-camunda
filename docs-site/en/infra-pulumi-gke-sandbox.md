@@ -1,8 +1,8 @@
 # Pulumi `gke-infra` stack (GKE, Cloud SQL, GCS, Artifact Registry)
 
-**Scope:** [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) is a **standalone** Pulumi project (its own `Pulumi.yaml`, separate from [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi)). The program [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) provisions **Artifact Registry**, a **GCS bucket**, **private Cloud SQL (PostgreSQL 15)** and a **regional GKE** cluster in **europe-central2** (configurable as `gcp:region`, default `europe-central2`). It is a sandbox all-in-one stack. The **canonical** product IaC in this repository is still **`infra/pulumi/`** (default **`europe-central2`**, `hbg-*` naming). **Do not** apply both projects to the same GCP project without a deliberate resource naming and state plan.
+**Scope:** [`infra/pulumi/gke-infra/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) is a **standalone** Pulumi project (its own `Pulumi.yaml`, separate from [`infra/pulumi/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/infra/pulumi)). The program [__main__.py](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) provisions **Artifact Registry**, a **GCS bucket**, **private Cloud SQL (PostgreSQL 15)** and a **regional GKE** cluster in **europe-central2** (configurable as `gcp:region`, default `europe-central2`). It is a sandbox all-in-one stack. The **canonical** product IaC in this repository is still **`infra/pulumi/`** (default **`europe-central2`**, `hbg-*` naming). **Do not** apply both projects to the same GCP project without a deliberate resource naming and state plan.
 
-**Also:** [Russian version of this page →](/infra-pulumi-gke-sandbox) · in-repo: [`README.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
+**Also:** [Russian version of this page →](/ru/infra-pulumi-gke-sandbox) · in-repo: [`README.md`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## 2. Region and project layout
 
-- **Regional** GKE and regional Cloud SQL/AR/GCS: **`europe-central2`** (default) via `gcp:region` — same default as the monorepo policy in [.cursorrules](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.cursorrules).
+- **Regional** GKE and regional Cloud SQL/AR/GCS: **`europe-central2`** (default) via `gcp:region` — same default as the monorepo policy in [.cursorrules](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.cursorrules).
 - Resource name prefix in code: **`cs-sandbox-*`**, not `hbg-*` from the main Pulumi app — still a separate stack and state file.
 - `Pulumi.dev.yaml` in the folder may use a **placeholder** project id; set `gcp:project` in your stack.
 
@@ -33,7 +33,7 @@
 ## 3. Prerequisites
 
 - **Tools:** Pulumi CLI, `gcloud`, `kubectl`, Docker, `helm` (if deploying apps), Python 3.10+.
-- **GCP:** billing, APIs enabled by the Pulumi `projects.Service` resources (compute, servicenetworking, container, sqladmin, storage, artifactregistry). You can also use: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) for baseline IAM/API enablement.
+- **GCP:** billing, APIs enabled by the Pulumi `projects.Service` resources (compute, servicenetworking, container, sqladmin, storage, artifactregistry). You can also use: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) for baseline IAM/API enablement.
 - **Auth:** `gcloud auth application-default login` (or a service account key — do not commit).
 - **Python:** `cd infra/pulumi/gke-infra && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt` (uses `pulumi-random` for bucket name suffix).
 
@@ -95,7 +95,7 @@ Bucket name is unique per run (random suffix on create). **No** `force_destroy` 
 
 ## 7. Camunda 8 (Helm) — example
 
-The sample node pool is small (**1 × e2-standard-4**). Size Elasticsearch and other components to fit available RAM. Point `worker/` `ZEEBE_ADDRESS` at your in-cluster gateway (see [`k8s/hbg/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/k8s/hbg)).
+The sample node pool is small (**1 × e2-standard-4**). Size Elasticsearch and other components to fit available RAM. Point `worker/` `ZEEBE_ADDRESS` at your in-cluster gateway (see [`k8s/hbg/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/k8s/hbg)).
 
 ```bash
 kubectl create namespace camunda-8

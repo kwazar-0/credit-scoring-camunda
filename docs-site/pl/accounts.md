@@ -6,7 +6,7 @@ Ten dokument tłumaczy, **które repozytorium na GitHubie jest źródłem prawdy
 
 | Element | Wartość |
 |---------|---------|
-| **Główne repozytorium** | [OlehKondratow/credit-scoring-camunda](https://github.com/OlehKondratow/credit-scoring-camunda) |
+| **Główne repozytorium** | [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) |
 | **Domyślna gałąź integracji** | `develop` (zob. [git-workflow.md](git-workflow.md)) |
 
 Inne remotes (forki, mirrory) mogą istnieć lokalnie; traktuj je jako **prywatne / przejściowe**, nie jako Źródło prawdy dla releasów czy CI.
@@ -29,6 +29,6 @@ Lokalne notatki wymieniały **kilka par** `user.name` / `user.email` (tymczasowe
 
 ## Zobacz też
 
-- [GOVERNANCE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/GOVERNANCE.md)
-- [CONTRIBUTING.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/CONTRIBUTING.md)
-- [SECURITY.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/SECURITY.md)
+- [GOVERNANCE.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/GOVERNANCE.md)
+- [CONTRIBUTING.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/CONTRIBUTING.md)
+- [SECURITY.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/SECURITY.md)

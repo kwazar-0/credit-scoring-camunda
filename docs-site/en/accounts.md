@@ -6,7 +6,7 @@ This document explains **which GitHub repository is canonical** and how to avoid
 
 | Item | Value |
 |------|--------|
-| **Primary GitHub repo** | [OlehKondratow/credit-scoring-camunda](https://github.com/OlehKondratow/credit-scoring-camunda) |
+| **Primary GitHub repo** | [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) |
 | **Default integration branch** | `develop` (see [git-workflow.md](git-workflow.md)) |
 
 Other remotes (forks, mirrors, or legacy clones) may exist on developers’ machines; treat them as **personal or transitional**, not as the source of truth for releases or CI.
@@ -31,6 +31,6 @@ A local note file previously listed **several distinct `user.name` / `user.email
 
 ## Related
 
-- [GOVERNANCE.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/GOVERNANCE.md) — maintainers
-- [CONTRIBUTING.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/CONTRIBUTING.md) — branches and PRs
-- [SECURITY.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/SECURITY.md) — reporting issues safely
+- [GOVERNANCE.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/GOVERNANCE.md) — maintainers
+- [CONTRIBUTING.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/CONTRIBUTING.md) — branches and PRs
+- [SECURITY.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/SECURITY.md) — reporting issues safely

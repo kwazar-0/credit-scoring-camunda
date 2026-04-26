@@ -12,12 +12,13 @@
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Fazy, kolejność, linki — **punkt wejścia** |
 | [prompt.md](prompt.md) §1–8 | Handoff, produkt, plan, ścieżki w repo |
 | [infra-pulumi-iac.md](infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC, stosy — **kanon IaC** w tej witrynie |
+| [`infra/README.md` (w repo)](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md) | **Bootstrap pet-project:** billing, IAM, GCS state, `infra-core` / split stosy, typowe błędy |
 | [piaskownica gke →](infra-pulumi-gke-sandbox.md) | Osobny Pulumi (ten sam region domyślnie; nie łącz VPC/state z głównym stosem) |
 | [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
 | [ml-data-rag.md](ml-data-rag.md) | Vertex, embeddingi, env backendu |
 | [hbg-rag-dominance.md](hbg-rag-dominance.md) | HBG: strategia platformy, role U1–U6 |
 | [hr-offers-hbg.md](hr-offers-hbg.md) | HBG: oferty, RACI, 11 etapów, macierz 6×11 |
-| [../scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Włączanie API GCP (CLI) |
+| [../scripts/gcp-enable-apis-iam.sh](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Włączanie API GCP (CLI) |
 
 ## Tor B — Git, GitHub, konwencje
 
@@ -32,6 +33,8 @@
 
 | Dokument | Zastosowanie |
 |----------|----------------|
+| [team-11x6-organization.md](team-11x6-organization.md) | **Zespół 11×6:** koncepcja (warstwy, SoD, SDLC) + linki do **sześciu person** z pełnym cyklem rozwoju |
+| [team-persona-ok-admin.md](team-persona-ok-admin.md) · [gw-devops](team-persona-gw-devops.md) · [ux-dev](team-persona-ux-dev.md) · [sh-dev](team-persona-sh-dev.md) · [pk-qa](team-persona-pk-qa.md) · [ok-audit](team-persona-ok-audit.md) | Jedna strona na konto: mandat, fazy SDLC, GitHub/GCP, interakcje, antywzorce |
 | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 ról × GCP, 6 kont; szczegóły — [prompt](prompt.md) §9 |
 | [github-codeowners-matrix.md](github-codeowners-matrix.md) | Role ↔ GitHub, CODEOWNERS |
 | [accounts.md](accounts.md) | Kanoniczny remote; lokalne PII w `accounts.local.md` (gitignore) |
@@ -45,6 +48,6 @@
 
 ---
 
-**Katalogowy [README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/README.md)** — skrót repozytorium i link tutaj.
+**Katalogowy [README.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/README.md)** — skrót repozytorium i link tutaj.
 
-> [Русский: оглавление](/toc) · [English: table of contents](/en/toc)
+> [Русский: оглавление](/ru/toc) · [English: table of contents](/en/toc)

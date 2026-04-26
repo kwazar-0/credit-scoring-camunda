@@ -125,5 +125,21 @@ def provision() -> None:
     pulumi.export("artifact_repository_id", repo_id)
     pulumi.export("artifact_registry_url", pulumi.Output.concat(region, "-docker.pkg.dev/", project_id, "/", repo_id))
     pulumi.export("stack_role", "infra-runtime")
+    pulumi.export(
+        "gcloud_get_credentials",
+        pulumi.Output.concat(
+            "gcloud container clusters get-credentials ",
+            cluster.name,
+            " --region ",
+            region,
+            " --project ",
+            project_id,
+        ),
+    )
+    pulumi.export(
+        "kubectl_port_forward_hint",
+        "kubectl -n hbg port-forward svc/credit-backend 8000:8000 & "
+        "kubectl -n hbg port-forward svc/credit-ui 8501:8501",
+    )
 
     provision_vertex(provider, project_id)

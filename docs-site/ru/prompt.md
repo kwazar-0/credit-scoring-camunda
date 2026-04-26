@@ -16,7 +16,7 @@
 
 | Что | Значение |
 |-----|-----------|
-| **Remote** | `git@github.com:OlehKondratow/credit-scoring-camunda.git` |
+| **Remote** | `git@github.com:kwazar-0/credit-scoring-camunda.git` |
 | **Default branch на GitHub** | Рекомендуется **`develop`** (интеграция); **`main`** — production. См. **[git-workflow.md](git-workflow.md)**, **[branch-notes.md](branch-notes.md)**. |
 | **Ветка `main`** | **Production** — защищённая линия для прода (см. github-setup). |
 | **Тег релиза** | **`v1.0.0`** — снимок нового контура (при необходимости обновлять осторожно на remote). |
@@ -34,10 +34,10 @@
 | **[infra-pulumi-iac.md](infra-pulumi-iac.md)** | **Актуальная** документация Pulumi на этом сайте: `credit-scoring:stackRole`, split стеков, ссылки в код. |
 | **`infra/pulumi/`** (в репо) | **Основной IaC (Python).** Содержимое зависит от `stackRole` (см. [infra-pulumi-iac](infra-pulumi-iac.md)); регион по умолчанию **`europe-central2`**. Venv: **`infra/pulumi/venv`** (`Pulumi.yaml`: `virtualenv: venv`). |
 | **[gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)** | Матрица: 11 ролей × сервисы GCP + 6 учёток; согласовано с [prompt](prompt.md) §9. |
-| **[infra-pulumi-gke-sandbox.md](infra-pulumi-gke-sandbox.md)** | **Опциональный** отдельный Pulumi `gke-infra` (по умолчанию тот же **`europe-central2`**, другие имена; [EN](en/infra-pulumi-gke-sandbox.md)). **Не** смешивать `pulumi up` с основым стеком в одном project без плана (VPC/PSA/SQL). |
+| **[infra-pulumi-gke-sandbox.md](infra-pulumi-gke-sandbox.md)** | **Опциональный** отдельный Pulumi `gke-infra` (по умолчанию тот же **`europe-central2`**, другие имена; [EN](/en/infra-pulumi-gke-sandbox)). **Не** смешивать `pulumi up` с основым стеком в одном project без плана (VPC/PSA/SQL). |
 | **`infra/README.md`** (в репо) | Один экран: ссылка на **этот** сайт и `pulumi/`. |
-| **[hbg-rag-dominance.md](hbg-rag-dominance.md)** | Оргмодель HBG: стратегия платформы, роли U1–U6 (вымысел; [EN](en/hbg-rag-dominance.md)). |
-| **[hr-offers-hbg.md](hr-offers-hbg.md)** | Вакансии, RACI, 11 этапов workflow, матрица 6×11 ([EN](en/hr-offers-hbg.md)). |
+| **[hbg-rag-dominance.md](hbg-rag-dominance.md)** | Оргмодель HBG: стратегия платформы, роли U1–U6 (вымысел; [EN](/en/hbg-rag-dominance)). |
+| **[hr-offers-hbg.md](hr-offers-hbg.md)** | Вакансии, RACI, 11 этапов workflow, матрица 6×11 ([EN](/en/hr-offers-hbg)). |
 
 **Кластер:** **GKE Standard** (не **Autopilot**). GKE в основом дереве Pulumi — при **`stackRole: infra-runtime`** (см. [infra-pulumi-iac](infra-pulumi-iac.md)) или песочница **[gke-infra](infra-pulumi-gke-sandbox.md)** (тоже по умолчанию **`europe-central2`**, отдельные имена `cs-sandbox-*`).
 
@@ -201,7 +201,7 @@
 
 # System Prompt: HBG infrastructure (Handlowy Bank Galicyjski) & Governance
 
-**Context:** Ты — Lead Cloud Architect & DevSecOps Engineer. Твоя задача — спроектировать и реализовать инфраструктуру для кредитного конвейера на базе Camunda (remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`).
+**Context:** Ты — Lead Cloud Architect & DevSecOps Engineer. Твоя задача — спроектировать и реализовать инфраструктуру для кредитного конвейера на базе Camunda (remote: `git@github.com:kwazar-0/credit-scoring-camunda.git`).
 
 ## 1. Технический Стек
 * **Cloud:** GCP (Google Cloud Platform).

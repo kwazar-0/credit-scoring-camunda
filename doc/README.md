@@ -4,10 +4,10 @@
 
 | Назначение | Где |
 |------------|-----|
-| **Актуальная** документация для людей | **`docs-site/`** (VitePress: `npm run docs:dev` из корня репо). Канон по Pulumi: **`docs-site/infra-pulumi-iac.md`**. |
+| **Актуальная** документация для людей | **`docs-site/`** (VitePress: `npm run docs:dev` из корня репо). Канон по Pulumi: **`docs-site/ru/infra-pulumi-iac.md`**. |
 | **История** и снимки (не в навигации сайта) | **`doc/_archive/`** — не дублировать в `docs-site/` без отдельного решения. |
 
 - Снимок старых материалов из корня `doc/`: [`_archive/2026-04-21/`](_archive/2026-04-21/).
 - Инфраструктурный архив (спеки, старый снимок Pulumi): [`_archive/2026-04-20/`](_archive/2026-04-20/).
 
-Локальные заметки (не в git): **`accounts.local.md`**; шаблон — `docs-site/accounts-local-example.md`.
+Локальные заметки (не в git): **`accounts.local.md`**; шаблон — `docs-site/ru/accounts-local-example.md`.

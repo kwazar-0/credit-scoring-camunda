@@ -8,7 +8,7 @@
 |------|------------------|
 | **Product / documentation** | **Handlowy Bank Galicyjski** (short **HBG**; fictitious sample bank) |
 | **Default branch on GitHub** | **`main`**; **`develop`** for integration (do not use `Credit-Scoring-V2` as the default *name* for the branch) |
-| **Remote** | `git@github.com:OlehKondratow/credit-scoring-camunda.git` — the **GitHub repository name** can be changed in *Settings → General → Repository name* (e.g. `hbg`); GitHub rewrites URL; set new `remote url`. |
+| **Remote** | `git@github.com:kwazar-0/credit-scoring-camunda.git` — the **GitHub repository name** can be changed in *Settings → General → Repository name* (e.g. `hbg`); GitHub rewrites URL; set new `remote url`. |
 | **Release tags** | **`v1.0.0`**, `v1.1.0`, … (SemVer) |
 | **Local clone folder** | Any convenient path, e.g. `~/src/hbg-worktree` — does not affect code. |
 
@@ -29,7 +29,7 @@
 2. Update `git remote`:
 
    ```bash
-   git remote set-url origin git@github.com:OlehKondratow/NEW_NAME.git
+   git remote set-url origin git@github.com:kwazar-0/NEW_NAME.git
    ```
 
 3. Check **CI badges**, Argo CD `repoURL`, doc links — update old URLs.

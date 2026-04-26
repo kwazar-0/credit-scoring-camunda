@@ -2,6 +2,8 @@
 
 Zgodne z [`prompt.md`](prompt.md) §9.1–9.2 (w tym **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) i hardening §9.6. Region domyślny: **`europe-central2`**.
 
+**Organizacja zespołu (koncepcja + sześć person, pełny SDLC):** [team-11x6-organization](/pl/team-11x6-organization).
+
 ## 1. Czy 11 ról i „6 użytkowników”?
 
 Tak. **11** to *role logiczne*. **6** to *ludzie* (konta Google / grupy). Jedna osoba **nosi pakiet** ról; **UAT** i **App** zwykle **bez** konsoli GCP; **BG** (break-glass) to rola **zdarzeniowa**, nie stały profil.

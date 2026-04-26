@@ -5,8 +5,9 @@
 | **Status** | Internal; recruiting and planning |
 | **Link** | [hbg-rag-dominance](/en/hbg-rag-dominance) — strategy and roles U1–U6 |
 | **Matrix version** | 1.1 (see Annex B) |
+| **11×6 team** | [team-11x6-organization](/en/team-11x6-organization) — team concept and six personas with full SDLC |
 
-**Other languages:** [Русский](/hr-offers-hbg) · [Polski](/pl/hr-offers-hbg)
+**Other languages:** [Русский](/ru/hr-offers-hbg) · [Polski](/pl/hr-offers-hbg)
 
 ---
 

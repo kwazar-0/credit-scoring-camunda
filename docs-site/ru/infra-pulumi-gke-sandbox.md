@@ -1,8 +1,8 @@
 # Pulumi: стек `gke-infra` (GKE, Cloud SQL, GCS, Artifact Registry)
 
-**Назначение:** каталог [`infra/pulumi/gke-infra/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) — **отдельный** Pulumi-проект (свой `Pulumi.yaml`), не путать с основым [`infra/pulumi/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/infra/pulumi). Код [__main__.py](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) создаёт **VPC** (с PSA), **Artifact Registry**, бакет **GCS** с **версионированием**, **приватный** **Cloud SQL (PostgreSQL 15)** без публичного IPv4 и **региональный** кластер **GKE** в **europe-central2** (по умолчанию; `gcp:region`). **Каноничный** продуктовый IaC в репозитории — **`infra/pulumi/`** (по умолчанию **europe-central2**, префиксы `hbg-*`). **Не** накатывайте оба стека в один GCP project без согласования имён и state.
+**Назначение:** каталог [`infra/pulumi/gke-infra/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/infra/pulumi/gke-infra) — **отдельный** Pulumi-проект (свой `Pulumi.yaml`), не путать с основым [`infra/pulumi/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/infra/pulumi). Код [__main__.py](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/__main__.py) создаёт **VPC** (с PSA), **Artifact Registry**, бакет **GCS** с **версионированием**, **приватный** **Cloud SQL (PostgreSQL 15)** без публичного IPv4 и **региональный** кластер **GKE** в **europe-central2** (по умолчанию; `gcp:region`). **Каноничный** продуктовый IaC в репозитории — **`infra/pulumi/`** (по умолчанию **europe-central2**, префиксы `hbg-*`). **Не** накатывайте оба стека в один GCP project без согласования имён и state.
 
-**English:** [infra-pulumi-gke-sandbox (EN) →](/en/infra-pulumi-gke-sandbox) · в репо: [`README.md`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
+**English:** [infra-pulumi-gke-sandbox (EN) →](/en/infra-pulumi-gke-sandbox) · в репо: [`README.md`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/pulumi/gke-infra/README.md).
 
 ---
 
@@ -32,7 +32,7 @@
 ## 3. Предпосылки
 
 - Pulumi CLI, `gcloud`, `kubectl`, Docker, `helm` (по необходимости), Python 3.10+.
-- API: включение через ресурсы `projects.Service` в `__main__.py` при необходимости дополнить скриптом [`scripts/gcp-enable-apis-iam.sh`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh).
+- API: включение через ресурсы `projects.Service` в `__main__.py` при необходимости дополнить скриптом [`scripts/gcp-enable-apis-iam.sh`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh).
 - `gcloud auth application-default login` (без коммита JSON-ключей).
 - `cd infra/pulumi/gke-infra && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt`.
 
@@ -94,7 +94,7 @@ docker push europe-central2-docker.pkg.dev/PROJECT_ID/cs-sandbox-docker/my-app:1
 
 ## 7. Camunda 8 (Helm) — пример
 
-Кластер небольшой (1 нода **e2-standard-4**). Память под **Elasticsearch** и остальное планируйте с запасом. `ZEEBE_ADDRESS` для `worker/` — на gateway в кластере, см. [`k8s/hbg/`](https://github.com/OlehKondratow/credit-scoring-camunda/tree/develop/k8s/hbg).
+Кластер небольшой (1 нода **e2-standard-4**). Память под **Elasticsearch** и остальное планируйте с запасом. `ZEEBE_ADDRESS` для `worker/` — на gateway в кластере, см. [`k8s/hbg/`](https://github.com/kwazar-0/credit-scoring-camunda/tree/develop/k8s/hbg).
 
 ---
 

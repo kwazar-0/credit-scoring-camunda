@@ -61,14 +61,14 @@ def provision(
         project=project_id,
     )
 
-    gcp.project.IAMMember(
+    gcp.projects.IAMMember(
         "vertex_sa_aiplatform_user",
         project=project_id,
         role="roles/aiplatform.user",
         member=pulumi.Output.concat("serviceAccount:", vertex_sa.email),
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[vertex_sa]),
     )
-    gcp.project.IAMMember(
+    gcp.projects.IAMMember(
         "csql_sa_client",
         project=project_id,
         role="roles/cloudsql.client",

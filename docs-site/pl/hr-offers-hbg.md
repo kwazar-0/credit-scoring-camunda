@@ -5,8 +5,9 @@
 | **Status** | Wewnętrzny; rekrutacja i planowanie |
 | **Powiązanie** | [hbg-rag-dominance](/pl/hbg-rag-dominance) — strategia i role U1–U6 |
 | **Wersja macierzy** | 1.1 (załącznik B) |
+| **Zespół 11×6** | [team-11x6-organization](/pl/team-11x6-organization) — koncepcja i sześć person z pełnym SDLC |
 
-**Inne języki:** [Русский](/hr-offers-hbg) · [English](/en/hr-offers-hbg)
+**Inne języki:** [Русский](/ru/hr-offers-hbg) · [English](/en/hr-offers-hbg)
 
 ---
 

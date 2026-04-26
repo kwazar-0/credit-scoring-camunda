@@ -1,6 +1,6 @@
 # Git: gałęzie, release’y, środowiska
 
-Zgodne z [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (role), **[github-setup.md](github-setup.md)**, **[branch-notes.md](branch-notes.md)**. Domyślny remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Nazwa repozytorium, tagi, katalog klonu: **[naming.md](naming.md)**.
+Zgodne z [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (role), **[github-setup.md](github-setup.md)**, **[branch-notes.md](branch-notes.md)**. Domyślny remote: `git@github.com:kwazar-0/credit-scoring-camunda.git`. Nazwa repozytorium, tagi, katalog klonu: **[naming.md](naming.md)**.
 
 ---
 

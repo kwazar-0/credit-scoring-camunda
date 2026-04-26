@@ -6,7 +6,7 @@
 | **Powiązane** | [hr-offers-hbg](/pl/hr-offers-hbg) — oferty, RACI, 11 etapów, macierz 6×11 |
 | **Region domyślny (IaC)** | `europe-central2` (repozytorium `.cursorrules`, `access_matrix` w [hr-offers-hbg](/pl/hr-offers-hbg)) |
 
-**Inne języki:** [Русский](/hbg-rag-dominance) · [English](/en/hbg-rag-dominance)
+**Inne języki:** [Русский](/ru/hbg-rag-dominance) · [English](/en/hbg-rag-dominance)
 
 ---
 

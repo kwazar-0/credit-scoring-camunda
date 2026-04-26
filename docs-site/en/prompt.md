@@ -3,7 +3,7 @@
 ::: tip Full specification (Russian)
 The **authoritative, complete** `prompt` (product plan, `infra/`, git, **§9** hardening) is maintained in **Russian** as the working language for this repository.
 
-➡️ **[Read the full `prompt` in Russian →](/prompt)**
+➡️ **[Read the full `prompt` in Russian →](/ru/prompt)**
 :::
 
 ## What this page is (EN)
@@ -16,8 +16,8 @@ The **authoritative, complete** `prompt` (product plan, `infra/`, git, **§9** h
 
 1. [INFRA-IMPLEMENTATION](INFRA-IMPLEMENTATION.md) (roadmap)  
 2. [Table of contents](toc.md)  
-3. The Russian **[prompt](/prompt)** for full narrative.
+3. The Russian **[prompt](/ru/prompt)** for full narrative.
 
 ---
 
-[Русский](/prompt) · [Polski: prompt](/pl/prompt)
+[Русский](/ru/prompt) · [Polski: prompt](/pl/prompt)

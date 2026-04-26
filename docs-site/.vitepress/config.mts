@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 
-const githubRepo = "https://github.com/OlehKondratow/credit-scoring-camunda";
+const githubRepo = "https://github.com/kwazar-0/credit-scoring-camunda";
 
 /** For GitHub project Pages, set in CI, e.g. VITEPRESS_BASE=/credit-scoring-camunda/ (must end with /). */
 function vitepressBase(): string {
@@ -16,39 +16,51 @@ const sidebarRu = [
   {
     text: "Старт",
     items: [
-      { text: "Оглавление (все страницы)", link: "/toc" },
-      { text: "Архитектура (обзор)", link: "/architecture" },
-      { text: "Implementation track", link: "/INFRA-IMPLEMENTATION" },
-      { text: "Pulumi: основной IaC", link: "/infra-pulumi-iac" },
-      { text: "CLI / console", link: "/cli-console" },
-      { text: "Pulumi: gke-infra (песочница)", link: "/infra-pulumi-gke-sandbox" },
+      { text: "Оглавление (все страницы)", link: "/ru/toc" },
+      { text: "Архитектура (обзор)", link: "/ru/architecture" },
+      { text: "Implementation track", link: "/ru/INFRA-IMPLEMENTATION" },
+      { text: "Pulumi: основной IaC", link: "/ru/infra-pulumi-iac" },
+      { text: "CLI / console", link: "/ru/cli-console" },
+      { text: "Pulumi: gke-infra (песочница)", link: "/ru/infra-pulumi-gke-sandbox" },
     ],
   },
   {
     text: "Продукт",
     items: [
-      { text: "prompt (handoff + §9)", link: "/prompt" },
-      { text: "ML / Data / RAG", link: "/ml-data-rag" },
-      { text: "HBG: стратегия RAG-DOMINANCE", link: "/hbg-rag-dominance" },
-      { text: "HBG: роли и вакансии (HR)", link: "/hr-offers-hbg" },
+      { text: "prompt (handoff + §9)", link: "/ru/prompt" },
+      { text: "ML / Data / RAG", link: "/ru/ml-data-rag" },
+      { text: "HBG: стратегия RAG-DOMINANCE", link: "/ru/hbg-rag-dominance" },
+      { text: "HBG: роли и вакансии (HR)", link: "/ru/hr-offers-hbg" },
     ],
   },
   {
     text: "Git и GitHub",
     items: [
-      { text: "git-workflow", link: "/git-workflow" },
-      { text: "branch-notes", link: "/branch-notes" },
-      { text: "github-setup", link: "/github-setup" },
-      { text: "naming", link: "/naming" },
+      { text: "git-workflow", link: "/ru/git-workflow" },
+      { text: "branch-notes", link: "/ru/branch-notes" },
+      { text: "github-setup", link: "/ru/github-setup" },
+      { text: "naming", link: "/ru/naming" },
     ],
   },
   {
     text: "Доступ и governance",
     items: [
-      { text: "GCP matrix 11×6", link: "/gcp-saas-access-matrix-11x6" },
-      { text: "CODEOWNERS matrix", link: "/github-codeowners-matrix" },
-      { text: "accounts", link: "/accounts" },
-      { text: "accounts (шаблон local)", link: "/accounts-local-example" },
+      { text: "GCP matrix 11×6", link: "/ru/gcp-saas-access-matrix-11x6" },
+      { text: "CODEOWNERS matrix", link: "/ru/github-codeowners-matrix" },
+      { text: "accounts", link: "/ru/accounts" },
+      { text: "accounts (шаблон local)", link: "/ru/accounts-local-example" },
+    ],
+  },
+  {
+    text: "Команда 11×6",
+    items: [
+      { text: "Организация (концепция)", link: "/ru/team-11x6-organization" },
+      { text: "Персона: ok-admin", link: "/ru/team-persona-ok-admin" },
+      { text: "Персона: gw-devops", link: "/ru/team-persona-gw-devops" },
+      { text: "Персона: ux-dev", link: "/ru/team-persona-ux-dev" },
+      { text: "Персона: sh-dev", link: "/ru/team-persona-sh-dev" },
+      { text: "Персона: pk-qa", link: "/ru/team-persona-pk-qa" },
+      { text: "Персона: ok-audit", link: "/ru/team-persona-ok-audit" },
     ],
   },
 ];
@@ -92,6 +104,18 @@ const sidebarEn = [
       { text: "accounts (local template)", link: "/en/accounts-local-example" },
     ],
   },
+  {
+    text: "Team 11×6",
+    items: [
+      { text: "Organisation (concept)", link: "/en/team-11x6-organization" },
+      { text: "Persona: ok-admin", link: "/en/team-persona-ok-admin" },
+      { text: "Persona: gw-devops", link: "/en/team-persona-gw-devops" },
+      { text: "Persona: ux-dev", link: "/en/team-persona-ux-dev" },
+      { text: "Persona: sh-dev", link: "/en/team-persona-sh-dev" },
+      { text: "Persona: pk-qa", link: "/en/team-persona-pk-qa" },
+      { text: "Persona: ok-audit", link: "/en/team-persona-ok-audit" },
+    ],
+  },
 ];
 
 const sidebarPl = [
@@ -133,6 +157,18 @@ const sidebarPl = [
       { text: "accounts (szablon local)", link: "/pl/accounts-local-example" },
     ],
   },
+  {
+    text: "Zespół 11×6",
+    items: [
+      { text: "Organizacja (koncepcja)", link: "/pl/team-11x6-organization" },
+      { text: "Persona: ok-admin", link: "/pl/team-persona-ok-admin" },
+      { text: "Persona: gw-devops", link: "/pl/team-persona-gw-devops" },
+      { text: "Persona: ux-dev", link: "/pl/team-persona-ux-dev" },
+      { text: "Persona: sh-dev", link: "/pl/team-persona-sh-dev" },
+      { text: "Persona: pk-qa", link: "/pl/team-persona-pk-qa" },
+      { text: "Persona: ok-audit", link: "/pl/team-persona-ok-audit" },
+    ],
+  },
 ];
 
 export default defineConfig({
@@ -140,18 +176,42 @@ export default defineConfig({
   cleanUrls: true,
   locales: {
     root: {
+      label: "",
+      lang: "en-US",
+      title: "HBG",
+      description:
+        "Camunda 8 + AI credit scoring — documentation (default: PL → /pl/)",
+      themeConfig: {
+        logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
+        nav: [
+          { text: "Polski", link: "/pl/" },
+          { text: "Русский", link: "/ru/" },
+          { text: "English", link: "/en/" },
+          { text: "ADR", link: "/adr" },
+        ],
+        sidebar: false,
+        search: { provider: "local" },
+        socialLinks: [{ icon: "github", link: githubRepo }],
+        footer: {
+          message: "Sources in the repository; GitHub for code and infra/.",
+        },
+      },
+    },
+    ru: {
       label: "Русский",
       lang: "ru-RU",
+      link: "/ru/",
       title: "HBG",
       description:
         "Handlowy Bank Galicyjski (HBG) — Camunda 8 + AI credit scoring — документация (вымысел)",
       themeConfig: {
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
-          { text: "Главная", link: "/" },
-          { text: "Архитектура", link: "/architecture" },
-          { text: "Infra track", link: "/INFRA-IMPLEMENTATION" },
-          { text: "Оглавление", link: "/toc" },
+          { text: "Главная", link: "/ru/" },
+          { text: "Архитектура", link: "/ru/architecture" },
+          { text: "Infra track", link: "/ru/INFRA-IMPLEMENTATION" },
+          { text: "Оглавление", link: "/ru/toc" },
+          { text: "ADR", link: "/adr" },
         ],
         sidebar: sidebarRu,
         search: { provider: "local" },
@@ -175,6 +235,7 @@ export default defineConfig({
           { text: "Architecture", link: "/en/architecture" },
           { text: "Infra track", link: "/en/INFRA-IMPLEMENTATION" },
           { text: "Contents", link: "/en/toc" },
+          { text: "ADR", link: "/adr" },
         ],
         sidebar: sidebarEn,
         search: { provider: "local" },
@@ -198,6 +259,7 @@ export default defineConfig({
           { text: "Architektura", link: "/pl/architecture" },
           { text: "Infra track", link: "/pl/INFRA-IMPLEMENTATION" },
           { text: "Spis treści", link: "/pl/toc" },
+          { text: "ADR", link: "/adr" },
         ],
         sidebar: sidebarPl,
         search: { provider: "local" },

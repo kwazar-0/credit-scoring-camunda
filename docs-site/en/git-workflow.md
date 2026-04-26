@@ -1,6 +1,6 @@
 # Git: branches, releases, and environments
 
-Aligned with [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (roles), **[github-setup.md](github-setup.md)**, and **[branch-notes.md](branch-notes.md)**. Default remote: `git@github.com:OlehKondratow/credit-scoring-camunda.git`. Repository name, tags, and clone path: **[naming.md](naming.md)**.
+Aligned with [prompt.md](prompt.md) (§2), [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) (roles), **[github-setup.md](github-setup.md)**, and **[branch-notes.md](branch-notes.md)**. Default remote: `git@github.com:kwazar-0/credit-scoring-camunda.git`. Repository name, tags, and clone path: **[naming.md](naming.md)**.
 
 ---
 

@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 ролей и 6 учётных записей GitHub
 
-Документ связывает **логические роли** (см. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [prompt.md](prompt.md) §9) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
+Документ связывает **логические роли** (см. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [prompt.md](prompt.md) §9) с **шестью пользователями GitHub**, которые участвуют в ревью через [`.github/CODEOWNERS`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.github/CODEOWNERS). Полный жизненный цикл по **персонам** (ok-admin, gw-devops, …): [team-11x6-organization](team-11x6-organization.md).
 
 Форк для примера: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Логины ниже должны совпадать с реальными `@username` на GitHub; при смене ника обновите и этот файл, и `CODEOWNERS`.
 
@@ -19,7 +19,7 @@
 | Учётка | Какие из 11 ролей закрывает (пример) |
 |--------|--------------------------------------|
 | **U1** `@kwazar-0` | **1** devops/sre, часть **7** (вместе с U4), контакт **8** on-call, часть **9** (release с U2) |
-| **U2** `@OlehKondratow` | **2** dev-developer, **11** ML Engineer, часть **9** release, часть **10** data (с U5) |
+| **U2** `@kwazar-0` | **2** dev-developer, **11** ML Engineer, часть **9** release, часть **10** data (с U5) |
 | **U3** `@tempb59-commits` | **3** dev-tester, **4** ref-tester |
 | **U4** `@geraltwilkbialy-cloud` | **7** security/compliance (основной фокус политик) |
 | **U5** `@olehkondracki-prog` | **10** data-engineer, поддержка **2** и **11** в зоне данных |
@@ -32,7 +32,7 @@
 | # | GitHub | Типичный фокус в матрице ролей |
 |---|--------|--------------------------------|
 | U1 | `@kwazar-0` | Платформа, владелец форка, инциденты IaC |
-| U2 | `@OlehKondratow` | Разработка приложения, ML/RAG, релизный код |
+| U2 | `@kwazar-0` | Разработка приложения, ML/RAG, релизный код |
 | U3 | `@tempb59-commits` | QA (dev/ref), процессы в BPMN/DMN с точки зрения тестирования |
 | U4 | `@geraltwilkbialy-cloud` | Security / compliance (политики, чувствительные документы) |
 | U5 | `@olehkondracki-prog` | Data / пайплайны, поддержка разработки |

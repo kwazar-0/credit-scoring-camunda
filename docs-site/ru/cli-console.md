@@ -17,6 +17,47 @@
 
 ---
 
+## How-to: configure workstation
+
+```bash
+# 1) gcloud: account + project + default region
+gcloud auth list
+gcloud config set account tempb418@gmail.com
+gcloud config set project my-camunda8-project
+gcloud config set compute/region europe-central2
+gcloud config set artifacts/location europe-central2
+
+# 2) ADC for SDK/Pulumi provider
+gcloud auth application-default login
+gcloud auth application-default print-access-token >/dev/null && echo "ADC OK"
+
+# 3) Docker access without sudo (re-login may be required)
+sudo usermod -aG docker "$USER"
+newgrp docker
+docker run --rm hello-world
+
+# 4) Pulumi local backend + stack config
+cd "$(git rev-parse --show-toplevel)/infra/pulumi"
+pulumi login --local
+export PULUMI_CONFIG_PASSPHRASE='changeme'
+pulumi stack select dev || pulumi stack init dev
+pulumi config set gcp:project my-camunda8-project
+pulumi config set credit-scoring:region europe-central2
+pulumi config set credit-scoring:clusterName hbg-gke
+```
+
+Быстрая проверка:
+
+```bash
+docker --version
+kubectl version --client
+gcloud config list
+pulumi version
+helm version
+```
+
+---
+
 ## Локально: Docker Compose (Zeebe + backend + worker + UI)
 
 ```bash

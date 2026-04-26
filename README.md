@@ -4,19 +4,19 @@
 
 **Vertex AI** (Vector Search + Gemini), **Camunda 8 / Zeebe**, **GKE (`europe-central2`)**, **Streamlit** dla analityków.
 
-**Документация (VitePress):** **[`docs-site/`](docs-site/)** — `npm run docs:dev` (см. [doc/README.md](doc/README.md)). **Инфра / Pulumi:** [docs-site/infra-pulumi-iac.md](docs-site/infra-pulumi-iac.md), дорожная карта: [INFRA-IMPLEMENTATION](docs-site/INFRA-IMPLEMENTATION.md). **Исторические** файлы — [doc/\_archive/](doc/_archive/) (не в сайт).
+**Документация (VitePress):** **[`docs-site/`](docs-site/)** — `npm run docs:dev` (см. [doc/README.md](doc/README.md)). **Инфра / Pulumi:** [docs-site/ru/infra-pulumi-iac.md](docs-site/ru/infra-pulumi-iac.md), дорожная карта: [INFRA-IMPLEMENTATION](docs-site/ru/INFRA-IMPLEMENTATION.md). **Исторические** файлы — [doc/\_archive/](doc/_archive/) (не в сайт).
 
-| Doc (источник в `docs-site/`) | Purpose |
+| Doc (источник в `docs-site/ru/`) | Purpose |
 |-----|---------|
-| [docs-site/INFRA-IMPLEMENTATION.md](docs-site/INFRA-IMPLEMENTATION.md) | **Старт:** фазы внедрения облака и Camunda + AI |
-| [docs-site/infra-pulumi-iac.md](docs-site/infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC (канон) |
-| [docs-site/toc.md](docs-site/toc.md) | Оглавление: треки A/B/C (infra, Git, governance) |
-| [docs-site/prompt.md](docs-site/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
-| [docs-site/git-workflow.md](docs-site/git-workflow.md) | Branches, `release/*`, tags |
-| [docs-site/branch-notes.md](docs-site/branch-notes.md) | Ветки `main` / `develop`, заметки по релизам |
-| [docs-site/github-setup.md](docs-site/github-setup.md) | Branch protection, Environments (GitHub UI) |
-| [docs-site/naming.md](docs-site/naming.md) | Repo / branch / tag naming (avoid `Credit-Scoring-V2` as brand) |
-| [docs-site/cli-console.md](docs-site/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
+| [docs-site/ru/INFRA-IMPLEMENTATION.md](docs-site/ru/INFRA-IMPLEMENTATION.md) | **Старт:** фазы внедрения облака и Camunda + AI |
+| [docs-site/ru/infra-pulumi-iac.md](docs-site/ru/infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC (канон) |
+| [docs-site/ru/toc.md](docs-site/ru/toc.md) | Оглавление: треки A/B/C (infra, Git, governance) |
+| [docs-site/ru/prompt.md](docs-site/ru/prompt.md) | Handoff §1–8; §9+ enterprise blueprint (не подряд при старте) |
+| [docs-site/ru/git-workflow.md](docs-site/ru/git-workflow.md) | Branches, `release/*`, tags |
+| [docs-site/ru/branch-notes.md](docs-site/ru/branch-notes.md) | Ветки `main` / `develop`, заметки по релизам |
+| [docs-site/ru/github-setup.md](docs-site/ru/github-setup.md) | Branch protection, Environments (GitHub UI) |
+| [docs-site/ru/naming.md](docs-site/ru/naming.md) | Repo / branch / tag naming (avoid `Credit-Scoring-V2` as brand) |
+| [docs-site/ru/cli-console.md](docs-site/ru/cli-console.md) | CLI commands (Pulumi, `kubectl`, Docker) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Tests, PR expectations |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
 
@@ -25,9 +25,9 @@
 | Path | Purpose |
 |------|---------|
 | `infra/pulumi/` | **Основной IaC (Pulumi):** GCS, Artifact Registry, API |
-| `infra/README.md` | Указатель на `docs-site/infra-pulumi-iac` и `pulumi/` |
+| `infra/README.md` | Указатель на `docs-site/ru/infra-pulumi-iac` и `pulumi/` |
 | `doc/_archive/` | Только **история** (роли, снимки Pulumi) — вне VitePress |
-| `docs-site/gcp-saas-access-matrix-11x6.md` | Матрица ролей × GCP (на сайте) |
+| `docs-site/ru/gcp-saas-access-matrix-11x6.md` | Матрица ролей × GCP (на сайте) |
 | `backend/` | FastAPI + LangGraph (`/analyze`) |
 | `worker/` | PyZeebe (`ai-loan-analysis`) |
 | `ui/` | Streamlit |

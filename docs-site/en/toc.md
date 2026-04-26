@@ -12,12 +12,13 @@
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Phases, order, links — **entry point** |
 | [prompt.md](prompt.md) §1–8 | Handoff, product, plan, paths in the repo |
 | [infra-pulumi-iac.md](infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC, stacks — **IaC SoT** on this site |
+| [`infra/README.md` (in repo)](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md) | **Pet-project bootstrap:** billing, IAM, GCS state, `infra-core` / split stacks, common errors |
 | [gke sandbox →](infra-pulumi-gke-sandbox.md) | Separate Pulumi app (same default region; do not mix VPC/state with main stack) |
 | [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
 | [ml-data-rag.md](ml-data-rag.md) | Vertex, embeddings, backend env |
 | [hbg-rag-dominance.md](hbg-rag-dominance.md) | HBG: platform strategy, roles U1–U6 |
 | [hr-offers-hbg.md](hr-offers-hbg.md) | HBG: job specs, RACI, 11 stages, 6×11 matrix |
-| [../scripts/gcp-enable-apis-iam.sh](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Enabling GCP APIs (CLI) |
+| [../scripts/gcp-enable-apis-iam.sh](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Enabling GCP APIs (CLI) |
 
 ## Track B — Git, GitHub, conventions
 
@@ -32,6 +33,8 @@
 
 | Document | Purpose |
 |----------|--------|
+| [team-11x6-organization.md](team-11x6-organization.md) | **11×6 team:** concept (layers, SoD, SDLC) + links to **six persona** pages with full dev lifecycle |
+| [team-persona-ok-admin.md](team-persona-ok-admin.md) · [gw-devops](team-persona-gw-devops.md) · [ux-dev](team-persona-ux-dev.md) · [sh-dev](team-persona-sh-dev.md) · [pk-qa](team-persona-pk-qa.md) · [ok-audit](team-persona-ok-audit.md) | One page per account: mandate, SDLC phases, GitHub/GCP, interactions, anti-patterns |
 | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 roles × GCP, 6 accounts; details — [prompt](prompt.md) §9 |
 | [github-codeowners-matrix.md](github-codeowners-matrix.md) | Roles ↔ GitHub, CODEOWNERS |
 | [accounts.md](accounts.md) | Canonical remote; local PII in `accounts.local.md` (gitignore) |
@@ -45,6 +48,6 @@
 
 ---
 
-**Root [README.md](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/README.md)** gives a short repo overview and a link here.
+**Root [README.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/README.md)** gives a short repo overview and a link here.
 
-> [Русский: оглавление](/toc) · [Polski: spis treści](/pl/toc)
+> [Русский: оглавление](/ru/toc) · [Polski: spis treści](/pl/toc)

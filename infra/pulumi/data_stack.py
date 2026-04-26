@@ -23,6 +23,7 @@ def provision() -> None:
     create_sql = cfg.get_bool("createCloudSql") or False
     sql_tier = cfg.get("cloudSqlTier") or "db-f1-micro"
     bq_dataset_id = cfg.get("bigqueryDatasetId") or "hbg_analytics"
+    cloud_sql_instance_name_opt = (cfg.get("cloudSqlInstanceName") or "").strip() or None
 
     provider = gcp.Provider("gcp", **gcp_provider_args(project_id, region))
 
@@ -91,7 +92,7 @@ def provision() -> None:
             region=region,
             network_self_link=network_link,
             sql_tier=sql_tier,
-            fixed_instance_name=cloud_sql_name_opt,
+            fixed_instance_name=cloud_sql_instance_name_opt,
             bucket_suffix=suffix,
         )
 

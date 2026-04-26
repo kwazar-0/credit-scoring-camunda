@@ -80,4 +80,4 @@ gcloud projects add-iam-policy-binding my-camunda8-project \
 
 ## Актуальный handoff (репо `Credit-Scoring-V2`, не чёрновик выше)
 
-Регион IaC по умолчанию: **`europe-central2`**. Pulumi: `infra/pulumi/__main__.py` → `credit-scoring:stackRole` = `legacy` | `infra-core` | `infra-data` | `infra-runtime`. Подробности: `docs-site/infra-pulumi-iac.md`, `infra/prompt.md`.
+Регион IaC по умолчанию: **`europe-central2`**. Pulumi: `infra/pulumi/__main__.py` → `credit-scoring:stackRole` = `legacy` | `infra-core` | `infra-data` | `infra-runtime`. Подробности: `docs-site/ru/infra-pulumi-iac.md`, `infra/prompt.md`.

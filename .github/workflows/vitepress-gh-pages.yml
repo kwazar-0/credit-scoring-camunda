@@ -1,5 +1,7 @@
-# Публикация VitePress на GitHub Pages (Settings → Pages → Source: GitHub Actions).
-# URL project site: https://<user>.github.io/<repo>/ — путь должен совпадать с VITEPRESS_BASE.
+# Deploy VitePress to GitHub Pages. Requires: Settings → Pages → Source: **GitHub Actions**
+# (not "Deploy from a branch" alone). If deploy fails with 404, enable Pages or approve the `github-pages` environment.
+#
+# Project URL: https://<owner>.github.io/<repo>/  →  VITEPRESS_BASE must match /repo/
 name: Docs (VitePress → GitHub Pages)
 
 on:
@@ -21,23 +23,25 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
       - name: Install
         run: npm ci
-      - name: Build (base для /.github.io/<repo>/)
+      - name: Build (base for https://<owner>.github.io/<repo>/)
         env:
-          # Имя репозитория на GitHub; при переименовании репо — обновить.
-          VITEPRESS_BASE: /credit-scoring-camunda/
+          VITEPRESS_BASE: /${{ github.event.repository.name }}/
         run: npm run docs:build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: docs-site/.vitepress/dist
 
@@ -52,4 +56,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

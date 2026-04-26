@@ -31,4 +31,4 @@ python eval_rag.py --questions fixtures/questions_sample.jsonl --top-k 5
 
 ## Связь с Vertex
 
-После загрузки JSONL в GCS — создание индекса и deploy на endpoint в **Console** или через gcloud (см. `docs-site/ml-data-rag.md`). Pulumi поднимает бакеты и BigQuery; сам индекс Matching Engine часто создают отдельным шагом из-за формата батча.
+После загрузки JSONL в GCS — создание индекса и deploy на endpoint в **Console** или через gcloud (см. `docs-site/ru/ml-data-rag.md`). Pulumi поднимает бакеты и BigQuery; сам индекс Matching Engine часто создают отдельным шагом из-за формата батча.

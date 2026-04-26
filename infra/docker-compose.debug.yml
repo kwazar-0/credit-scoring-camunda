@@ -1,0 +1,19 @@
+# Override for local debugging (use with root docker-compose.yml).
+#   ./infra/scripts/local-compose-debug.sh up --build
+# Or: docker compose -f docker-compose.yml -f infra/docker-compose.debug.yml up
+
+services:
+  backend:
+    environment:
+      LOG_LEVEL: DEBUG
+      PYTHONUNBUFFERED: "1"
+
+  worker:
+    environment:
+      LOG_LEVEL: DEBUG
+      PYTHONUNBUFFERED: "1"
+
+  ui:
+    environment:
+      LOG_LEVEL: DEBUG
+      PYTHONUNBUFFERED: "1"

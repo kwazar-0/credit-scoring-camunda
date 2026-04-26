@@ -23,6 +23,52 @@ The **Credit-Scoring / HBG** (Handlowy Bank Galicyjski) repository is a **demo/t
 
 ---
 
+## Engineering decisions: context, alternatives, trade-offs
+
+This is **not** a duplicate of the [site-wide ADR table](/adr); it explains **why** the stack looks this way for anyone who will change it later.
+
+### Orchestration: Camunda 8, not “code only”
+
+**Alternatives:** orchestration entirely in **LangGraph** (or similar) without BPMN; **Temporal** / hand-rolled sagas; Step-Functions-style cloud workflows.
+
+**Criteria:** explicit **process stages** reviewable beyond pure engineers; **human tasks** and policy branches without redeploying the whole service; audit of “what happened at step N”. A code-first graph fits ML branches poorly as the **sole** carrier of a regulated credit contour.
+
+**Trade-off:** Camunda ops and licensing; BPMN/DMN skills. **Revisit when:** regulators and business accept “code + event log only” and human-in-the-loop is not required in this shape.
+
+### IaC: Pulumi with **split stacks**, not one `up` for everything
+
+**Alternatives:** one large stack; **Terraform** / CDK with modular layout.
+
+**Criteria:** different **blast radius** and change frequency (network/PSA are slow-moving; runtime changes more often). Separate state reduces “we broke the cluster while editing a bucket” risk and eases CI approval boundaries.
+
+**Trade-off:** more stacks — more `coreStackRef` discipline and ordering of `pulumi up`. **Revisit when:** a tiny pet setup may stay on the `legacy` single stack (see [infra-pulumi-iac](/en/infra-pulumi-iac)).
+
+### GKE **Standard**, not Autopilot by default
+
+**Alternatives:** GKE Autopilot; **Cloud Run** for parts of the surface; Camunda SaaS without owning a cluster.
+
+**Criteria:** typical Camunda Helm charts and **network / PSA / private SQL** assumptions align more predictably on Standard for this training contour.
+
+**Trade-off:** more ops surface (node pools, patching). **Revisit when:** the team accepts Autopilot constraints after explicit compatibility checks.
+
+### Cognitive layer: Vertex in the same GCP project/region story
+
+**Alternatives:** external LLM APIs as the primary path; self-hosted embeddings.
+
+**Criteria:** one **IAM and data-residency** story for an EU-style default (`europe-central2`), RAG on GCS / Vector Search without mirroring artifacts into another cloud.
+
+**Trade-off:** coupling to Google’s roadmap; hybrid is possible but complicates compliance. **Revisit when:** a hard requirement forces a specific frontier model only from an external vendor — then a gateway and PII policy (mask before external calls, as in this repo).
+
+### Monorepo
+
+**Alternatives:** separate repos for `worker`, `backend`, `infra`.
+
+**Criteria:** **job-type ↔ API** contracts and **BPMN** versions ship in one PR; IaC and [docs-site](/adr) review with code.
+
+**Trade-off:** CI cost and repo size; mature teams sometimes split. **Revisit when:** independent release trains need strict semver between services.
+
+---
+
 ## Layer A: Camunda 8
 
 - **BPMN** in `bpmn/`, **DMN** in `dmn/` for deterministic rules and fewer LLM calls.
@@ -73,4 +119,4 @@ The **Credit-Scoring / HBG** (Handlowy Bank Galicyjski) repository is a **demo/t
 
 **Next:** [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION), [cli-console](/en/cli-console), [table of contents](/en/toc).
 
-> Languages: [Русский (архитектура)](/architecture) · [Polski](/pl/architecture)
+> Languages: [Русский (архитектура)](/ru/architecture) · [Polski](/pl/architecture)

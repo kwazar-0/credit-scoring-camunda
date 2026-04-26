@@ -2,6 +2,8 @@
 
 Aligned with [`prompt.md`](prompt.md) §9.1–9.2 (including **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) and hardening §9.6. Default region: **`europe-central2`**.
 
+**Team organisation (concept + six personas, full SDLC):** [team-11x6-organization](/en/team-11x6-organization).
+
 ## 1. Can you have “11 roles” with “6 people”?
 
 Yes. **11** are *logical* roles. **6** are *people* (Google accounts / group membership). Each account **carries a bundle** of roles; roles **UAT** and **App** usually have **no** GCP console; **BG** (break-glass) is **event**-based, not a standing profile.

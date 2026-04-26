@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 ról i 6 kont GitHub
 
-Dokument mapuje **role logiczne** (zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt.md](prompt.md) §9) na **sześć użytkowników** w recenzjach [`.github/CODEOWNERS`](https://github.com/OlehKondratow/credit-scoring-camunda/blob/develop/.github/CODEOWNERS).
+Dokument mapuje **role logiczne** (zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt.md](prompt.md) §9) na **sześć użytkowników** w recenzjach [`.github/CODEOWNERS`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.github/CODEOWNERS). Pełny cykl życia wg **sześciu person** (ok-admin, gw-devops, …): [team-11x6-organization](/pl/team-11x6-organization).
 
 Fork przykładowy: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Loginy = rzeczywiste `@username`; przy zmianie nika zaktualizuj ten plik i `CODEOWNERS`.
 
@@ -19,7 +19,7 @@ Pozostałe **8 ról** rozdziela **sześć osób** (przykładowa macierz odwrotna
 | Konto | Jakie z 11 ról (przykład) |
 |-------|----------------------------|
 | **U1** `@kwazar-0` | **1** devops, część **7**, on-call **8**, część **9** (z U2) |
-| **U2** `@OlehKondratow` | **2** dev, **11** ML, część **9**, część **10** (z U5) |
+| **U2** `@kwazar-0` | **2** dev, **11** ML, część **9**, część **10** (z U5) |
 | **U3** `@tempb59-commits` | **3** / **4** testery |
 | **U4** `@geraltwilkbialy-cloud` | **7** security |
 | **U5** `@olehkondracki-prog` | **10** data, wsparcie **2**/**11** w danych |
@@ -32,7 +32,7 @@ Jeśli **release** i **security** muszą być *rozdzielone* (SOX), przenieś **9
 | # | GitHub | Typowy fokus |
 |---|--------|--------------|
 | U1 | `@kwazar-0` | Platforma, fork, incydenty IaC |
-| U2 | `@OlehKondratow` | Aplikacja, ML, release |
+| U2 | `@kwazar-0` | Aplikacja, ML, release |
 | U3 | `@tempb59-commits` | QA, BPMN/DMN |
 | U4 | `@geraltwilkbialy-cloud` | Security / compliance |
 | U5 | `@olehkondracki-prog` | Data |

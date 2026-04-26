@@ -9,7 +9,7 @@
 
 ## Documentation
 
-Project layout, runbooks, and naming are summarized in [README.md](README.md) and under **`docs-site/`** (e.g. [docs-site/infra-pulumi-iac.md](docs-site/infra-pulumi-iac.md), [docs-site/git-workflow.md](docs-site/git-workflow.md), [docs-site/gcp-saas-access-matrix-11x6.md](docs-site/gcp-saas-access-matrix-11x6.md)).
+Project layout, runbooks, and naming are summarized in [README.md](README.md) and under **`docs-site/ru/`** (e.g. [docs-site/ru/infra-pulumi-iac.md](docs-site/ru/infra-pulumi-iac.md), [docs-site/ru/git-workflow.md](docs-site/ru/git-workflow.md), [docs-site/ru/gcp-saas-access-matrix-11x6.md](docs-site/ru/gcp-saas-access-matrix-11x6.md)).
 
 ## Response times
 

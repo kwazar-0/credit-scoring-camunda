@@ -3,7 +3,7 @@
 ::: tip Pełna specyfikacja (rosyjski)
 **Kanoniczny, pełny** plik `prompt` (produkt, `infra/`, git, wzmocnienia **§9**) prowadzony jest po **rosyjsku** jako główny język roboczy tego repozytorium.
 
-➡️ **[Pełny `prompt` po rosyjsku →](/prompt)**
+➡️ **[Pełny `prompt` po rosyjsku →](/ru/prompt)**
 :::
 
 ## Co to jest (PL)
@@ -16,8 +16,8 @@
 
 1. [INFRA-IMPLEMENTATION](INFRA-IMPLEMENTATION.md) (mapa)  
 2. [Spis treści](toc.md)  
-3. Pełna narracja w **[prompt po rosyjsku](/prompt)**.
+3. Pełna narracja w **[prompt po rosyjsku](/ru/prompt)**.
 
 ---
 
-[Русский](/prompt) · [English: prompt](/en/prompt)
+[Русский](/ru/prompt) · [English: prompt](/en/prompt)
