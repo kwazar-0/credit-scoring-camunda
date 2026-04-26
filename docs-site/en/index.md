@@ -7,26 +7,49 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-Docs in `docs-site/`; code: `backend/`, `worker/`, `ui/`; IaC: `infra/`. Default region: `europe-central2`. Stack and data flow: [architecture](/en/architecture).
+## Solution overview
 
-## Quick links
+**HBG Credit Scoring** is an automation platform for credit decision flow where decisions are implemented as an engineering process, not a single LLM call.  
+Core stack: **Camunda 8 (BPMN/DMN)** + **FastAPI/LangGraph** + **Vertex AI RAG** + **GKE/Pulumi**.
 
-- [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION) — roadmap (phases, links)  
-- [architecture](/en/architecture) — architecture overview  
-- [infra-pulumi-iac](/en/infra-pulumi-iac) — Pulumi, `stackRole`, OIDC  
-- [ml-data-rag](/en/ml-data-rag) — ML, RAG, backend env  
-- [cli-console](/en/cli-console) — `gcloud`, Pulumi, `kubectl`  
-- [toc](/en/toc) — table of contents
+Why this matters in practice:
 
-## Roles & access (optional, post-MVP)
+- **Transparent decision flow** — BPMN/DMN makes each step explicit and reviewable.
+- **Controlled AI layer** — LLM is embedded inside policy/process boundaries, not replacing them.
+- **Audit readiness** — roles, access and actions are traceable.
+- **Operational scale** — infrastructure is split by lifecycle (`infra-core` / `infra-data` / `infra-runtime`).
 
-- [gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6) — 11 roles × GCP, 6 accounts  
-- [team-11x6-organization](/en/team-11x6-organization) — team 11×6, personas, SDLC  
-- [github-codeowners-matrix](/en/github-codeowners-matrix) — CODEOWNERS
+## Project philosophy
+
+- **Git as source of truth** — technical decisions, IaC and docs are versioned and reviewed together.
+- **Orchestration over ad-hoc flow** — the credit process is explicit and auditable (BPMN/DMN), with a controlled AI layer.
+- **Least privilege + SoD** — GCP/GitHub access is role-mapped, not “everyone is admin”.
+- **Split lifecycle** — network, data and runtime evolve independently with smaller blast radius.
+
+## How to navigate the docs
+
+### 1) Implementation start
+
+- **[INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)** — primary phase order and first reading path.
+- **[architecture](/en/architecture)** — system layout, boundaries and data flow.
+- **[infra-pulumi-iac](/en/infra-pulumi-iac)** — Pulumi, `stackRole`, split stacks, OIDC.
+
+### 2) Operations and debugging
+
+- **[cli-console](/en/cli-console)** — `gcloud`, Pulumi, `kubectl` commands.
+- **[ml-data-rag](/en/ml-data-rag)** — RAG/Vertex and backend environment.
+- **[toc](/en/toc)** — full site contents.
+
+### 3) Governance (post-MVP)
+
+- **[gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6)** — role-based GCP access model.
+- **[team-11x6-organization](/en/team-11x6-organization)** — team model, personas and SDLC.
+- **[github-codeowners-matrix](/en/github-codeowners-matrix)** — review ownership in GitHub.
 
 ## Repository
 
-Code and CI: [github.com/kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) (canonical remote: [naming](/en/naming)).
+- **GitHub:** [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda)
+- **Naming/remote:** [naming](/en/naming)
 
 ---
 

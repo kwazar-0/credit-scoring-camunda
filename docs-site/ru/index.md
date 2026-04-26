@@ -7,26 +7,49 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-Документация в `docs-site/`; код: `backend/`, `worker/`, `ui/`; IaC: `infra/`. Регион по умолчанию: `europe-central2`. Стек и потоки: [architecture](/ru/architecture).
+## Аннотация решения
 
-## Быстрые ссылки
+**HBG Credit Scoring** — это проект автоматизации кредитного конвейера, где процесс принятия решения построен как инженерная система, а не как «один LLM-вызов».  
+В основе — связка **Camunda 8 (BPMN/DMN)** + **FastAPI/LangGraph** + **RAG на Vertex AI** + **GKE/Pulumi**.
 
-- [INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION) — дорожная карта (фазы, ссылки)  
-- [architecture](/ru/architecture) — обзор архитектуры  
-- [infra-pulumi-iac](/ru/infra-pulumi-iac) — Pulumi, `stackRole`, OIDC  
-- [ml-data-rag](/ru/ml-data-rag) — ML, RAG, env backend  
-- [cli-console](/ru/cli-console) — `gcloud`, Pulumi, `kubectl`  
-- [toc](/ru/toc) — оглавление
+Что это даёт бизнесу и эксплуатации:
 
-## Роли и доступ (опционально, после MVP)
+- **Прозрачный процесс** — шаги решения фиксируются в BPMN/DMN и могут быть объяснены/проверены.
+- **Управляемый AI-слой** — LLM работает внутри процесса, с правилами и ограничениями, а не вместо них.
+- **Аудитопригодность** — роли, доступы и действия трассируются; модель подходит под контрольные проверки.
+- **Масштабируемость платформы** — инфраструктура разделена по жизненному циклу (`infra-core` / `infra-data` / `infra-runtime`).
 
-- [gcp-saas-access-matrix-11x6](/ru/gcp-saas-access-matrix-11x6) — 11 ролей × GCP, 6 учёток  
-- [team-11x6-organization](/ru/team-11x6-organization) — команда 11×6, персоны, SDLC  
-- [github-codeowners-matrix](/ru/github-codeowners-matrix) — CODEOWNERS
+## Философия проекта
+
+- **Git как источник правды** — инженерные решения, IaC и документация версионируются и ревьюятся вместе.
+- **Оркестрация вместо ad-hoc** — кредитный процесс явный и аудитопригодный (BPMN/DMN), AI встроен как контролируемый слой.
+- **Least privilege и SoD** — доступ в GCP/GitHub выдаётся по ролям, а не по модели «всем админ».
+- **Разделённый жизненный цикл** — сеть, данные и runtime меняются независимо, с меньшим blast radius.
+
+## Как читать документацию
+
+### 1) Старт внедрения
+
+- **[INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION)** — основной порядок фаз и точка входа.
+- **[architecture](/ru/architecture)** — архитектурная схема, границы контуров и поток данных.
+- **[infra-pulumi-iac](/ru/infra-pulumi-iac)** — Pulumi, `stackRole`, split-стеки, OIDC.
+
+### 2) Операции и debug
+
+- **[cli-console](/ru/cli-console)** — рабочие команды `gcloud`, Pulumi, `kubectl`.
+- **[ml-data-rag](/ru/ml-data-rag)** — контур RAG/Vertex и переменные backend.
+- **[toc](/ru/toc)** — полное оглавление сайта.
+
+### 3) Governance (после MVP)
+
+- **[gcp-saas-access-matrix-11x6](/ru/gcp-saas-access-matrix-11x6)** — роли и границы доступа к GCP.
+- **[team-11x6-organization](/ru/team-11x6-organization)** — модель команды, персоны и SDLC.
+- **[github-codeowners-matrix](/ru/github-codeowners-matrix)** — ревью и ответственность в GitHub.
 
 ## Репозиторий
 
-Код и CI: [github.com/kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) (канонический remote: [naming](/ru/naming)).
+- **GitHub:** [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda)
+- **Именование/remote:** [naming](/ru/naming)
 
 ---
 

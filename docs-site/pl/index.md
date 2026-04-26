@@ -7,26 +7,49 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-Dokumentacja w `docs-site/`; kod: `backend/`, `worker/`, `ui/`; IaC: `infra/`. Region domyślny: `europe-central2`. Opis stosu i przepływów: [architecture](/pl/architecture).
+## Adnotacja rozwiązania
 
-## Szybki start
+**HBG Credit Scoring** to platforma automatyzacji procesu kredytowego, gdzie decyzja jest realizowana jako kontrolowany proces inżynierski, a nie pojedyncze wywołanie LLM.  
+Rdzeń: **Camunda 8 (BPMN/DMN)** + **FastAPI/LangGraph** + **RAG na Vertex AI** + **GKE/Pulumi**.
 
-- [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION) — mapa prac (fazy, linki)  
-- [architecture](/pl/architecture) — przegląd architektury  
-- [infra-pulumi-iac](/pl/infra-pulumi-iac) — Pulumi, `stackRole`, OIDC  
-- [ml-data-rag](/pl/ml-data-rag) — ML, RAG, env backendu  
-- [cli-console](/pl/cli-console) — `gcloud`, Pulumi, `kubectl`  
-- [toc](/pl/toc) — spis treści
+Wartość rozwiązania:
 
-## Model ról i dostępu (opcjonalnie po MVP)
+- **Przejrzysty przebieg decyzji** — BPMN/DMN pokazuje kroki i odpowiedzialności.
+- **Kontrolowana warstwa AI** — LLM działa wewnątrz reguł i procesu, nie zamiast nich.
+- **Gotowość audytowa** — role, dostępy i działania są śledzalne.
+- **Skalowalność operacyjna** — infrastruktura jest rozdzielona po lifecycle (`infra-core` / `infra-data` / `infra-runtime`).
 
-- [gcp-saas-access-matrix-11x6](/pl/gcp-saas-access-matrix-11x6) — macierz 11 ról × GCP, 6 kont  
-- [team-11x6-organization](/pl/team-11x6-organization) — zespół 11×6, persony, SDLC  
-- [github-codeowners-matrix](/pl/github-codeowners-matrix) — CODEOWNERS
+## Filozofia projektu
+
+- **Git jako źródło prawdy** — decyzje techniczne, IaC i dokumentacja są wersjonowane i recenzowane razem.
+- **Orkiestracja ponad ad-hoc** — proces kredytowy jest jawny i audytowalny (BPMN/DMN), z kontrolowanym miejscem dla AI.
+- **Least privilege i SoD** — dostęp do GCP/GitHub jest mapowany przez role, nie przez „wszyscy admin”.
+- **Split lifecycle** — sieć, dane i runtime rozwijają się osobno, z mniejszym blast radius.
+
+## Jak czytać dokumentację
+
+### 1) Start wdrożenia
+
+- **[INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION)** — główny porządek faz i ścieżka startowa.
+- **[architecture](/pl/architecture)** — układ systemu, granice i przepływ danych.
+- **[infra-pulumi-iac](/pl/infra-pulumi-iac)** — Pulumi, `stackRole`, split, OIDC.
+
+### 2) Operacje i debug
+
+- **[cli-console](/pl/cli-console)** — komendy `gcloud`, Pulumi, `kubectl`.
+- **[ml-data-rag](/pl/ml-data-rag)** — RAG/Vertex i env backendu.
+- **[toc](/pl/toc)** — pełny spis treści.
+
+### 3) Governance (po MVP)
+
+- **[gcp-saas-access-matrix-11x6](/pl/gcp-saas-access-matrix-11x6)** — model dostępu do GCP wg ról.
+- **[team-11x6-organization](/pl/team-11x6-organization)** — model zespołu, persony i SDLC.
+- **[github-codeowners-matrix](/pl/github-codeowners-matrix)** — odpowiedzialność review w GitHub.
 
 ## Repozytorium
 
-Kod i CI: [github.com/kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda) (remote kanoniczny w [naming](/pl/naming)).
+- **GitHub:** [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda)
+- **Nazewnictwo/remote:** [naming](/pl/naming)
 
 ---
 
