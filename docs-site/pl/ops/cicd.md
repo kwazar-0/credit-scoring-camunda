@@ -34,7 +34,7 @@ Ten rozdzial dotyczy **GitHub Environment**, **WIF secrets** i lokalnego testu *
 - Trigger: `workflow_dispatch`
 - Pierwszy run (typowo):
   - `service=worker`
-  - `gcp_project_id=uplifted-env-494515-m5`
+  - `gcp_project_id=credit-scoring-camunda-project`
   - `gcp_region=europe-central2`
   - `gke_cluster=hbg-gke`
   - `gke_namespace=hbg`
@@ -43,12 +43,12 @@ Ten rozdzial dotyczy **GitHub Environment**, **WIF secrets** i lokalnego testu *
 ### Lokalny smoke check Artifact Registry
 
 ```bash
-gcloud config set project uplifted-env-494515-m5
+gcloud config set project credit-scoring-camunda-project
 gcloud auth configure-docker europe-central2-docker.pkg.dev --quiet
 docker pull hello-world:latest
-docker tag hello-world:latest europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
-docker push europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
-docker pull europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
+docker tag hello-world:latest europe-central2-docker.pkg.dev/credit-scoring-camunda-project/hbg-gke-docker/push-test:local-1
+docker push europe-central2-docker.pkg.dev/credit-scoring-camunda-project/hbg-gke-docker/push-test:local-1
+docker pull europe-central2-docker.pkg.dev/credit-scoring-camunda-project/hbg-gke-docker/push-test:local-1
 ```
 
 Oczekiwane linie:
@@ -58,6 +58,12 @@ gcloud credential helpers already registered correctly.
 ...
 local-1: digest: sha256:... size: ...
 ```
+
+### Typowe bledy i szybkie poprawki
+
+- `Not found: ... clusters/hbg-gke`: mismatch project/cluster. Dla tego klastra ustaw `gcp_project_id=credit-scoring-camunda-project`.
+- `artifactregistry.repositories.uploadArtifacts denied`: nadaj GitHub SA role `roles/artifactregistry.writer` w **docelowym** projekcie.
+- `Repository "... not found"`: utworz Docker repository (np. `hbg-gke-docker`) w `europe-central2`.
 
 ## Navigation
 
