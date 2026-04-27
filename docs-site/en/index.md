@@ -7,9 +7,9 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-## Layered path (start here if you are new)
+## DevOps-first path (start here)
 
-Read in order: **[main — system entry](/en/main)** → **[simplified roles](/en/simplified)** → **[architecture](/en/architecture)** → **[plan & roadmap](/en/plan)** → **[appendix](/en/appendix)**. **At a glance:** [system summary](/en/system-summary). **Operators** still use **[INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)** as the single phase-by-phase track.
+Read in order: **[DevOps operating model](/en/devops-operating-model)** → **[CI/CD pipeline](/en/cicd-pipeline)** → **[deployment lifecycle](/en/deployment-lifecycle)** → **[observability and incident response](/en/observability-and-incident)** → **[governance and controls](/en/governance-and-controls)**.
 
 ---
 
@@ -34,13 +34,13 @@ Why this matters in practice:
 
 ## How to navigate the docs
 
-### 1) Layered narrative (concept → depth)
+### 1) Production operation narrative
 
-- **[main](/en/main)** — what the system is, two-minute model, diagram.
-- **[simplified](/en/simplified)** — four core roles and responsibility boundaries.
-- **[architecture](/en/architecture)** — components, layers, data flow, trade-offs.
-- **[plan](/en/plan)** — evolution, phases (summary), lifecycle of components.
-- **[appendix](/en/appendix)** — index to deep pages (personas, matrices, RAG, CLI, `prompt` §9).
+- **[devops-operating-model](/en/devops-operating-model)** — production operating boundaries.
+- **[cicd-pipeline](/en/cicd-pipeline)** — controls from commit to production.
+- **[deployment-lifecycle](/en/deployment-lifecycle)** — infra and app rollout model.
+- **[observability-and-incident](/en/observability-and-incident)** — logging, metrics, alerting, response.
+- **[governance-and-controls](/en/governance-and-controls)** — segregation of duties and audit controls.
 
 ### 2) Implementation start
 

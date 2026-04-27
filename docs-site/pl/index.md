@@ -7,9 +7,9 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-## Ułożone poziomy (dla nowych czytelników)
+## DevOps-first ścieżka (start)
 
-Czytaj w kolejności: **[main](/pl/main)** → **[simplified](/pl/simplified)** → **[architecture](/pl/architecture)** → **[plan](/pl/plan)** → **[dodatek](/pl/appendix)**. **W skrócie:** [podsumowanie](/pl/system-summary). **Wdrożenie:** **[INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION)**.
+Czytaj w kolejności: **[devops-operating-model](/pl/devops-operating-model)** → **[cicd-pipeline](/pl/cicd-pipeline)** → **[deployment-lifecycle](/pl/deployment-lifecycle)** → **[observability-and-incident](/pl/observability-and-incident)** → **[governance-and-controls](/pl/governance-and-controls)**.
 
 ---
 

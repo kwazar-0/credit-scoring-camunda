@@ -7,9 +7,9 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
-## Слои документации (с чего начать)
+## DevOps-first путь (с чего начать)
 
-Порядок: **[main](/ru/main)** → [упрощённые роли](/ru/simplified) → [архитектура](/ru/architecture) → [план](/ru/plan) → [приложение](/ru/appendix). **Сводка:** [одна страница](/ru/system-summary). **Внедрение:** **[INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION)**.
+Порядок: **[devops-operating-model](/ru/devops-operating-model)** → **[cicd-pipeline](/ru/cicd-pipeline)** → **[deployment-lifecycle](/ru/deployment-lifecycle)** → **[observability-and-incident](/ru/observability-and-incident)** → **[governance-and-controls](/ru/governance-and-controls)**.
 
 ---
 

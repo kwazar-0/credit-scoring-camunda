@@ -1,56 +1,43 @@
-# Documentation — table of contents
+# Documentation — DevOps Table of Contents
 
-**Layered narrative (recommended):** [main.md](main.md) → [simplified.md](simplified.md) → [architecture.md](architecture.md) → [process-flow-camunda.md](process-flow-camunda.md) → [decision-model-dmn.md](decision-model-dmn.md) → [plan.md](plan.md) → [appendix.md](appendix.md) · [system-summary.md](system-summary.md)
+## LEVEL 0 — Entry (what/why)
 
-**Implementation track:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — single roadmap: Camunda + AI scoring, phases, what to read, what to defer.
+- [DevOps operating model](devops-operating-model.md)
+- [System summary (1 page)](system-summary.md)
+- [Architecture (1 page)](architecture.md)
 
----
+## LEVEL 1 — How it runs (DevOps core)
 
-## Track A — infrastructure & cloud (main focus)
+- [CI/CD pipeline](cicd-pipeline.md)
+- [Deployment lifecycle](deployment-lifecycle.md)
+- [Implementation track (environment strategy)](INFRA-IMPLEMENTATION.md)
+- [Git workflow controls](git-workflow.md)
 
-| Document | Purpose |
-|----------|--------|
-| [architecture.md](architecture.md) | **Repository architecture:** layers, stack, data flow, monorepo layout |
-| [system-philosophy-governance.md](system-philosophy-governance.md) | Full governance philosophy text moved from root `README.md` |
-| [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Phases, order, links — **entry point** |
-| [prompt.md](prompt.md) §1–8 | Handoff, product, plan, paths in the repo |
-| [infra-pulumi-iac.md](infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC, stacks — **IaC SoT** on this site |
-| [`infra/README.md` (in repo)](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md) | **Pet-project bootstrap:** billing, IAM, GCS state, `infra-core` / split stacks, common errors |
-| [gke sandbox →](infra-pulumi-gke-sandbox.md) | Separate Pulumi app (same default region; do not mix VPC/state with main stack) |
-| [cli-console.md](cli-console.md) | `gcloud`, Pulumi, Docker, `kubectl` |
-| [ml-data-rag.md](ml-data-rag.md) | Vertex, embeddings, backend env |
-| [hbg-rag-dominance.md](hbg-rag-dominance.md) | HBG: platform strategy, roles U1–U6 |
-| [hr-offers-hbg.md](hr-offers-hbg.md) | HBG: job specs, RACI, 11 stages, 6×11 matrix |
-| [../scripts/gcp-enable-apis-iam.sh](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh) | Enabling GCP APIs (CLI) |
+## LEVEL 2 — Infrastructure
 
-## Track B — Git, GitHub, conventions
+- [Pulumi and GKE runtime](pulumi-and-gke-runtime.md)
+- [Pulumi IaC details](infra-pulumi-iac.md)
+- [Pulumi GKE sandbox](infra-pulumi-gke-sandbox.md)
+- [GCP access matrix 11x6](gcp-saas-access-matrix-11x6.md)
 
-| Document | Purpose |
-|----------|--------|
-| [git-workflow.md](git-workflow.md) | `develop` / `main` branches, `release/*`, tags |
-| [github-setup.md](github-setup.md) | Branch protection, Environments |
-| [branch-notes.md](branch-notes.md) | Legacy branches, notes |
-| [naming.md](naming.md) | Repo names, tags |
+## LEVEL 3 — Operations
 
-## Track C — governance, roles, access (post-MVP or audit)
+- [Observability and incident response](observability-and-incident.md)
+- [CLI / console operations](cli-console.md)
+- [ML / Data / RAG runtime context](ml-data-rag.md)
 
-| Document | Purpose |
-|----------|--------|
-| [team-11x6-organization.md](team-11x6-organization.md) | **11×6 team:** concept (layers, SoD, SDLC) + links to **six persona** pages with full dev lifecycle |
-| [team-persona-ok-admin.md](team-persona-ok-admin.md) · [gw-devops](team-persona-gw-devops.md) · [ux-dev](team-persona-ux-dev.md) · [sh-dev](team-persona-sh-dev.md) · [pk-qa](team-persona-pk-qa.md) · [ok-audit](team-persona-ok-audit.md) | One page per account: mandate, SDLC phases, GitHub/GCP, interactions, anti-patterns |
-| [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) | 11 roles × GCP, 6 accounts; details — [prompt](prompt.md) §9 |
-| [github-codeowners-matrix.md](github-codeowners-matrix.md) | Roles ↔ GitHub, CODEOWNERS |
-| [accounts.md](accounts.md) | Canonical remote; local PII in `accounts.local.md` (gitignore) |
-| [prompt.md](prompt.md) §9+ | Enterprise blueprint, hardening, SoD |
+## LEVEL 4 — Governance
 
-## Other
+- [Governance and change controls](governance-and-controls.md)
+- [CODEOWNERS matrix](github-codeowners-matrix.md)
+- [11x6 organization](team-11x6-organization.md)
 
-| Document | Purpose |
-|----------|--------|
-| [prompt.md](prompt.md) | **Long:** §1–8 = handoff; §9+ = extended spec — not linear reading for “start infra” |
+## LEVEL 5 — Deep Dive
+
+- [Camunda process flow](process-flow-camunda.md)
+- [DMN decision model](decision-model-dmn.md)
+- [Appendix](appendix.md)
 
 ---
 
-**Root [README.md](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/README.md)** gives a short repo overview and a link here.
-
-> [Русский: оглавление](/ru/toc) · [Polski: spis treści](/pl/toc)
+Cross-language navigation: [Русский](/ru/toc) · [Polski](/pl/toc)
