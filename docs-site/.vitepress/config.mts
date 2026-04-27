@@ -17,6 +17,7 @@ const sidebarRu = [
     text: "Старт",
     items: [
       { text: "Оглавление (все страницы)", link: "/ru/toc" },
+      { text: "Философия системы", link: "/ru/system-philosophy-governance" },
       { text: "Архитектура (обзор)", link: "/ru/architecture" },
       { text: "Implementation track", link: "/ru/INFRA-IMPLEMENTATION" },
       { text: "Pulumi: основной IaC", link: "/ru/infra-pulumi-iac" },
@@ -124,6 +125,7 @@ const sidebarPl = [
     text: "Start",
     items: [
       { text: "Spis treści", link: "/pl/toc" },
+      { text: "Filozofia systemu", link: "/pl/system-philosophy-governance" },
       { text: "Architektura (przegląd)", link: "/pl/architecture" },
       { text: "Implementation track", link: "/pl/INFRA-IMPLEMENTATION" },
       { text: "Pulumi: główne IaC", link: "/pl/infra-pulumi-iac" },
@@ -260,6 +262,7 @@ export default defineConfig({
           { text: "Architektura", link: "/pl/architecture" },
           { text: "Infra track", link: "/pl/INFRA-IMPLEMENTATION" },
           { text: "Spis treści", link: "/pl/toc" },
+      { text: "Filozofia systemu", link: "/pl/system-philosophy-governance" },
           { text: "ADR", link: "/adr" },
         ],
         sidebar: sidebarPl,

@@ -13,6 +13,8 @@ Short project overview: credit decision automation platform with Camunda 8, Fast
 The full original text from this README is now maintained in:
 
 - [`docs-site/en/system-philosophy-governance.md`](docs-site/en/system-philosophy-governance.md)
+- [`docs-site/ru/system-philosophy-governance.md`](docs-site/ru/system-philosophy-governance.md)
+- [`docs-site/pl/system-philosophy-governance.md`](docs-site/pl/system-philosophy-governance.md)
 
 For localized navigation, use:
 

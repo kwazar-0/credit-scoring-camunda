@@ -8,6 +8,7 @@
 
 | Dokument | Zastosowanie |
 |----------|--------------|
+| [system-philosophy-governance.md](system-philosophy-governance.md) | Filozofia systemu i governance (pełny/przeniesiony tekst z root README) |
 | [architecture.md](architecture.md) | **Architektura repozytorium:** warstwy, stos, przepływ, układ monorepo |
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Fazy, kolejność, linki — **punkt wejścia** |
 | [prompt.md](prompt.md) §1–8 | Handoff, produkt, plan, ścieżki w repo |

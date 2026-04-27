@@ -8,6 +8,7 @@
 
 | Документ | Назначение |
 |----------|------------|
+| [system-philosophy-governance.md](system-philosophy-governance.md) | Философия системы и governance (pełny/przeniesiony tekst z root README) |
 | [architecture.md](architecture.md) | **Архитектура репозитория:** контура, стек, поток данных, пути в монорепо |
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Фазы, порядок работ, ссылки — **точка входа** |
 | [prompt.md](prompt.md) §1–8 | Handoff, продукт, план, пути в репо |

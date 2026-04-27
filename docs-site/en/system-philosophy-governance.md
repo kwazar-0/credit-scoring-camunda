@@ -202,3 +202,6 @@ The system enforces three constraints:
 
 > If a change cannot be explained, traced, and attributed,  
 > it should not exist in the system.
+
+
+**Languages:** [Русский](/ru/system-philosophy-governance) · [Polski](/pl/system-philosophy-governance)
