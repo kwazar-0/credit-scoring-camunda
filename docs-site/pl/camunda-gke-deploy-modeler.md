@@ -20,6 +20,14 @@ Ta strona opisuje **ścieżkę operacyjną**: dostęp do **GKE**, instalacja **C
 
 ---
 
+## 0. Lokalny test Artifact Registry (push/pull)
+
+Tutaj zostaje tylko szybki prereq: lokalny Docker auth i test push/pull powinny dzialac.
+
+Pelna konfiguracja GitHub/WIF/Artifact Registry z komendami: [Operations: CI/CD](/pl/ops/cicd).
+
+---
+
 ## 1. Credentials klastra
 
 ```bash

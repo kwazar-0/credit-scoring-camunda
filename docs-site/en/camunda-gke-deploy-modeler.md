@@ -21,6 +21,14 @@ Canonical Helm notes and variants live in the repository: [`k8s/camunda/README.m
 
 ---
 
+## 0. Local Artifact Registry check (push/pull)
+
+Quick precheck only: ensure local Docker auth and at least one test push/pull works.
+
+Full GitHub/WIF/Artifact Registry setup and command blocks are in [Operations: CI/CD](/en/ops/cicd).
+
+---
+
 ## 1. Cluster credentials
 
 Replace project, region, and cluster name if yours differ (`hbg-gke` is the default name from Pulumi `infra-runtime`).

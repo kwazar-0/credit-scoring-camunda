@@ -20,6 +20,14 @@ description: "Helm Camunda 8 в GKE, Desktop Modeler (Ubuntu), port-forward, PyZ
 
 ---
 
+## 0. Локальная проверка Artifact Registry (push/pull)
+
+Тут держим только короткий prereq: локальный Docker auth и тестовый push/pull должны работать.
+
+Полная настройка GitHub/WIF/Artifact Registry с командами вынесена в [Operations: CI/CD](/ru/ops/cicd).
+
+---
+
 ## 1. Credentials кластера
 
 Подставьте свой проект, регион и имя кластера (дефолт имени из Pulumi — **`hbg-gke`**).

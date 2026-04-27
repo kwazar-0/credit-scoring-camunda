@@ -17,9 +17,52 @@ Build -> Test -> Security Scan -> Package -> Deploy -> Promote
 
 `dev` -> `stage` -> `prod` без прямого обхода.
 
+## GitHub + Registry setup (ручной тестовый CD)
+
+Этот раздел про **GitHub Environment**, **WIF secrets** и проверку **Artifact Registry**. Camunda runtime и Modeler остаются в [camunda-gke-deploy-modeler](/ru/camunda-gke-deploy-modeler).
+
+### GitHub Environment
+
+- Создайте environment: `GCP_WORKLOAD`.
+- Добавьте secrets:
+  - `GCP_WORKLOAD_IDENTITY_PROVIDER`
+  - `GCP_GITHUB_ACTIONS_SA_EMAIL`
+
+### Ручной workflow
+
+- Файл: `.github/workflows/manual-build-push-deploy-gke.yml`
+- Запуск: `workflow_dispatch`
+- Типичный первый прогон:
+  - `service=worker`
+  - `gcp_project_id=uplifted-env-494515-m5`
+  - `gcp_region=europe-central2`
+  - `gke_cluster=hbg-gke`
+  - `gke_namespace=hbg`
+  - `artifact_repository=hbg-gke-docker`
+
+### Локальный smoke check Artifact Registry
+
+```bash
+gcloud config set project uplifted-env-494515-m5
+gcloud auth configure-docker europe-central2-docker.pkg.dev --quiet
+docker pull hello-world:latest
+docker tag hello-world:latest europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
+docker push europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
+docker pull europe-central2-docker.pkg.dev/uplifted-env-494515-m5/hbg-gke-docker/push-test:local-1
+```
+
+Ожидаемые строки:
+
+```text
+gcloud credential helpers already registered correctly.
+...
+local-1: digest: sha256:... size: ...
+```
+
 ## Навигация
 
 - Entry page: [main](/ru/main)
+- Camunda deploy + Modeler: [camunda-gke-deploy-modeler](/ru/camunda-gke-deploy-modeler)
 - Deployment: [ops/deployment](/ru/ops/deployment)
 - Observability: [ops/observability](/ru/ops/observability)
 - Incidents: [ops/incidents](/ru/ops/incidents)
