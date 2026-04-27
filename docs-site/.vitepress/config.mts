@@ -70,6 +70,7 @@ const sidebarEn = [
     text: "Start",
     items: [
       { text: "Table of contents", link: "/en/toc" },
+      { text: "System philosophy & governance", link: "/en/system-philosophy-governance" },
       { text: "Architecture (overview)", link: "/en/architecture" },
       { text: "Implementation track", link: "/en/INFRA-IMPLEMENTATION" },
       { text: "Pulumi: main IaC", link: "/en/infra-pulumi-iac" },

@@ -9,6 +9,7 @@
 | Document | Purpose |
 |----------|--------|
 | [architecture.md](architecture.md) | **Repository architecture:** layers, stack, data flow, monorepo layout |
+| [system-philosophy-governance.md](system-philosophy-governance.md) | Full governance philosophy text moved from root `README.md` |
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Phases, order, links — **entry point** |
 | [prompt.md](prompt.md) §1–8 | Handoff, product, plan, paths in the repo |
 | [infra-pulumi-iac.md](infra-pulumi-iac.md) | Pulumi, `stackRole`, OIDC, stacks — **IaC SoT** on this site |

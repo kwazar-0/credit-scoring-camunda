@@ -1,12 +1,12 @@
 ---
 layout: page
 title: Home
-description: Przekierowanie na dokumentację (PL)
+description: Redirect to system philosophy page
 outline: false
 head:
   - - meta
     - http-equiv: refresh
-      content: "0;url=pl/"
+      content: "0;url=en/system-philosophy-governance"
 ---
 
 <script setup lang="ts">
@@ -15,15 +15,17 @@ import { onMounted } from "vue";
 onMounted(() => {
   const base = import.meta.env.BASE_URL || "/";
   const normalized = base.endsWith("/") ? base : `${base}/`;
-  const target = `${normalized}pl/`.replace(/([^:]\/)\/+/g, "$1");
+  const target = `${normalized}en/system-philosophy-governance`.replace(/([^:]\/)\/+/g, "$1");
   const path = typeof window !== "undefined" ? window.location.pathname : "";
-  const alreadyPl = /\/pl\/?$/.test(path) || path.includes("/pl/");
-  if (typeof window !== "undefined" && !alreadyPl) {
+  const alreadyTarget =
+    /\/en\/system-philosophy-governance\/?$/.test(path) ||
+    path.includes("/en/system-philosophy-governance/");
+  if (typeof window !== "undefined" && !alreadyTarget) {
     window.location.replace(target);
   }
 });
 </script>
 
-Dokumentacja techniczna (domyślnie język polski) — [przejdź do /pl/](/pl/).
+Start page: [System Philosophy and Governance](/en/system-philosophy-governance).
 
-Ręcznie: [PL](/pl/) · [EN](/en/) · [RU](/ru/) · [ADR](/adr)
+Manual links: [EN philosophy](/en/system-philosophy-governance) · [PL](/pl/) · [RU](/ru/) · [EN home](/en/) · [ADR](/adr)
