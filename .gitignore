@@ -35,3 +35,6 @@ infra/pulumi/.pulumi/
 # Camunda Helm: large `helm get values --all` / manifest dumps (optional; review before commit)
 k8s/camunda/camunda-platform-all-values.yaml
 k8s/camunda/camunda-platform-manifest.yaml
+
+# Cursor workspace files
+.cursor/

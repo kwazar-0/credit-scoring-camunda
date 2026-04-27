@@ -15,20 +15,19 @@ Read in order: **[DevOps operating model](/en/devops-operating-model)** → **[C
 
 ## Solution overview
 
-**HBG Credit Scoring** is an automation platform for credit decision flow where decisions are implemented as an engineering process, not a single LLM call.  
-Core stack: **Camunda 8 (BPMN/DMN)** + **FastAPI/LangGraph** + **Vertex AI RAG** + **GKE/Pulumi**.
+**HBG Credit Scoring** is an automation platform for credit decision flow where decisions are implemented as an engineering process with explicit controls and auditability.  
+Core stack: **Camunda 8 (BPMN/DMN)** + **FastAPI** + **GKE/Pulumi**.
 
 Why this matters in practice:
 
 - **Transparent decision flow** — BPMN/DMN makes each step explicit and reviewable.
-- **Controlled AI layer** — LLM is embedded inside policy/process boundaries, not replacing them.
 - **Audit readiness** — roles, access and actions are traceable.
 - **Operational scale** — infrastructure is split by lifecycle (`infra-core` / `infra-data` / `infra-runtime`).
 
 ## Project philosophy
 
 - **Git as source of truth** — technical decisions, IaC and docs are versioned and reviewed together.
-- **Orchestration over ad-hoc flow** — the credit process is explicit and auditable (BPMN/DMN), with a controlled AI layer.
+- **Orchestration over ad-hoc flow** — the credit process is explicit and auditable (BPMN/DMN).
 - **Least privilege + SoD** — GCP/GitHub access is role-mapped, not “everyone is admin”.
 - **Split lifecycle** — network, data and runtime evolve independently with smaller blast radius.
 
@@ -51,7 +50,6 @@ Why this matters in practice:
 ### 3) Operations and debugging
 
 - **[cli-console](/en/cli-console)** — `gcloud`, Pulumi, `kubectl` commands.
-- **[ml-data-rag](/en/ml-data-rag)** — RAG/Vertex and backend environment.
 - **[toc](/en/toc)** — full site contents.
 
 ### 4) Governance (post-MVP)

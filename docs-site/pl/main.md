@@ -1,74 +1,43 @@
 ---
-title: "Wejście do systemu (main)"
-description: "Czym jest HBG Credit Scoring, model na dwie minuty i dalsze kroki."
+title: "Wejscie do systemu (main)"
+description: "Strona startowa z perspektywa produkcyjnego DevOps."
 ---
 
-# Wejście do systemu (main)
+# Wejscie do systemu (main)
 
-**HBG Credit Scoring** to **demo / szkoleniowy** monorepo **automatycznego obiegu kredytowego w stylu regulowanym**: proces jest jawny, AI osadzone pod polityką, infrastruktura odtwarzalna. Domyślny region chmury: **`europe-central2`**. Kanoniczny podział kodu: [architecture](/pl/architecture) — ta strona to **narracyjne wejście** (poziom 0).
+## 1. Czym jest system
 
----
+HBG Credit Scoring to platforma decyzji kredytowej oparta o Camunda dla środowiska regulowanego: BPMN orkiestruje proces, DMN przechowuje deterministyczne reguly, a infrastruktura jako kod utrzymuje audytowalne i powtarzalne wdrozenia.
 
-## Czym jest system
-
-- **Orkiestracja procesu** — Camunda 8 (BPMN etapów, **DMN** reguł deterministycznych).
-- **Aplikacja i graf** — FastAPI, LangGraph, Vertex (Gemini) w `backend/`.
-- **Wykonanie** — **workery** PyZeebe w `worker/` (typy zadań powiązane z procesem).
-- **Infrastruktura** — **GCP** (GKE Standard, GCS, BigQuery, opcjonalnie Cloud SQL itd.) z **Pulumi** i rozłącznymi stosami (`stackRole` / `infra-core` · `infra-data` · `infra-runtime`).
-
-> Logika biznesowa, definicja procesu i infrastruktura **rozwijają się niezależnie** z założenia.
-
----
-
-## Po co to jest
-
-Kredyt i scoring wymagają **śledzalności**: kto zmienił regułę, jaka wersja procesu działała, co widział model (bez surowych PII w logach). Stos stawia na **kontrolę i audytowalność**, nie na minimalną liczbę ruchomych części. To świadome kompromisy (wolniej niż jeden mikroserwis, więcej pojęć niż w skrypcie).
-
----
-
-## Model na dwie minuty
+## 2. Jak dziala na produkcji (DevOps flow)
 
 ```text
-Wnioskodawca / kanał
-        │
-        ▼
-   HTTP API (FastAPI) ──► LangGraph / Vertex (RAG + LLM, w polityce)
-        │
-        ▼
-   Zeebe / Camunda (stan BPMN, human tasks, incydenty)
-        │
-        ├─► DMN (reguły deterministyczne, mniej niedeterminizmu)
-        ├─► Workery (PyZeebe) ↔ serwisy, magazyny danych
-        └─► Obserwowalność, BigQuery, logi (PII: maskować przed zewn. LLM)
-        │
-        ▼
-   GKE + Pulumi (IaC), Artifact Registry, Secret Manager, IAM
+PR -> CI (build + test + scan) -> publikacja artefaktu -> deploy do dev
+   -> promotion do stage (approval + testy integracyjne)
+   -> promotion do prod (approval + kontrolowany rollout)
+   -> runtime monitoring (logi + metryki + alerty)
+   -> incident response / rollback do last stable release
 ```
 
-**Rozdziałów nie zacieramy** w dokumentacji ani w kodzie:
+### Model wdrozenia i odzyskiwania
 
-| Warstwa | Odpowiedzialność |
-|--------|-----------------|
-| **DMN** | Reguły biznesowe deterministyczne. |
-| **BPMN / Camunda** | Orkiestracja, human tasks, kroki w śladzie audytu. |
-| **Serwisy / workery** | Integracje, scoring, handlery zadań. |
-| **GCP + Pulumi** | Sieci, klaster, data plane, tożsamość — **IaC SoT** w `infra/pulumi/`. |
+- Zmiany infra sa stosowane przez Pulumi w kolejnosci: core -> data -> runtime.
+- Workloady na GKE sa wdrazane z immutable image i versioned manifests/charts.
+- Aktualizacja Camunda obejmuje versioned BPMN/DMN, aby uniknac drift procesu i regul.
+- Promotion miedzy srodowiskami uzywa tego samego artifact digest.
+- Przy bledzie health-check lub SLO breach wykonywany jest rollback do ostatniej stabilnej wersji.
 
----
+## 3. Kluczowe komponenty
 
-## Gdzie dalej (warstwy)
+- Camunda i Zeebe do orkiestracji workflow i utrzymania stanu procesu.
+- DMN dla deterministycznej i reviewowalnej logiki scoringowej.
+- API i workery do integracji oraz wykonania process tasks.
+- GCP runtime (GKE, Cloud Storage, Artifact Registry, IAM) jako platforma produkcyjna.
+- Pulumi multi-stack IaC (core/data/runtime) dla kontrolowanych zmian infra.
 
-| Poziom | Dokument | Co dostajesz |
-|-------|----------|--------|
-| 1 | [model uproszczony](/pl/simplified) | Cztery role, model mentalny bez szumu stosu. |
-| 2 | [architektura](/pl/architecture) | Komponenty, warstwy, przepływ, monorepo, kompromisy. |
-| 3 | [plan i roadmap](/pl/plan) | Fazy, ewolucja, skalowanie governance, linki. |
-| 4 | [dodatek (indeks)](/pl/appendix) | Persony, macierze, długi `prompt` §9, CLI, RAG. |
+## Operations (DevOps)
 
-**Jedna strona — w skrócie:** [podsumowanie](/pl/system-summary).
-
-**Governance (pełny tekst):** [filozofia i governance](/pl/system-philosophy-governance) · [macierz GCP 11×6](/pl/gcp-saas-access-matrix-11x6).
-
-**Ścieżka wdrożeniowa (operator):** [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION).
-
-> Inne języki: [English: main →](/en/main) · [Русский: вход →](/ru/main)
+- Deployment model: [ops/deployment](/pl/ops/deployment)
+- CI/CD controls: [ops/cicd](/pl/ops/cicd)
+- Observability model: [ops/observability](/pl/ops/observability)
+- Failure and recovery flow: [ops/incidents](/pl/ops/incidents)

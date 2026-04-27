@@ -5,7 +5,7 @@ description: "One-page view: architecture, governance, and responsibility struct
 
 # System summary
 
-**HBG Credit Scoring** — a **monorepo** for a **demonstration / training** **automated credit flow**: **Camunda 8** (BPMN/DMN) orchestrates; **FastAPI + LangGraph** and **Vertex AI** provide the cognitive path (RAG + LLM under policy); **PyZeebe workers** run jobs; **GCP** (default **europe-central2**) and **Pulumi** (split **infra-core** / **infra-data** / **infra-runtime** stacks) provide reproducible infrastructure. **VitePress** in `docs-site/` is the documentation source of truth; `doc/_archive/` is **historical only**.
+**HBG Credit Scoring** — a **monorepo** for a **demonstration / training** **automated credit flow**: **Camunda 8** (BPMN/DMN) orchestrates; **FastAPI** services and **PyZeebe workers** run jobs; **GCP** (default **europe-central2**) and **Pulumi** (split **infra-core** / **infra-data** / **infra-runtime** stacks) provide reproducible infrastructure. **VitePress** in `docs-site/` is the documentation source of truth; `doc/_archive/` is **historical only**.
 
 ---
 
@@ -14,12 +14,12 @@ description: "One-page view: architecture, governance, and responsibility struct
 | Concern | Choice | Note |
 |--------|--------|------|
 | Process | Camunda 8, BPMN + **DMN** for rules | Stages, human tasks, audit of steps — not only “code flow”. |
-| App / AI | `backend/`, `worker/` | PII: mask before external LLM; align with `backend` PII helpers. |
-| Data | GCS, BQ, optional Cloud SQL / vectors | RAG: see [ml-data-rag](/en/ml-data-rag). |
+| Application | `backend/`, `worker/` | PII: mask sensitive identifiers in logs and external integrations. |
+| Data | GCS, BQ, optional Cloud SQL | Data services for reporting and operational persistence. |
 | Runtime | GKE **Standard** | See ADRs and [architecture](/en/architecture) for Autopilot / SaaS trade-offs. |
 | IaC | Pulumi, split stacks | `stackRole` and ordering — [infra-pulumi-iac](/en/infra-pulumi-iac). |
 
-**Data path (simplified):** request → API / graph → Zeebe → retrieval & LLM → Camunda state & tasks → logs / BQ (no raw **PESEL** in logs).
+**Data path (simplified):** request → API → Zeebe → Camunda state & tasks → logs / BQ (no raw **PESEL** in logs).
 
 **Integrity rule (do not collapse in docs or design):** **DMN** (rules) · **Camunda** (orchestration) · **services/workers** (execution) · **Pulumi/GCP** (infrastructure) — four distinct layers.
 

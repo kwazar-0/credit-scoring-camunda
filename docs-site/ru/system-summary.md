@@ -5,7 +5,7 @@ description: "Архитектура, governance и ответственност
 
 # Сводка системы 
 
-**HBG Credit Scoring** — **монорепо** **демо/тренинга** **автоматизированного кредитного контура**: **Camunda 8** (BPMN/DMN) оркестрирует; **FastAPI + LangGraph** и **Vertex AI** — когнитивный путь (RAG + LLM в рамках политики); **воркеры PyZeebe** исполняют задания; **GCP** (по умолчанию **europe-central2**) и **Pulumi** (стеки **infra-core** / **infra-data** / **infra-runtime**) — воспроизводимая инфраструктура. **VitePress** в `docs-site/` — SoT по документации; `doc/_archive/` **только история**.
+**HBG Credit Scoring** — **монорепо** **демо/тренинга** **автоматизированного кредитного контура**: **Camunda 8** (BPMN/DMN) оркестрирует; **FastAPI** и **воркеры PyZeebe** исполняют задания; **GCP** (по умолчанию **europe-central2**) и **Pulumi** (стеки **infra-core** / **infra-data** / **infra-runtime**) — воспроизводимая инфраструктура. **VitePress** в `docs-site/` — SoT по документации; `doc/_archive/` **только история**.
 
 ---
 
@@ -14,12 +14,12 @@ description: "Архитектура, governance и ответственност
 | Аспект | Выбор | Примечание |
 |--------|--------|------|
 | Процесс | Camunda 8, BPMN + **DMN** | Этапы, human tasks, шаги в аудите — не только «поток в коде». |
-| Приложение / AI | `backend/`, `worker/` | PII: маскировать до внешнего LLM; выровняйтесь с `pii` в backend. |
-| Данные | GCS, BQ, опционально Cloud SQL / вектор | RAG: [ml-data-rag](/ru/ml-data-rag). |
+| Приложение | `backend/`, `worker/` | PII: маскировать чувствительные идентификаторы в логах и внешних интеграциях. |
+| Данные | GCS, BQ, опционально Cloud SQL | Слой данных для отчетности и операционной персистентности. |
 | Рантайм | GKE **Standard** | ADR и [architecture](/ru/architecture) — Autopilot / SaaS. |
 | IaC | Pulumi, split | `stackRole` и порядок — [infra-pulumi-iac](/ru/infra-pulumi-iac). |
 
-**Поток данных (схема):** запрос → API / граф → Zeebe → retrieval и LLM → Camunda, задачи → логи / BQ (без **PESEL** в логах в открытом виде).
+**Поток данных (схема):** запрос → API → Zeebe → Camunda, задачи → логи / BQ (без **PESEL** в логах в открытом виде).
 
 **Целостность (не сливать):** **DMN** (правила) · **Camunda** (оркестрация) · **сервисы/воркеры** (исполнение) · **Pulumi/GCP** (инфраструктура) — четыре уровня.
 

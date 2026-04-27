@@ -1,69 +1,38 @@
 # Вход в систему (main)
 
-**HBG Credit Scoring** — **демонстрационно-учебный** монорепозиторий для **кредитного контура в духе регулируемой среды**: процесс явный, ИИ встроен в рамки политики, инфраструктура воспроизводима. Регион облака по умолчанию: **`europe-central2`**. Каноническая раскладка кода: [architecture](/ru/architecture) — эта страница **нарративный вход** (уровень 0).
+## 1. Что это за система
 
----
+HBG Credit Scoring - это платформа кредитного решения на Camunda для регулируемой среды: BPMN управляет процессом, DMN хранит детерминированные правила, а инфраструктура управляется как код для аудируемых и воспроизводимых релизов.
 
-## Что это за система
-
-- **Оркестрация процесса** — Camunda 8 (BPMN для этапов, **DMN** для детерминированных правил).
-- **Приложение и граф** — FastAPI, LangGraph, Vertex (Gemini) в `backend/`.
-- **Исполнение** — **воркеры** PyZeebe в `worker/` (типы задач привязаны к процессу).
-- **Инфраструктура** — **GCP** (GKE Standard, GCS, BigQuery, опционально Cloud SQL и т.д.) с **Pulumi** и раздельными стеками (`stackRole` / `infra-core` · `infra-data` · `infra-runtime`).
-
-> Бизнес-логика, описание процесса и инфраструктура по задумке **эволюционируют независимо**.
-
----
-
-## Зачем она существует
-
-Кредитные и скоринговые контексты требуют **прослеживаемости**: кто изменил правило, с какой версией процесса шёл запуск, что «видел» модель (без сырого PII в логах). Стек ориентирован на **контроль и аудируемость**, а не на минимальное число сущностей. Это сознательные компромиссы (медленнее, чем один микросервис, больше концептов, чем у скрипта).
-
----
-
-## Модель на две минуты
+## 2. Как это работает в проде (DevOps flow)
 
 ```text
-Заявитель / канал
-        │
-        ▼
-   HTTP API (FastAPI) ──► LangGraph / Vertex (RAG + LLM, в рамках политики)
-        │
-        ▼
-   Zeebe / Camunda (состояние BPMN, human tasks, инциденты)
-        │
-        ├─► DMN (детерминированные правила, меньше недетерминизма)
-        ├─► Воркеры (PyZeebe) ↔ сервисы, хранилища
-        └─► Наблюдаемость, BigQuery, логи (PII: маскировать до внешнего LLM)
-        │
-        ▼
-   GKE + Pulumi (IaC), Artifact Registry, Secret Manager, IAM
+PR -> CI (build + test + scan) -> публикация артефакта -> deploy в dev
+   -> promotion в stage (approval + интеграционные проверки)
+   -> promotion в prod (approval + контролируемый rollout)
+   -> runtime monitoring (логи + метрики + алерты)
+   -> incident response / rollback на last stable release
 ```
 
-**Разделение, которое нельзя «сплющивать»** в документах и коде:
+### Модель деплоя и восстановления
 
-| Слой | Ответственность |
-|--------|-----------------|
-| **DMN** | Детерминированные бизнес-правила. |
-| **BPMN / Camunda** | Оркестрация процесса, human tasks, шаги в аудит-трейсе. |
-| **Сервисы / воркеры** | Интеграции, вызовы скоринга, обработчики задач. |
-| **GCP + Pulumi** | Сети, кластер, data plane, идентичность — **IaC SoT** в `infra/pulumi/`. |
+- Изменения infra применяются Pulumi-стеками по цепочке: core -> data -> runtime.
+- Workload в GKE деплоится из immutable image и versioned manifests/charts.
+- Обновление Camunda включает versioned BPMN/DMN, чтобы не было дрейфа процесса и правил.
+- Promotion между средами идет одним и тем же artifact digest.
+- При провале health-check или SLO breach выполняется rollback на последнюю стабильную версию.
 
----
+## 3. Ключевые компоненты
 
-## Куда дальше (слои документации)
+- Camunda и Zeebe для оркестрации и состояния workflow.
+- DMN-таблицы для детерминированной и проверяемой логики скоринга.
+- API и workers для интеграций и выполнения process tasks.
+- GCP runtime (GKE, Cloud Storage, Artifact Registry, IAM) как прод-платформа.
+- Pulumi multi-stack IaC (core/data/runtime) для контролируемых infra-изменений.
 
-| Уровень | Документ | Что внутри |
-|-------|----------|--------|
-| 1 | [упрощённая модель](/ru/simplified) | Четыре роли, ментальная модель без «шума» стека. |
-| 2 | [архитектура](/ru/architecture) | Компоненты, слои, поток данных, монорепо, компромиссы. |
-| 3 | [план и roadmap](/ru/plan) | Фазы, эволюция, ссылки на инфраструктурный трек. |
-| 4 | [приложение (индекс)](/ru/appendix) | Персоны, матрицы, длинный `prompt` §9, CLI, RAG. |
+## Operations (DevOps)
 
-**Одна страница — всё сразу:** [сводка](/ru/system-summary).
-
-**Governance (полный текст):** [философия и governance](/ru/system-philosophy-governance) · [матрица доступа GCP 11×6](/ru/gcp-saas-access-matrix-11x6).
-
-**Практическая дорожка (чеклист оператора):** [INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION).
-
-> Другие языки: [English: main →](/en/main) · [Polski: wejście →](/pl/main)
+- Deployment model: [ops/deployment](/ru/ops/deployment)
+- CI/CD controls: [ops/cicd](/ru/ops/cicd)
+- Observability model: [ops/observability](/ru/ops/observability)
+- Failure and recovery flow: [ops/incidents](/ru/ops/incidents)

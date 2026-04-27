@@ -1,222 +1,95 @@
 ---
-title: "Credit Scoring Camunda Platform"
-description: "2-minute entry: controlled credit decisioning for regulated environments."
+title: "Credit Scoring Platform (Main)"
+description: "Operational entry page with constraints, trade-offs, and failure behavior."
 ---
 
-# Credit Scoring Camunda Platform
+# Credit Scoring Platform (Main)
 
-## A controlled credit decisioning system built for regulated environments
+## 1. What the system is
 
----
+HBG Credit Scoring is a Camunda-based credit decision platform for regulated environments. BPMN orchestrates process flow, DMN stores deterministic decision logic, API and workers execute tasks, and GCP infrastructure is managed with Pulumi. AI/RAG is a system element in the decision support path, but it is constrained by process rules and governance controls.
 
-## 1. What this system is
+## 2. How it runs in production (DevOps flow)
 
-This platform is a **credit scoring and decision orchestration system** built on Camunda, GCP, and a strict governance model.
-
-It is designed to ensure that every credit decision is:
-
-- **deterministic**
-- **auditable**
-- **traceable**
-- **controlled through explicit permissions**
-
----
-
-## 2. What happens in the system
-
-A credit application follows a fully observable workflow:
+The production lifecycle follows a controlled path from Git change to runtime verification:
 
 ```text
-Customer Application
-        ↓
-API Layer
-        ↓
-Camunda Process Engine
-        ↓
-Business Rules (DMN)
-        ↓
-External Services / Workers
-        ↓
-Decision Engine
-        ↓
-Final Credit Decision
+PR -> CI (build + test + scan) -> artifact publish -> deploy to dev
+   -> promote to stage (approval + integration checks)
+   -> promote to prod (approval + guarded rollout)
+   -> runtime monitoring (logs + metrics + alerts)
+   -> incident response / rollback to last stable release
 ```
 
-At every step:
-
-- the state is persisted;
-- the decision is traceable;
-- the responsible role is defined.
-
----
-
-## 3. Why this system exists
-
-Credit scoring systems in regulated environments require:
-
-- strict auditability (who changed what and why);
-- controlled execution (no implicit logic);
-- separation of concerns;
-- reproducible infrastructure.
-
-This system enforces these constraints by design.
-
----
-
-## 4. Core architecture principles
-
-### 4.1 Separation of concerns
-
-The system is divided into independent layers:
-
-- **Decision layer (DMN)** → business rules;
-- **Process layer (Camunda)** → orchestration;
-- **Execution layer (services/workers)** → implementation;
-- **Infrastructure layer (GCP + Pulumi)** → runtime environment.
-
-Detailed layer mapping: [architecture](/en/architecture).
-
----
-
-### 4.2 Controlled change model
-
-No change is applied directly to production.
-
-All changes move through a controlled pipeline:
-
-```text
-feature/* → develop → release/* → main
-```
-
-Each stage represents a higher level of validation and trust.
-
-Workflow policy details: [git-workflow](/en/git-workflow).
-
----
-
-### 4.3 Unified governance model
-
-Access across all system components is governed by a single model:
-
-- GitHub (code & workflow);
-- GCP (infrastructure);
-- Camunda (process execution).
-
-Access is defined by roles and enforced consistently across all layers.
-
-See: [gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6).
-
----
-
-## 5. System components
-
-### Camunda (Process Orchestration)
-
-Executes BPMN workflows and coordinates system behavior.
-
-### DMN (Decision Engine)
-
-Encodes credit scoring rules as versioned, deterministic decision logic.
-
-### Workers (Execution Layer)
-
-Implements integrations and business logic.
-
-### GCP (Infrastructure Layer)
-
-Provides compute, networking, storage, and runtime services.
-
-### Pulumi (Infrastructure as Code)
-
-Defines and manages all cloud resources in a reproducible way.
-
----
-
-## 6. Infrastructure model
-
-All infrastructure is managed via Pulumi with centralized state:
-
-```text
-gs://credit-scoring-camunda-project-pulumi-state-euc2
-```
-
-Stack details and commands: [infra-pulumi-iac](/en/infra-pulumi-iac).
-
-### Stack structure
-
-- **infra-core**
-  - VPC
-  - subnetting
-  - Private Service Access (PSA)
-- **infra-data**
-  - GCS buckets
-  - BigQuery datasets
-  - optional Cloud SQL (via core stack reference)
-- **infra-runtime**
-  - GKE (private nodes)
-  - Workload Identity
-  - Artifact Registry
-  - Vertex AI integrations
-
----
-
-## 7. Governance model (high-level)
-
-The system uses a **role-based responsibility model (11 × 6)**:
-
-- Roles define **what can be changed**;
-- Users define **where it applies**;
-- Permissions are consistent across:
-  - GitHub
-  - GCP
-  - Camunda
-
-This ensures:
-
-- segregation of duties;
-- controlled production access;
-- full auditability of changes.
-
----
-
-## 8. Key design principle
-
-> The system is not organized around services.  
-> It is organized around responsibilities.
-
-Every change must be:
-
-- explicitly owned;
-- traceable;
-- validated through a controlled lifecycle.
-
----
-
-## 9. Summary
-
-This platform demonstrates how a regulated credit scoring system can be built with:
-
-- explicit governance;
-- strict change control;
-- separation of system layers;
-- reproducible cloud infrastructure;
-- observable business logic.
-
-It is designed for environments where correctness and auditability are more important than speed of change.
-
----
-
-## Next reading (layered path)
-
-| Level | Document | You get |
-|-------|----------|--------|
-| 1 | [simplified model](/en/simplified) | Four core roles, mental model without stack noise. |
-| 2 | [architecture](/en/architecture) | Components, layers, data flow, monorepo map, design trade-offs. |
-| 3 | [plan & roadmap](/en/plan) | Phases, evolution, scaling mental model, links to the infra track. |
-| 4 | [appendix index](/en/appendix) | Personas, matrices, long `prompt` §9, CLI, RAG details. |
-
-**One-page view:** [system summary](/en/system-summary)  
-**Governance text:** [system philosophy & governance](/en/system-philosophy-governance)  
-**Implementation track:** [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)
-
-> Other languages: [Русский (полный)](/ru/main) · [Polski (pełny)](/pl/main)
+### Deployment model (with operational constraints)
+
+- Infra changes are applied by Pulumi stacks in order: core -> data -> runtime.
+- Workloads are deployed to GKE from immutable images and versioned manifests/charts.
+- Camunda updates include versioned BPMN/DMN assets to prevent process-rule drift.
+- Promotion uses the same artifact digest across environments.
+- Some production deployments are gated by manual approvals and release windows.
+- On failed rollout health checks or SLO breach, rollback restores the last stable release.
+
+### Operational reality (what is still manual)
+
+- Some Camunda incident cases still require manual workflow replay.
+- Some rollback decisions are manual when state consistency is unclear.
+- Deep debugging of cross-service failures may require temporary platform-level access.
+- Incident response is assisted by runbooks, not fully automated.
+
+## 3. Key components
+
+- Camunda and Zeebe for workflow orchestration and execution state.
+- DMN decision tables for deterministic and reviewable credit logic.
+- API, workers, and AI/RAG integration for execution of process tasks and decision support.
+- GCP runtime (GKE, Cloud Storage, Artifact Registry, IAM) as production platform.
+- Pulumi multi-stack IaC (core/data/runtime) for controlled infrastructure changes.
+
+## Trade-offs by component
+
+| Component | Why chosen | What was sacrificed | What is not optimal today |
+|---|---|---|---|
+| Camunda (BPMN/DMN) | Strong auditability and explicit process state | More operational overhead than a simple service flow | Incident handling and replay are not fully automated |
+| GCP runtime (GKE, storage, registry) | Managed platform with strong IAM integration | Higher platform complexity and cost control effort | Capacity tuning still relies on manual review in peak periods |
+| Pulumi (core/data/runtime stacks) | Code-level reuse and typed stack composition | Smaller ecosystem than Terraform in some tooling areas | Stack dependency management still needs experienced operators |
+| CI/CD pipeline | Controlled promotion and release evidence | Slower releases due to approvals and quality gates | Not all checks are parallelized; lead time can spike |
+| Governance (11x6 roles) | Segregation of duties and audit clarity | More coordination and slower operational decisions | Some changes still wait on role-specific approvers |
+
+## Failure scenarios (what breaks first)
+
+| Component | Failure mode | Detection | Recovery |
+|---|---|---|---|
+| Camunda/Zeebe | Workflow incidents and stuck jobs | Incident count rise, backlog growth, failed task metrics | Retry policy checks, manual replay for selected instances, rollback if release-related |
+| Worker services | Retry storm or external dependency timeout | Error-rate alerts, queue lag, pod restart spikes | Scale workers, isolate bad dependency path, redeploy previous stable build |
+| GKE runtime | Node pressure and pod evictions | Saturation alerts, scheduling failures | Scale node pool, tune requests/limits, shift traffic or reduce load |
+| Pulumi deployment | Partial infra apply or drift | Pipeline apply failure, drift checks | Stop promotion, corrective apply, forward-fix with reviewed change |
+| CI/CD | Broken build or invalid deployment artifact | Failing pipeline stage, smoke test failure | Block promotion, hotfix branch, redeploy last stable artifact digest |
+
+## Non-goals (explicit)
+
+- This platform does not provide fully automated incident response.
+- This platform does not provide perfect observability coverage for every failure mode.
+- This platform does not optimize autoscaling to minimum cost at all times.
+- This platform does not provide one-click recovery for all stateful failures.
+- This platform does not run unrestricted autonomous promotions to production.
+
+## System evolution timeline
+
+- **v0**: Initial API-centric flow with limited process visibility and manual operational steps.
+- **v1**: Camunda introduced to make workflow state explicit and auditable.
+- **v2**: Pulumi stack split into core/data/runtime to reduce blast radius of infra changes.
+- **v3**: Governance model (11x6) formalized for role boundaries and auditability.
+- **v4 (current)**: DevOps operations layer added (deployment, CI/CD, observability, incidents) with explicit failure and recovery model.
+
+## Operations (DevOps)
+
+- Deployment model: [operations deployment](/en/ops/deployment)
+- CI/CD controls: [operations cicd](/en/ops/cicd)
+- Observability model: [operations observability](/en/ops/observability)
+- Failure and recovery flow: [operations incidents](/en/ops/incidents)
+
+## Keep reading
+
+- System deep dive: [Camunda process flow](/en/process-flow-camunda), [DMN decision model](/en/decision-model-dmn)
+- Governance model: [gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6)
+- Infrastructure model: [infra-pulumi-iac](/en/infra-pulumi-iac), [infra-pulumi-gke-sandbox](/en/infra-pulumi-gke-sandbox)

@@ -16,51 +16,50 @@ const sidebarRu = [
   {
     text: "LEVEL 0 — Вход",
     items: [
-      { text: "DevOps operating model", link: "/ru/devops-operating-model" },
+      { text: "Вход в систему (main)", link: "/ru/main" },
       { text: "Сводка (1 стр.)", link: "/ru/system-summary" },
       { text: "Архитектура (1 страница)", link: "/ru/architecture" },
     ],
   },
   {
-    text: "LEVEL 1 — Как это работает",
+    text: "LEVEL 1 — Система (как работает)",
     items: [
-      { text: "CI/CD pipeline", link: "/ru/cicd-pipeline" },
-      { text: "Deployment lifecycle", link: "/ru/deployment-lifecycle" },
-      { text: "Стратегия сред", link: "/ru/INFRA-IMPLEMENTATION" },
+      { text: "Camunda process flow", link: "/ru/process-flow-camunda" },
+      { text: "DMN decision model", link: "/ru/decision-model-dmn" },
+      { text: "Системная философия", link: "/ru/system-philosophy-governance" },
+    ],
+  },
+  {
+    text: "LEVEL 2 — Governance (кто)",
+    items: [
+      { text: "GCP access matrix 11x6", link: "/ru/gcp-saas-access-matrix-11x6" },
+      { text: "CODEOWNERS matrix", link: "/ru/github-codeowners-matrix" },
+      { text: "team 11x6", link: "/ru/team-11x6-organization" },
       { text: "Git workflow", link: "/ru/git-workflow" },
     ],
   },
   {
-    text: "LEVEL 2 — Инфраструктура",
+    text: "LEVEL 3 — Инфраструктура (где работает)",
     items: [
       { text: "Pulumi и GKE runtime", link: "/ru/pulumi-and-gke-runtime" },
       { text: "Pulumi IaC (детали)", link: "/ru/infra-pulumi-iac" },
       { text: "GKE sandbox", link: "/ru/infra-pulumi-gke-sandbox" },
-      { text: "GCP access matrix 11x6", link: "/ru/gcp-saas-access-matrix-11x6" },
+      { text: "Implementation track", link: "/ru/INFRA-IMPLEMENTATION" },
     ],
   },
   {
-    text: "LEVEL 3 — Операции",
+    text: "LEVEL 4 — Operations (DevOps)",
     items: [
-      { text: "Observability & incidents", link: "/ru/observability-and-incident" },
+      { text: "Deployment", link: "/ru/ops/deployment" },
+      { text: "CI/CD", link: "/ru/ops/cicd" },
+      { text: "Observability", link: "/ru/ops/observability" },
+      { text: "Incidents", link: "/ru/ops/incidents" },
+    ],
+  },
+  {
+    text: "Референсы",
+    items: [
       { text: "CLI / console", link: "/ru/cli-console" },
-      { text: "Runbook index", link: "/ru/toc" },
-    ],
-  },
-  {
-    text: "LEVEL 4 — Governance",
-    items: [
-      { text: "Governance and controls", link: "/ru/governance-and-controls" },
-      { text: "CODEOWNERS matrix", link: "/ru/github-codeowners-matrix" },
-      { text: "team 11x6", link: "/ru/team-11x6-organization" },
-    ],
-  },
-  {
-    text: "LEVEL 5 — Deep Dive",
-    items: [
-      { text: "Camunda process flow", link: "/ru/process-flow-camunda" },
-      { text: "DMN decision model", link: "/ru/decision-model-dmn" },
-      { text: "ML / Data / RAG", link: "/ru/ml-data-rag" },
       { text: "Appendix", link: "/ru/appendix" },
     ],
   },
@@ -70,51 +69,50 @@ const sidebarEn = [
   {
     text: "LEVEL 0 — Entry",
     items: [
-      { text: "DevOps operating model", link: "/en/devops-operating-model" },
+      { text: "System entry (main)", link: "/en/main" },
       { text: "System summary (1 page)", link: "/en/system-summary" },
       { text: "Architecture (1 page)", link: "/en/architecture" },
     ],
   },
   {
-    text: "LEVEL 1 — How It Runs",
+    text: "LEVEL 1 — System (how it works)",
     items: [
-      { text: "CI/CD pipeline", link: "/en/cicd-pipeline" },
-      { text: "Deployment lifecycle", link: "/en/deployment-lifecycle" },
-      { text: "Environment strategy", link: "/en/INFRA-IMPLEMENTATION" },
+      { text: "Camunda process flow", link: "/en/process-flow-camunda" },
+      { text: "DMN decision model", link: "/en/decision-model-dmn" },
+      { text: "System philosophy", link: "/en/system-philosophy-governance" },
+    ],
+  },
+  {
+    text: "LEVEL 2 — Governance (who)",
+    items: [
+      { text: "GCP access matrix 11x6", link: "/en/gcp-saas-access-matrix-11x6" },
+      { text: "CODEOWNERS matrix", link: "/en/github-codeowners-matrix" },
+      { text: "Team 11x6 organization", link: "/en/team-11x6-organization" },
       { text: "Git workflow", link: "/en/git-workflow" },
     ],
   },
   {
-    text: "LEVEL 2 — Infrastructure",
+    text: "LEVEL 3 — Infrastructure (where it runs)",
     items: [
       { text: "Pulumi and GKE runtime", link: "/en/pulumi-and-gke-runtime" },
       { text: "Pulumi IaC details", link: "/en/infra-pulumi-iac" },
       { text: "GKE sandbox", link: "/en/infra-pulumi-gke-sandbox" },
-      { text: "GCP access matrix 11x6", link: "/en/gcp-saas-access-matrix-11x6" },
+      { text: "Implementation track", link: "/en/INFRA-IMPLEMENTATION" },
     ],
   },
   {
-    text: "LEVEL 3 — Operations",
+    text: "LEVEL 4 — Operations (DevOps)",
     items: [
-      { text: "Observability and incidents", link: "/en/observability-and-incident" },
+      { text: "Deployment", link: "/en/ops/deployment" },
+      { text: "CI/CD", link: "/en/ops/cicd" },
+      { text: "Observability", link: "/en/ops/observability" },
+      { text: "Incidents", link: "/en/ops/incidents" },
+    ],
+  },
+  {
+    text: "References",
+    items: [
       { text: "CLI / console", link: "/en/cli-console" },
-      { text: "Operations index", link: "/en/toc" },
-    ],
-  },
-  {
-    text: "LEVEL 4 — Governance",
-    items: [
-      { text: "Governance and controls", link: "/en/governance-and-controls" },
-      { text: "CODEOWNERS matrix", link: "/en/github-codeowners-matrix" },
-      { text: "Team 11x6 organization", link: "/en/team-11x6-organization" },
-    ],
-  },
-  {
-    text: "LEVEL 5 — Deep Dive",
-    items: [
-      { text: "Camunda process flow", link: "/en/process-flow-camunda" },
-      { text: "DMN decision model", link: "/en/decision-model-dmn" },
-      { text: "ML / Data / RAG", link: "/en/ml-data-rag" },
       { text: "Appendix", link: "/en/appendix" },
     ],
   },
@@ -124,51 +122,50 @@ const sidebarPl = [
   {
     text: "LEVEL 0 — Wejście",
     items: [
-      { text: "DevOps operating model", link: "/pl/devops-operating-model" },
+      { text: "Wejście do systemu (main)", link: "/pl/main" },
       { text: "Podsumowanie (1 str.)", link: "/pl/system-summary" },
       { text: "Architektura (1 strona)", link: "/pl/architecture" },
     ],
   },
   {
-    text: "LEVEL 1 — Jak to dziala",
+    text: "LEVEL 1 — System (jak dziala)",
     items: [
-      { text: "CI/CD pipeline", link: "/pl/cicd-pipeline" },
-      { text: "Deployment lifecycle", link: "/pl/deployment-lifecycle" },
-      { text: "Strategia srodowisk", link: "/pl/INFRA-IMPLEMENTATION" },
+      { text: "Camunda process flow", link: "/pl/process-flow-camunda" },
+      { text: "DMN decision model", link: "/pl/decision-model-dmn" },
+      { text: "Filozofia systemu", link: "/pl/system-philosophy-governance" },
+    ],
+  },
+  {
+    text: "LEVEL 2 — Governance (kto)",
+    items: [
+      { text: "GCP access matrix 11x6", link: "/pl/gcp-saas-access-matrix-11x6" },
+      { text: "CODEOWNERS matrix", link: "/pl/github-codeowners-matrix" },
+      { text: "Team 11x6 organization", link: "/pl/team-11x6-organization" },
       { text: "Git workflow", link: "/pl/git-workflow" },
     ],
   },
   {
-    text: "LEVEL 2 — Infrastruktura",
+    text: "LEVEL 3 — Infrastruktura (gdzie dziala)",
     items: [
       { text: "Pulumi and GKE runtime", link: "/pl/pulumi-and-gke-runtime" },
       { text: "Pulumi IaC (detale)", link: "/pl/infra-pulumi-iac" },
       { text: "GKE sandbox", link: "/pl/infra-pulumi-gke-sandbox" },
-      { text: "GCP access matrix 11x6", link: "/pl/gcp-saas-access-matrix-11x6" },
+      { text: "Implementation track", link: "/pl/INFRA-IMPLEMENTATION" },
     ],
   },
   {
-    text: "LEVEL 3 — Operacje",
+    text: "LEVEL 4 — Operations (DevOps)",
     items: [
-      { text: "Observability and incidents", link: "/pl/observability-and-incident" },
+      { text: "Deployment", link: "/pl/ops/deployment" },
+      { text: "CI/CD", link: "/pl/ops/cicd" },
+      { text: "Observability", link: "/pl/ops/observability" },
+      { text: "Incidents", link: "/pl/ops/incidents" },
+    ],
+  },
+  {
+    text: "Referencje",
+    items: [
       { text: "CLI / console", link: "/pl/cli-console" },
-      { text: "Operations index", link: "/pl/toc" },
-    ],
-  },
-  {
-    text: "LEVEL 4 — Governance",
-    items: [
-      { text: "Governance and controls", link: "/pl/governance-and-controls" },
-      { text: "CODEOWNERS matrix", link: "/pl/github-codeowners-matrix" },
-      { text: "Team 11x6 organization", link: "/pl/team-11x6-organization" },
-    ],
-  },
-  {
-    text: "LEVEL 5 — Deep Dive",
-    items: [
-      { text: "Camunda process flow", link: "/pl/process-flow-camunda" },
-      { text: "DMN decision model", link: "/pl/decision-model-dmn" },
-      { text: "ML / Data / RAG", link: "/pl/ml-data-rag" },
       { text: "Dodatek", link: "/pl/appendix" },
     ],
   },
@@ -183,7 +180,7 @@ export default defineConfig({
       lang: "en-US",
       title: "HBG",
       description:
-        "Camunda 8 + AI credit scoring — documentation (default: PL → /pl/)",
+        "Camunda 8 credit scoring — documentation (default: PL → /pl/)",
       themeConfig: {
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
@@ -205,15 +202,13 @@ export default defineConfig({
       link: "/ru/",
       title: "HBG",
       description:
-        "Handlowy Bank Galicyjski (HBG) — Camunda 8 + AI credit scoring — документация (вымысел)",
+        "Handlowy Bank Galicyjski (HBG) — Camunda 8 credit scoring — документация (вымысел)",
       themeConfig: {
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Главная", link: "/ru/" },
-          { text: "DevOps", link: "/ru/devops-operating-model" },
-          { text: "CI/CD", link: "/ru/cicd-pipeline" },
-          { text: "Deploy", link: "/ru/deployment-lifecycle" },
-          { text: "Ops", link: "/ru/observability-and-incident" },
+          { text: "System", link: "/ru/main" },
+          { text: "Operations (DevOps)", link: "/ru/ops/deployment" },
           { text: "Governance", link: "/ru/governance-and-controls" },
           { text: "ADR", link: "/adr" },
         ],
@@ -231,15 +226,13 @@ export default defineConfig({
       lang: "en-US",
       link: "/en/",
       title: "HBG",
-      description: "Camunda 8 + AI credit scoring — documentation",
+      description: "Camunda 8 credit scoring — documentation",
       themeConfig: {
         siteTitle: false,
         nav: [
           { text: "Home", link: "/en/" },
-          { text: "DevOps", link: "/en/devops-operating-model" },
-          { text: "CI/CD", link: "/en/cicd-pipeline" },
-          { text: "Deploy", link: "/en/deployment-lifecycle" },
-          { text: "Ops", link: "/en/observability-and-incident" },
+          { text: "System", link: "/en/main" },
+          { text: "Operations (DevOps)", link: "/en/ops/deployment" },
           { text: "Governance", link: "/en/governance-and-controls" },
           { text: "ADR", link: "/adr" },
         ],
@@ -257,15 +250,13 @@ export default defineConfig({
       link: "/pl/",
       title: "HBG",
       description:
-        "Handlowy Bank Galicyjski (HBG) — Camunda 8 + AI (przykład fikcyjny) — dokumentacja",
+        "Handlowy Bank Galicyjski (HBG) — Camunda 8 (przykład fikcyjny) — dokumentacja",
       themeConfig: {
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Strona główna", link: "/pl/" },
-          { text: "DevOps", link: "/pl/devops-operating-model" },
-          { text: "CI/CD", link: "/pl/cicd-pipeline" },
-          { text: "Deploy", link: "/pl/deployment-lifecycle" },
-          { text: "Ops", link: "/pl/observability-and-incident" },
+          { text: "System", link: "/pl/main" },
+          { text: "Operations (DevOps)", link: "/pl/ops/deployment" },
           { text: "Governance", link: "/pl/governance-and-controls" },
           { text: "ADR", link: "/adr" },
         ],

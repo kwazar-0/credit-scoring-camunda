@@ -1,41 +1,41 @@
-# Documentation — DevOps Table of Contents
+# Documentation — Table of Contents
 
-## LEVEL 0 — Entry (what/why)
+## LEVEL 0 — Entry (WHAT)
 
-- [DevOps operating model](devops-operating-model.md)
+- [System entry (main)](main.md)
 - [System summary (1 page)](system-summary.md)
 - [Architecture (1 page)](architecture.md)
 
-## LEVEL 1 — How it runs (DevOps core)
+## LEVEL 1 — System (HOW IT WORKS)
 
-- [CI/CD pipeline](cicd-pipeline.md)
-- [Deployment lifecycle](deployment-lifecycle.md)
-- [Implementation track (environment strategy)](INFRA-IMPLEMENTATION.md)
-- [Git workflow controls](git-workflow.md)
+- [Camunda process flow](process-flow-camunda.md)
+- [DMN decision model](decision-model-dmn.md)
+- [System philosophy](system-philosophy-governance.md)
 
-## LEVEL 2 — Infrastructure
+## LEVEL 2 — Governance (WHO)
+
+- [GCP access matrix 11x6](gcp-saas-access-matrix-11x6.md)
+- [CODEOWNERS matrix](github-codeowners-matrix.md)
+- [Team 11x6 organization](team-11x6-organization.md)
+- [Git workflow](git-workflow.md)
+
+## LEVEL 3 — Infrastructure (WHERE IT RUNS)
 
 - [Pulumi and GKE runtime](pulumi-and-gke-runtime.md)
 - [Pulumi IaC details](infra-pulumi-iac.md)
 - [Pulumi GKE sandbox](infra-pulumi-gke-sandbox.md)
-- [GCP access matrix 11x6](gcp-saas-access-matrix-11x6.md)
+- [Implementation track](INFRA-IMPLEMENTATION.md)
 
-## LEVEL 3 — Operations
+## LEVEL 4 — Operations (HOW IT IS RUN)
 
-- [Observability and incident response](observability-and-incident.md)
+- [Deployment](ops/deployment.md)
+- [CI/CD](ops/cicd.md)
+- [Observability](ops/observability.md)
+- [Incidents and recovery](ops/incidents.md)
+
+## References
+
 - [CLI / console operations](cli-console.md)
-- [ML / Data / RAG runtime context](ml-data-rag.md)
-
-## LEVEL 4 — Governance
-
-- [Governance and change controls](governance-and-controls.md)
-- [CODEOWNERS matrix](github-codeowners-matrix.md)
-- [11x6 organization](team-11x6-organization.md)
-
-## LEVEL 5 — Deep Dive
-
-- [Camunda process flow](process-flow-camunda.md)
-- [DMN decision model](decision-model-dmn.md)
 - [Appendix](appendix.md)
 
 ---
