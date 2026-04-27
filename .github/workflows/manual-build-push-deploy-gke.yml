@@ -133,6 +133,13 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Install GKE auth plugin
+        shell: bash
+        run: |
+          set -euo pipefail
+          gcloud components install gke-gcloud-auth-plugin --quiet
+          gke-gcloud-auth-plugin --version
+
       - name: Configure Docker auth for Artifact Registry
         shell: bash
         run: |
@@ -165,6 +172,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           gcloud container clusters get-credentials "${{ github.event.inputs.gke_cluster }}" \
             --region "${{ github.event.inputs.gcp_region }}" \
             --project "${{ github.event.inputs.gcp_project_id }}"
