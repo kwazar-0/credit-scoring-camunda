@@ -27,6 +27,61 @@ setup_logging(LOG_LEVEL)
 log = logging.getLogger("ai-worker")
 
 
+async def execute_ai_loan_analysis(
+    application: dict | None,
+    *,
+    job_key: int | str = "n/a",
+    backend_url: str = BACKEND_URL,
+    ai_timeout_s: float = AI_TIMEOUT_S,
+) -> dict:
+    if not application:
+        raise BusinessError("MISSING_APPLICATION", "Brak zmiennej process 'application'.")
+
+    url = f"{backend_url.rstrip('/')}/analyze"
+    log.info("job_start job_key=%s", job_key)
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(ai_timeout_s)) as client:
+            r = await client.post(url, json={"application": application})
+    except httpx.TimeoutException as e:
+        log.warning("ai_timeout job_key=%s", job_key)
+        raise BusinessError(
+            "AI_SERVICE_TIMEOUT",
+            "Przekroczono czas oczekiwania na usługę AI (fallback ręczny).",
+        ) from e
+    except httpx.RequestError as e:
+        log.exception("ai_request_error")
+        raise BusinessError(
+            "AI_BACKEND_UNAVAILABLE",
+            f"Backend AI niedostępny: {e!s}",
+        ) from e
+
+    if r.status_code >= 500:
+        raise BusinessError(
+            "AI_BACKEND_ERROR",
+            f"Błąd serwera AI: HTTP {r.status_code}",
+        )
+    if r.status_code >= 400:
+        raise BusinessError(
+            "AI_BAD_REQUEST",
+            f"Niepoprawne żądanie: HTTP {r.status_code} {r.text[:200]}",
+        )
+
+    data = r.json()
+    out = {
+        "risk_score": int(data.get("risk_score", 0)),
+        "final_decision": str(data.get("final_decision", "MANUAL")),
+        "justification_pl": str(data.get("justification_pl", "")),
+        "chain_of_thought_pl": str(data.get("chain_of_thought_pl", "")),
+        "retrieved_chunks": data.get("retrieved_chunks") or [],
+        "dmn_snapshot": data.get("dmn") or {},
+        "bik_snapshot": data.get("bik") or {},
+        "llm_reasoning_pl": str(data.get("llm_reasoning_pl", "")),
+        "reflection_pl": str(data.get("reflection_pl", "")),
+    }
+    log.info("job_complete job_key=%s decision=%s", job_key, out["final_decision"])
+    return out
+
+
 async def main() -> None:
     gateway = os.environ.get("ZEEBE_ADDRESS", DEFAULT_GATEWAY).strip()
     channel = create_insecure_channel(grpc_address=gateway)
@@ -34,52 +89,12 @@ async def main() -> None:
 
     @worker.task(task_type=TASK_TYPE, timeout_ms=int((AI_TIMEOUT_S + 15) * 1000))
     async def ai_loan_analysis(job: Job, application: dict | None = None) -> dict:
-        if not application:
-            raise BusinessError("MISSING_APPLICATION", "Brak zmiennej process 'application'.")
-
-        url = f"{BACKEND_URL}/analyze"
-        log.info("job_start job_key=%s", job.key)
-        try:
-            async with httpx.AsyncClient(timeout=httpx.Timeout(AI_TIMEOUT_S)) as client:
-                r = await client.post(url, json={"application": application})
-        except httpx.TimeoutException as e:
-            log.warning("ai_timeout job_key=%s", job.key)
-            raise BusinessError(
-                "AI_SERVICE_TIMEOUT",
-                "Przekroczono czas oczekiwania na usługę AI (fallback ręczny).",
-            ) from e
-        except httpx.RequestError as e:
-            log.exception("ai_request_error")
-            raise BusinessError(
-                "AI_BACKEND_UNAVAILABLE",
-                f"Backend AI niedostępny: {e!s}",
-            ) from e
-
-        if r.status_code >= 500:
-            raise BusinessError(
-                "AI_BACKEND_ERROR",
-                f"Błąd serwera AI: HTTP {r.status_code}",
-            )
-        if r.status_code >= 400:
-            raise BusinessError(
-                "AI_BAD_REQUEST",
-                f"Niepoprawne żądanie: HTTP {r.status_code} {r.text[:200]}",
-            )
-
-        data = r.json()
-        out = {
-            "risk_score": int(data.get("risk_score", 0)),
-            "final_decision": str(data.get("final_decision", "MANUAL")),
-            "justification_pl": str(data.get("justification_pl", "")),
-            "chain_of_thought_pl": str(data.get("chain_of_thought_pl", "")),
-            "retrieved_chunks": data.get("retrieved_chunks") or [],
-            "dmn_snapshot": data.get("dmn") or {},
-            "bik_snapshot": data.get("bik") or {},
-            "llm_reasoning_pl": str(data.get("llm_reasoning_pl", "")),
-            "reflection_pl": str(data.get("reflection_pl", "")),
-        }
-        log.info("job_complete job_key=%s decision=%s", job.key, out["final_decision"])
-        return out
+        return await execute_ai_loan_analysis(
+            application,
+            job_key=job.key,
+            backend_url=BACKEND_URL,
+            ai_timeout_s=AI_TIMEOUT_S,
+        )
 
     log.info("worker_started task=%s gateway=%s backend=%s", TASK_TYPE, gateway, BACKEND_URL)
     await worker.work()

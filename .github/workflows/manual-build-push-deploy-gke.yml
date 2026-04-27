@@ -1,0 +1,198 @@
+name: Manual Build/Push/Deploy (GKE)
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: "Service to build and deploy"
+        required: true
+        default: "worker"
+        type: choice
+        options:
+          - worker
+          - backend
+          - ui
+      environment:
+        description: "GitHub Environment with GCP secrets"
+        required: true
+        default: "GCP_WORKLOAD"
+        type: choice
+        options:
+          - GCP_WORKLOAD
+      gcp_project_id:
+        description: "GCP project id"
+        required: true
+        default: "credit-scoring-camunda-project"
+        type: string
+      gcp_region:
+        description: "GCP region"
+        required: true
+        default: "europe-central2"
+        type: string
+      gke_cluster:
+        description: "GKE cluster name"
+        required: true
+        default: "hbg-gke"
+        type: string
+      gke_namespace:
+        description: "Kubernetes namespace"
+        required: true
+        default: "hbg"
+        type: string
+      artifact_repository:
+        description: "Artifact Registry repository name"
+        required: true
+        default: "hbg-gke-docker"
+        type: string
+      image_tag:
+        description: "Image tag (leave 'auto' for sha-<short>)"
+        required: true
+        default: "auto"
+        type: string
+      k8s_deployment_name:
+        description: "Kubernetes deployment name"
+        required: true
+        default: "credit-worker"
+        type: string
+      k8s_container_name:
+        description: "Container name in Deployment spec"
+        required: true
+        default: "worker"
+        type: string
+      apply_worker_manifest:
+        description: "Apply k8s/hbg/deployment-worker.yaml before set image"
+        required: true
+        default: true
+        type: boolean
+
+concurrency:
+  group: manual-build-push-deploy-${{ github.event.inputs.service }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build_push_deploy:
+    name: Build image, push to AR, deploy to GKE
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Select service paths
+        id: svc
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${{ github.event.inputs.service }}" in
+            worker)
+              echo "docker_context=worker" >> "$GITHUB_OUTPUT"
+              ;;
+            backend)
+              echo "docker_context=backend" >> "$GITHUB_OUTPUT"
+              ;;
+            ui)
+              echo "docker_context=ui" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Unsupported service: ${{ github.event.inputs.service }}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Resolve image tag
+        id: tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event.inputs.image_tag }}" == "auto" ]]; then
+            echo "value=sha-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${{ github.event.inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compose image URI
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE_URI="${{ github.event.inputs.gcp_region }}-docker.pkg.dev/${{ github.event.inputs.gcp_project_id }}/${{ github.event.inputs.artifact_repository }}/${{ github.event.inputs.service }}:${{ steps.tag.outputs.value }}"
+          echo "uri=${IMAGE_URI}" >> "$GITHUB_OUTPUT"
+          echo "Image URI: ${IMAGE_URI}"
+
+      - name: Authenticate to Google Cloud (WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_GITHUB_ACTIONS_SA_EMAIL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker auth for Artifact Registry
+        shell: bash
+        run: |
+          set -euo pipefail
+          gcloud auth configure-docker "${{ github.event.inputs.gcp_region }}-docker.pkg.dev" --quiet
+
+      - name: Build Docker image
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build -t "${{ steps.image.outputs.uri }}" "${{ steps.svc.outputs.docker_context }}"
+
+      - name: Push Docker image
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker push "${{ steps.image.outputs.uri }}"
+
+      - name: Configure kubectl context
+        shell: bash
+        run: |
+          set -euo pipefail
+          gcloud container clusters get-credentials "${{ github.event.inputs.gke_cluster }}" \
+            --region "${{ github.event.inputs.gcp_region }}" \
+            --project "${{ github.event.inputs.gcp_project_id }}"
+
+      - name: Ensure namespace exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl get namespace "${{ github.event.inputs.gke_namespace }}" >/dev/null 2>&1 || \
+            kubectl create namespace "${{ github.event.inputs.gke_namespace }}"
+
+      - name: Apply worker manifest (optional)
+        if: ${{ github.event.inputs.apply_worker_manifest == 'true' && github.event.inputs.service == 'worker' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl apply -n "${{ github.event.inputs.gke_namespace }}" -f k8s/hbg/deployment-worker.yaml
+
+      - name: Patch deployment image
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl set image deployment/"${{ github.event.inputs.k8s_deployment_name }}" \
+            "${{ github.event.inputs.k8s_container_name }}"="${{ steps.image.outputs.uri }}" \
+            -n "${{ github.event.inputs.gke_namespace }}"
+
+      - name: Wait rollout
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl rollout status deployment/"${{ github.event.inputs.k8s_deployment_name }}" \
+            -n "${{ github.event.inputs.gke_namespace }}" \
+            --timeout=300s
+
+      - name: Show deployed image
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl get deployment "${{ github.event.inputs.k8s_deployment_name }}" \
+            -n "${{ github.event.inputs.gke_namespace }}" \
+            -o jsonpath='{.spec.template.spec.containers[*].image}'; echo
