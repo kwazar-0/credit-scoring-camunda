@@ -1,6 +1,10 @@
 # Architecture and purpose of the repository
 
+**Documentation layers:** [main (entry)](/en/main) → [simplified model](/en/simplified) → **this page** → [plan & roadmap](/en/plan) → [appendix](/en/appendix). **One-page summary:** [system summary](/en/system-summary).
+
 The **Credit-Scoring / HBG** (Handlowy Bank Galicyjski) repository is a **demo/training** stack: automated credit flow with **Camunda 8** orchestration, **RAG** and generative models (**Vertex AI / Gemini**), and **GCP** infrastructure (default region **europe-central2**). See also [HBG: RAG-DOMINANCE strategy](/en/hbg-rag-dominance) and [ml-data-rag](/en/ml-data-rag).
+
+**Design rationale (one line):** the system optimises for **auditability, separation of concerns, and controlled change** — not for minimal component count or fastest first-time setup. That trade-off is intentional; see the “Engineering decisions” section below.
 
 **Repo layout (monorepo):**
 

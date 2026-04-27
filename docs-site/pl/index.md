@@ -7,6 +7,12 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
+## Ułożone poziomy (dla nowych czytelników)
+
+Czytaj w kolejności: **[main](/pl/main)** → **[simplified](/pl/simplified)** → **[architecture](/pl/architecture)** → **[plan](/pl/plan)** → **[dodatek](/pl/appendix)**. **W skrócie:** [podsumowanie](/pl/system-summary). **Wdrożenie:** **[INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION)**.
+
+---
+
 ## Adnotacja rozwiązania
 
 **HBG Credit Scoring** to platforma automatyzacji procesu kredytowego, gdzie decyzja jest realizowana jako kontrolowany proces inżynierski, a nie pojedyncze wywołanie LLM.  
@@ -28,19 +34,27 @@ Wartość rozwiązania:
 
 ## Jak czytać dokumentację
 
-### 1) Start wdrożenia
+### 1) Narracja (koncepcja → głębia)
+
+- **[main](/pl/main)** — czym jest system, model 2 minuty, diagram.
+- **[simplified](/pl/simplified)** — cztery główne role i odpowiedzialności.
+- **[architecture](/pl/architecture)** — komponenty, przepływ, decyzje.
+- **[plan](/pl/plan)** — ewolucja, fazy (skrót), cykl komponentów.
+- **[dodatek](/pl/appendix)** — indeks głębokich stron (persony, RAG, CLI).
+
+### 2) Start wdrożenia
 
 - **[INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION)** — główny porządek faz i ścieżka startowa.
 - **[architecture](/pl/architecture)** — układ systemu, granice i przepływ danych.
 - **[infra-pulumi-iac](/pl/infra-pulumi-iac)** — Pulumi, `stackRole`, split, OIDC.
 
-### 2) Operacje i debug
+### 3) Operacje i debug
 
 - **[cli-console](/pl/cli-console)** — komendy `gcloud`, Pulumi, `kubectl`.
 - **[ml-data-rag](/pl/ml-data-rag)** — RAG/Vertex i env backendu.
 - **[toc](/pl/toc)** — pełny spis treści.
 
-### 3) Governance (po MVP)
+### 4) Governance (po MVP)
 
 - **[gcp-saas-access-matrix-11x6](/pl/gcp-saas-access-matrix-11x6)** — model dostępu do GCP wg ról.
 - **[team-11x6-organization](/pl/team-11x6-organization)** — model zespołu, persony i SDLC.

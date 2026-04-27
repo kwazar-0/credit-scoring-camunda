@@ -17,6 +17,12 @@ const sidebarRu = [
     text: "Старт",
     items: [
       { text: "Оглавление (все страницы)", link: "/ru/toc" },
+      { text: "Вход: система (main)", link: "/ru/main" },
+      { text: "Упрощённые роли", link: "/ru/simplified" },
+      { text: "План и roadmap", link: "/ru/plan" },
+      { text: "Приложение (индекс)", link: "/ru/appendix" },
+      { text: "Сводка (1 стр.)", link: "/ru/system-summary" },
+      { text: "English (main)", link: "/en/main" },
       { text: "Философия системы", link: "/ru/system-philosophy-governance" },
       { text: "Архитектура (обзор)", link: "/ru/architecture" },
       { text: "Implementation track", link: "/ru/INFRA-IMPLEMENTATION" },
@@ -71,6 +77,12 @@ const sidebarEn = [
     text: "Start",
     items: [
       { text: "Table of contents", link: "/en/toc" },
+      { text: "System entry (main)", link: "/en/main" },
+      { text: "Simplified model", link: "/en/simplified" },
+      { text: "Plan & roadmap", link: "/en/plan" },
+      { text: "Appendix (deep index)", link: "/en/appendix" },
+      { text: "System summary (1 page)", link: "/en/system-summary" },
+      { text: "Doc reorg report", link: "/REORG-CHANGE-REPORT" },
       { text: "System philosophy & governance", link: "/en/system-philosophy-governance" },
       { text: "Architecture (overview)", link: "/en/architecture" },
       { text: "Implementation track", link: "/en/INFRA-IMPLEMENTATION" },
@@ -125,6 +137,12 @@ const sidebarPl = [
     text: "Start",
     items: [
       { text: "Spis treści", link: "/pl/toc" },
+      { text: "Wejście: system (main)", link: "/pl/main" },
+      { text: "Uproszczone role", link: "/pl/simplified" },
+      { text: "Plan i roadmap", link: "/pl/plan" },
+      { text: "Dodatek (indeks)", link: "/pl/appendix" },
+      { text: "Podsumowanie (1 str.)", link: "/pl/system-summary" },
+      { text: "English (main)", link: "/en/main" },
       { text: "Filozofia systemu", link: "/pl/system-philosophy-governance" },
       { text: "Architektura (przegląd)", link: "/pl/architecture" },
       { text: "Implementation track", link: "/pl/INFRA-IMPLEMENTATION" },
@@ -211,6 +229,7 @@ export default defineConfig({
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Главная", link: "/ru/" },
+          { text: "Вход (main)", link: "/ru/main" },
           { text: "Архитектура", link: "/ru/architecture" },
           { text: "Infra track", link: "/ru/INFRA-IMPLEMENTATION" },
           { text: "Оглавление", link: "/ru/toc" },
@@ -235,6 +254,7 @@ export default defineConfig({
         siteTitle: false,
         nav: [
           { text: "Home", link: "/en/" },
+          { text: "Entry (main)", link: "/en/main" },
           { text: "Architecture", link: "/en/architecture" },
           { text: "Infra track", link: "/en/INFRA-IMPLEMENTATION" },
           { text: "Contents", link: "/en/toc" },
@@ -259,6 +279,7 @@ export default defineConfig({
         logo: { src: "/images/hbg-bf1.png", alt: "Handlowy Bank Galicyjski" },
         nav: [
           { text: "Strona główna", link: "/pl/" },
+          { text: "Wejście (main)", link: "/pl/main" },
           { text: "Architektura", link: "/pl/architecture" },
           { text: "Infra track", link: "/pl/INFRA-IMPLEMENTATION" },
           { text: "Spis treści", link: "/pl/toc" },

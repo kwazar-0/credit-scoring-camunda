@@ -1,6 +1,8 @@
 # Dokumentacja — spis treści
 
-**Zacznij od:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — jedna mapa: Camunda + AI scoring, fazy, co czytać, co odłożyć.
+**Warstwowa narracja (zalecane):** [main](/pl/main) → [simplified](/pl/simplified) → [architecture](architecture.md) → [plan](/pl/plan) → [dodatek](/pl/appendix) · [podsumowanie](/pl/system-summary)
+
+**Ścieżka operacyjna:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — jedna mapa: Camunda + AI scoring, fazy, co czytać, co odłożyć.
 
 ---
 

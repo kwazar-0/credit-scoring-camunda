@@ -1,6 +1,18 @@
 # Credit Scoring Camunda (HBG)
 
-Short project overview: credit decision automation platform with Camunda 8, FastAPI/LangGraph, Vertex AI RAG, and Pulumi-managed GCP runtime.
+## What is this project?
+
+A demonstration of a credit scoring platform built with:
+
+- Camunda (workflow orchestration)
+- GCP (cloud infrastructure)
+- Pulumi (infrastructure as code)
+- Strict governance model (roles + access matrix)
+
+Goal: show how regulated systems can be structured safely and predictably.
+
+Short project overview: credit decision automation platform with Camunda 8, 
+FastAPI/LangGraph, Vertex AI RAG, and Pulumi-managed GCP runtime.
 
 ## Main documentation
 

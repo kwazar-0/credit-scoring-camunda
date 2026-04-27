@@ -7,6 +7,12 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
+## Layered path (start here if you are new)
+
+Read in order: **[main — system entry](/en/main)** → **[simplified roles](/en/simplified)** → **[architecture](/en/architecture)** → **[plan & roadmap](/en/plan)** → **[appendix](/en/appendix)**. **At a glance:** [system summary](/en/system-summary). **Operators** still use **[INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)** as the single phase-by-phase track.
+
+---
+
 ## Solution overview
 
 **HBG Credit Scoring** is an automation platform for credit decision flow where decisions are implemented as an engineering process, not a single LLM call.  
@@ -28,19 +34,27 @@ Why this matters in practice:
 
 ## How to navigate the docs
 
-### 1) Implementation start
+### 1) Layered narrative (concept → depth)
+
+- **[main](/en/main)** — what the system is, two-minute model, diagram.
+- **[simplified](/en/simplified)** — four core roles and responsibility boundaries.
+- **[architecture](/en/architecture)** — components, layers, data flow, trade-offs.
+- **[plan](/en/plan)** — evolution, phases (summary), lifecycle of components.
+- **[appendix](/en/appendix)** — index to deep pages (personas, matrices, RAG, CLI, `prompt` §9).
+
+### 2) Implementation start
 
 - **[INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)** — primary phase order and first reading path.
 - **[architecture](/en/architecture)** — system layout, boundaries and data flow.
 - **[infra-pulumi-iac](/en/infra-pulumi-iac)** — Pulumi, `stackRole`, split stacks, OIDC.
 
-### 2) Operations and debugging
+### 3) Operations and debugging
 
 - **[cli-console](/en/cli-console)** — `gcloud`, Pulumi, `kubectl` commands.
 - **[ml-data-rag](/en/ml-data-rag)** — RAG/Vertex and backend environment.
 - **[toc](/en/toc)** — full site contents.
 
-### 3) Governance (post-MVP)
+### 4) Governance (post-MVP)
 
 - **[gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6)** — role-based GCP access model.
 - **[team-11x6-organization](/en/team-11x6-organization)** — team model, personas and SDLC.

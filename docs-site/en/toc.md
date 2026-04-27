@@ -1,6 +1,8 @@
 # Documentation — table of contents
 
-**Start with:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — a single roadmap: Camunda + AI scoring, phases, what to read, what to defer.
+**Layered narrative (recommended):** [main.md](main.md) → [simplified.md](simplified.md) → [architecture.md](architecture.md) → [plan.md](plan.md) → [appendix.md](appendix.md) · [system-summary.md](system-summary.md)
+
+**Implementation track:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — single roadmap: Camunda + AI scoring, phases, what to read, what to defer.
 
 ---
 

@@ -1,6 +1,8 @@
 # Документация — оглавление
 
-**Начните с:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — единая дорожная карта: Camunda + AI scoring, фазы, что читать, что отложить.
+**Слойная схема (рекомендуется):** [main](/ru/main) → [simplified](/ru/simplified) → [architecture](architecture.md) → [plan](/ru/plan) → [приложение](/ru/appendix) · [сводка](/ru/system-summary)
+
+**Практическая дорожка:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — единая дорожная карта: Camunda + AI scoring, фазы, что читать, что отложить.
 
 ---
 
@@ -8,7 +10,7 @@
 
 | Документ | Назначение |
 |----------|------------|
-| [system-philosophy-governance.md](system-philosophy-governance.md) | Философия системы и governance (pełny/przeniesiony tekst z root README) |
+| [system-philosophy-governance.md](system-philosophy-governance.md) | Философия системы и governance (полный/перенесённый текст с root README) |
 | [architecture.md](architecture.md) | **Архитектура репозитория:** контура, стек, поток данных, пути в монорепо |
 | [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) | Фазы, порядок работ, ссылки — **точка входа** |
 | [prompt.md](prompt.md) §1–8 | Handoff, продукт, план, пути в репо |

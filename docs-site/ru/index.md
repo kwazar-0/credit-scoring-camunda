@@ -7,6 +7,12 @@ outline: [2, 3]
 
 # Credit Scoring / HBG
 
+## Слои документации (с чего начать)
+
+Порядок: **[main](/ru/main)** → [упрощённые роли](/ru/simplified) → [архитектура](/ru/architecture) → [план](/ru/plan) → [приложение](/ru/appendix). **Сводка:** [одна страница](/ru/system-summary). **Внедрение:** **[INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION)**.
+
+---
+
 ## Аннотация решения
 
 **HBG Credit Scoring** — это проект автоматизации кредитного конвейера, где процесс принятия решения построен как инженерная система, а не как «один LLM-вызов».  
@@ -28,19 +34,27 @@ outline: [2, 3]
 
 ## Как читать документацию
 
-### 1) Старт внедрения
+### 1) Сюжетная линия (смысл → детали)
+
+- **[main](/ru/main)** — что за система, короткая модель, схема.
+- **[simplified](/ru/simplified)** — четыре роли и зоны ответственности.
+- **[architecture](/ru/architecture)** — компоненты, поток данных, решения.
+- **[plan](/ru/plan)** — фазы, эволюция, жизненный цикл.
+- **[приложение](/ru/appendix)** — индекс углублённых страниц.
+
+### 2) Старт внедрения
 
 - **[INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION)** — основной порядок фаз и точка входа.
 - **[architecture](/ru/architecture)** — архитектурная схема, границы контуров и поток данных.
 - **[infra-pulumi-iac](/ru/infra-pulumi-iac)** — Pulumi, `stackRole`, split-стеки, OIDC.
 
-### 2) Операции и debug
+### 3) Операции и debug
 
 - **[cli-console](/ru/cli-console)** — рабочие команды `gcloud`, Pulumi, `kubectl`.
 - **[ml-data-rag](/ru/ml-data-rag)** — контур RAG/Vertex и переменные backend.
 - **[toc](/ru/toc)** — полное оглавление сайта.
 
-### 3) Governance (после MVP)
+### 4) Governance (после MVP)
 
 - **[gcp-saas-access-matrix-11x6](/ru/gcp-saas-access-matrix-11x6)** — роли и границы доступа к GCP.
 - **[team-11x6-organization](/ru/team-11x6-organization)** — модель команды, персоны и SDLC.
