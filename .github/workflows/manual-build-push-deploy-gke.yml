@@ -162,6 +162,29 @@ jobs:
           cd worker
           PYTHONPATH=. pytest -q
 
+      - name: PyZeebe worker code sanity
+        if: ${{ github.event.inputs.service == 'worker' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd worker
+          PYTHONPATH=. python3 - <<'PY'
+          import asyncio
+          from pyzeebe.errors.pyzeebe_errors import BusinessError
+          from app.main import TASK_TYPE, execute_ai_loan_analysis
+
+          assert TASK_TYPE == "ai-loan-analysis", f"Unexpected TASK_TYPE={TASK_TYPE}"
+
+          try:
+              asyncio.run(execute_ai_loan_analysis(None))
+          except BusinessError as exc:
+              assert exc.error_code == "MISSING_APPLICATION", exc.error_code
+          else:
+              raise AssertionError("Expected BusinessError for empty application payload")
+
+          print("PyZeebe worker sanity checks passed.")
+          PY
+
       - name: Push Docker image
         shell: bash
         run: |
