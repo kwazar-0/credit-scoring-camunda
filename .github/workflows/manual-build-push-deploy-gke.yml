@@ -22,7 +22,7 @@ on:
       gcp_project_id:
         description: "GCP project id (used in AR URL and GKE auth)"
         required: true
-        default: "uplifted-env-494515-m5"
+        default: "credit-scoring-camunda-project"
         type: string
       gcp_region:
         description: "GCP region"
