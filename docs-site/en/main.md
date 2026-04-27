@@ -30,6 +30,43 @@ PR -> CI (build + test + scan) -> artifact publish -> deploy to dev
 - Some production deployments are gated by manual approvals and release windows.
 - On failed rollout health checks or SLO breach, rollback restores the last stable release.
 
+### End-to-end deployment chain (reality)
+
+This is the path a change follows from commit to execution. It is not instantaneous; steps can fail independently.
+
+```text
+GitHub (PR / merge)
+  -> CI/CD (build, test, scan, package)
+  -> artifact registry (image/chart digest recorded)
+  -> Pulumi (preview/apply per stack: core -> data -> runtime)
+  -> GCP APIs (network, IAM, GKE, storage, etc.)
+  -> GKE (rollout / health checks)
+  -> Camunda runtime (BPMN/DMN + workers executing process tasks)
+```
+
+**Pulumi:** stacks are applied in dependency order. A failed `runtime` apply does not retroactively undo `core`; recovery is forward correction or a reviewed rollback plan, not a hidden “undo”.
+
+**GKE:** workloads are updated via controlled rollout (same digest promoted from dev onward where policy allows). Node upgrades and quota pressure are platform events, not application bugs.
+
+**Camunda:** process definitions and DMN are versioned with the release train. Operators expect occasional mismatch between “deployed gateway” and “in-flight instances” during rollout; mitigation is documented replay or version pinning, not silent auto-migration of all instances.
+
+**Manual gates:** production promotion and some infra classes still require human approval or a scheduled window. That is intentional for SoD and audit, not a gap in automation maturity.
+
+### CI/CD operations (pipeline behavior and gating)
+
+| Stage | What runs | What blocks the next step |
+|--------|------------|-----------------------------|
+| Build | compile / image build | compile errors, missing deps |
+| Test | unit / integration / smoke | failing tests, flaky suites above threshold |
+| Package | tag digest, SBOM/signing if enabled | policy scan failure, unsigned artifact policy |
+| Deploy (dev) | apply to dev cluster / dev Camunda | health check failure, smoke failure on critical path |
+| Promote (stage/prod) | same digest, env-specific values | missing approval, change freeze, failed integration gate |
+| Rollback | redeploy prior digest or workflow package | manual decision if data/process state is ambiguous |
+
+**Environments:** `dev`, `stage`, and `prod` are separated by configuration and IAM boundaries. Configuration drift between them is a known operational risk; drift checks are part of normal platform work.
+
+**Rollback:** default is “last known good artifact + last known good workflow package.” Infra rollback is rarer and usually a forward fix after review.
+
 ### Operational reality (what is still manual)
 
 - Some Camunda incident cases still require manual workflow replay.
@@ -55,15 +92,37 @@ PR -> CI (build + test + scan) -> artifact publish -> deploy to dev
 | CI/CD pipeline | Controlled promotion and release evidence | Slower releases due to approvals and quality gates | Not all checks are parallelized; lead time can spike |
 | Governance (11x6 roles) | Segregation of duties and audit clarity | More coordination and slower operational decisions | Some changes still wait on role-specific approvers |
 
-## Failure scenarios (what breaks first)
+## Failure and incident model (what breaks, how we find it, how we fix it)
 
-| Component | Failure mode | Detection | Recovery |
-|---|---|---|---|
-| Camunda/Zeebe | Workflow incidents and stuck jobs | Incident count rise, backlog growth, failed task metrics | Retry policy checks, manual replay for selected instances, rollback if release-related |
-| Worker services | Retry storm or external dependency timeout | Error-rate alerts, queue lag, pod restart spikes | Scale workers, isolate bad dependency path, redeploy previous stable build |
-| GKE runtime | Node pressure and pod evictions | Saturation alerts, scheduling failures | Scale node pool, tune requests/limits, shift traffic or reduce load |
-| Pulumi deployment | Partial infra apply or drift | Pipeline apply failure, drift checks | Stop promotion, corrective apply, forward-fix with reviewed change |
-| CI/CD | Broken build or invalid deployment artifact | Failing pipeline stage, smoke test failure | Block promotion, hotfix branch, redeploy last stable artifact digest |
+| Component | Failure mode | Detection | Impact | Troubleshooting path | Recovery |
+|---|---|---|---|---|---|
+| Camunda / Zeebe | Stuck jobs, incidents, broker pressure | Tasklist/Operate metrics, incident counters, job backlog | Decisions delayed; human tasks pile up | Identify process version and failed job type; check worker logs for same correlation id | Retry with backoff, manual replay for affected keys, rollback BPMN/DMN package if regression |
+| GKE / workers | Pod crash loop, node pressure, eviction | Pod restart rate, `Pending` pods, node conditions | Throughput drop; scoring path may degrade | `kubectl` describe pod/node; check resource requests vs limits; trace to deployment revision | Scale pool or reduce load; redeploy stable image; tune resources if root cause is sizing |
+| CI/CD | Broken pipeline, bad artifact, failed deploy | Red pipeline, failed gate, smoke alerts | No promotion; dev may be broken | Inspect job logs and test output; bisect recent merges; compare digest with last green | Fix forward on branch; revert merge; redeploy last green digest to affected env |
+| Pulumi / GCP | Partial apply, API quota, IAM drift | `pulumi` preview/up errors, drift job diffs | Infra out of spec; new workloads may fail to schedule | Compare state file intent vs GCP console; narrow to one stack; read cloud audit logs | Forward-fix with reviewed `up`; avoid blind destroy; document change for audit |
+
+## Troubleshooting loop (how engineers actually work)
+
+Operators do not guess in isolation. The loop is deliberate and cross-layer:
+
+```text
+Detect  ->  Trace  ->  Correlate  ->  Fix  ->  Redeploy / verify
+```
+
+- **Detect:** alerts, user reports, failed pipelines, Camunda incidents, SRE dashboards.
+- **Trace:** request or correlation id from edge (API) through logs; map to process instance id in Camunda; map to pod and revision in GKE.
+- **Correlate:** align timestamps with **GitHub** pipeline run and merged commit; align with **Pulumi** stack update window; align with **GCP** audit and infra change records; align with **Camunda** history for the same instance.
+- **Fix:** smallest change that restores service (scale, config, rollback digest, workflow replay). Prefer evidence-backed change over broad restarts.
+- **Redeploy / verify:** confirm health checks, rerun smoke on critical path, watch error budget for the release window.
+
+If correlation fails, the incident is escalated with partial evidence. That is normal; the system is not assumed to be self-explaining.
+
+## The system in real life
+
+- Not every path is fully automated. Approvals, replay, and some infra corrections are manual by design.
+- Operability is prioritized over theoretical completeness: coverage gaps in metrics and logs are closed incrementally.
+- Debugging is multi-layer by necessity: no single tool shows API, process engine, and cluster state in one pane for all failure modes.
+- “Working as designed” can still mean friction for the operator. That friction is the cost of auditability and separation of duties in a regulated context.
 
 ## Non-goals (explicit)
 
