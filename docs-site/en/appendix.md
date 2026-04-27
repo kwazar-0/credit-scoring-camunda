@@ -36,6 +36,7 @@ Use this when you need **depth**: personas, CLI, RAG, long handoff, enterprise h
 | [infra-pulumi-iac](/en/infra-pulumi-iac) | Pulumi, `stackRole`, OIDC, split stacks — **IaC SoT** on the site. |
 | [cli-console](/en/cli-console) | `gcloud`, Pulumi, `kubectl`, Docker. |
 | [infra-pulumi-gke-sandbox](/en/infra-pulumi-gke-sandbox) | Optional `gke-infra` Pulumi app; do not mix state with main stacks. |
+| [camunda-gke-deploy-modeler](/en/camunda-gke-deploy-modeler) | Helm Camunda on GKE, namespaces, Ubuntu Desktop Modeler + port-forward. |
 | [naming](/en/naming) | Repository and naming conventions. |
 
 ---

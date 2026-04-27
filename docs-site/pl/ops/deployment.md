@@ -21,6 +21,7 @@
 
 ## Navigation
 
+- Camunda na GKE + Ubuntu Modeler: [camunda-gke-deploy-modeler](/pl/camunda-gke-deploy-modeler)
 - Entry page: [main](/pl/main)
 - CI/CD controls: [ops/cicd](/pl/ops/cicd)
 - Observability: [ops/observability](/pl/ops/observability)

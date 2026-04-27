@@ -79,6 +79,7 @@ def provision() -> None:
         location=region,
         friendly_name="HBG loan / RAG analytics",
         description="Query logs, offline eval (no raw PII in this dataset).",
+        delete_contents_on_destroy=True,
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[bigquery_api]),
     )
 

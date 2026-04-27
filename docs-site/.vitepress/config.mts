@@ -54,6 +54,10 @@ const sidebarRu = [
       { text: "CI/CD", link: "/ru/ops/cicd" },
       { text: "Observability", link: "/ru/ops/observability" },
       { text: "Incidents", link: "/ru/ops/incidents" },
+      {
+        text: "Camunda GKE + Modeler",
+        link: "/ru/camunda-gke-deploy-modeler",
+      },
     ],
   },
   {
@@ -107,6 +111,10 @@ const sidebarEn = [
       { text: "CI/CD", link: "/en/ops/cicd" },
       { text: "Observability", link: "/en/ops/observability" },
       { text: "Incidents", link: "/en/ops/incidents" },
+      {
+        text: "Camunda GKE + Modeler",
+        link: "/en/camunda-gke-deploy-modeler",
+      },
     ],
   },
   {
@@ -160,6 +168,10 @@ const sidebarPl = [
       { text: "CI/CD", link: "/pl/ops/cicd" },
       { text: "Observability", link: "/pl/ops/observability" },
       { text: "Incidents", link: "/pl/ops/incidents" },
+      {
+        text: "Camunda GKE + Modeler",
+        link: "/pl/camunda-gke-deploy-modeler",
+      },
     ],
   },
   {

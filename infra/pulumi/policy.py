@@ -13,10 +13,12 @@ import pulumi_gcp as gcp
 def require_gcs_versioning_on_create(kwargs: dict[str, Any]) -> dict[str, Any]:
     """
     Enforce GCS object versioning. Pass Bucket constructor kwargs; mutates/returns
-    a copy with versioning enabled.
+    a copy with versioning enabled and no delete retention (Pulumi may empty+delete
+    the bucket on stack destroy via force_destroy).
     """
     v = dict(kwargs)
     v["versioning"] = gcp.storage.BucketVersioningArgs(enabled=True)
+    v["force_destroy"] = True
     return v
 
 

@@ -32,6 +32,7 @@
 - [CI/CD](ops/cicd.md)
 - [Observability](ops/observability.md)
 - [Incidents and recovery](ops/incidents.md)
+- [Camunda on GKE + Desktop Modeler (Ubuntu)](camunda-gke-deploy-modeler.md)
 
 ## References
 

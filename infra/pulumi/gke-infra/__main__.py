@@ -113,6 +113,7 @@ data_bucket = gcp.storage.Bucket(
     location=region,
     uniform_bucket_level_access=True,
     versioning=gcp.storage.BucketVersioningArgs(enabled=True),
+    force_destroy=True,
     opts=pulumi.ResourceOptions(depends_on=[storage_api]),
 )
 
@@ -145,6 +146,7 @@ cluster = gcp.container.Cluster(
     "gke",
     name=f"{stack_label}-cluster",
     location=region,
+    deletion_protection=False,
     remove_default_node_pool=True,
     initial_node_count=1,
     network=network.self_link,

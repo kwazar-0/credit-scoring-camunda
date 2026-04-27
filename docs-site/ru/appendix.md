@@ -36,6 +36,7 @@ description: "Индекс глубинных и справочных стран
 | [infra-pulumi-iac](/ru/infra-pulumi-iac) | Pulumi, `stackRole`, OIDC, split — **IaC SoT** на сайте. |
 | [cli-console](/ru/cli-console) | `gcloud`, Pulumi, `kubectl`, Docker. |
 | [infra-pulumi-gke-sandbox](/ru/infra-pulumi-gke-sandbox) | Опциональное Pulumi `gke-infra`; не смешивать state с основными стеками. |
+| [camunda-gke-deploy-modeler](/ru/camunda-gke-deploy-modeler) | Helm Camunda в GKE, namespaces, Ubuntu Desktop Modeler + port-forward. |
 | [naming](/ru/naming) | Именование в репозитории. |
 
 ---

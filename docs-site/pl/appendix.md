@@ -37,6 +37,7 @@ Gdy potrzebujesz **głębi**: persony, CLI, RAG, długi handoff, hardening. **Na
 | [infra-pulumi-iac](/pl/infra-pulumi-iac) | Pulumi, `stackRole`, OIDC, split — **IaC SoT** na stronie. |
 | [cli-console](/pl/cli-console) | `gcloud`, Pulumi, `kubectl`, Docker. |
 | [infra-pulumi-gke-sandbox](/pl/infra-pulumi-gke-sandbox) | Opcjonalne Pulumi `gke-infra`; nie mieszać state z głównymi stosami. |
+| [camunda-gke-deploy-modeler](/pl/camunda-gke-deploy-modeler) | Helm Camunda na GKE, namespaces, Ubuntu Desktop Modeler + port-forward. |
 | [naming](/pl/naming) | Konwencje w repozytorium. |
 
 ---

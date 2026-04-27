@@ -81,3 +81,33 @@ VSA="$(pulumi -C infra/pulumi stack output --stack <your-runtime-stack> cloudsql
 Фрагмент sidecar: [values-camunda-platform.gcp-pulumi.fragment.yaml](values-camunda-platform.gcp-pulumi.fragment.yaml) — **cloud-sql-proxy** рядом с **operate** (JDBC на `localhost:5432`, база в URI — `camunda_dev` / `camunda_ref` / `camunda_prod`). PVC для Zeebe/ES заданы в user + fragment. Для ref/prod при необходимости увеличьте `persistence` в отдельных `-f` overrides.
 
 **Бэкенд (Gemini):** сервисам в `hbg` выдайте WI на `hbg-vertex-llm` (см. `vertexWorkloadIdentities`); `GOOGLE_CLOUD_REGION` / проект — как в [`backend/app/config.py`](../../backend/app/config.py) и `vertex_vector` / LangChain Vertex.
+
+## Локальный Camunda Desktop Modeler → Zeebe (GKE, port-forward)
+
+Установка **Camunda Desktop Modeler** (не Web Modeler): скачайте сборку под вашу ОС с [официальной страницы загрузки](https://camunda.com/download/modeler/) или релизов [camunda/camunda-modeler](https://github.com/camunda/camunda-modeler/releases) (Linux — AppImage / `.tar.gz`).
+
+**1. Туннель к Zeebe Gateway** (оставьте терминал открытым). Имя сервиса = `{helm-release-name}-zeebe-gateway`, namespace — тот, куда ставили Helm.
+
+Пример для релиза **`camunda-dev`** в **`camunda-dev`**:
+
+```bash
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+kubectl port-forward svc/camunda-dev-zeebe-gateway 26500:26500 -n camunda-dev
+```
+
+Для дефолтного релиза из секции «Установка» (`camunda-platform`, namespace `camunda`):
+
+```bash
+kubectl port-forward svc/camunda-platform-zeebe-gateway 26500:26500 -n camunda
+```
+
+**2. В Modeler:** откройте BPMN или DMN → **Deploy** (иконка ракеты / развёртывание) → добавьте **Camunda 8 Self-Managed** кластер, если ещё нет:
+
+- **Cluster endpoint** (gRPC): `localhost:26500`
+- В профиле **без Identity** (как в `values-camunda-platform.user.yaml`) обычно достаточно подключения **без OAuth**; если Modeler спросит аутентификацию — оставьте режим по умолчанию для незащищённого dev-gateways или следуйте подсказкам UI для «no authentication».
+
+**3. Деплой:** выберите этот кластер и выполните deploy для **BPMN** и **DMN** — процессы и решения попадут в Zeebe в выбранном кластере.
+
+Проверка с той же машины (опционально): `export ZEEBE_ADDRESS=127.0.0.1:26500` для `worker/` — см. также [`docs-site/ru/cli-console.md`](../../docs-site/ru/cli-console.md).
+
+Та же процедура на сайте документации (VitePress): [EN — Camunda on GKE + Modeler](../../docs-site/en/camunda-gke-deploy-modeler.md) · [RU](../../docs-site/ru/camunda-gke-deploy-modeler.md) · [PL](../../docs-site/pl/camunda-gke-deploy-modeler.md).

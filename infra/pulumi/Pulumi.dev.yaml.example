@@ -16,5 +16,14 @@ config:
   # Optional GKE node boot disk (pet defaults: 25 GB pd-standard — low SSD quota use):
   # credit-scoring:gkeNodeDiskGb: "25"
   # credit-scoring:gkeNodeDiskType: pd-standard
+  # GKE autoscaling (infra-runtime): gkeMinNodes / gkeMaxNodes apply to the node pool.
+  # On a REGIONAL cluster the autoscaler may spread nodes across zones; raising counts
+  # can hit CPUS_ALL_REGIONS quickly (e.g. e2-standard-4 × many nodes). Prefer a quota
+  # check before raising max. Changing only min/max should NOT replace the cluster; if
+  # `pulumi up` proposes replacing `gcp:container:Cluster`, stop and fix provider drift
+  # (e.g. refresh) rather than losing the node pool. Cluster deletion_protection in GCP
+  # can leave the control plane up with no pool if a replace is attempted mid-flight.
+  # credit-scoring:gkeMinNodes: "1"
+  # credit-scoring:gkeMaxNodes: "3"
   # credit-scoring:vertexWorkloadIdentities: hbg:backend-ksa,hbg:worker-ksa
   # credit-scoring:cloudSqlWorkloadIdentities: camunda-dev:hbg-camunda-operate,camunda-ref:hbg-camunda-operate,camunda-prod:hbg-camunda-operate

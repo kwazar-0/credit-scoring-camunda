@@ -79,6 +79,7 @@ def provision() -> None:
         "primary",
         name=cluster_name,
         location=region,
+        deletion_protection=False,
         remove_default_node_pool=True,
         initial_node_count=1,
         network=network,
