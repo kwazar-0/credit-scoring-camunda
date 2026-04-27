@@ -1,62 +1,212 @@
 ---
-title: "System entry (main)"
-description: "What HBG Credit Scoring is, two-minute model, and where to go next."
+title: "Credit Scoring Camunda Platform"
+description: "2-minute entry: controlled credit decisioning for regulated environments."
 ---
 
-# System entry
+# Credit Scoring Camunda Platform
 
-**HBG Credit Scoring** is a **demo/training** monorepo for a **regulated-style credit flow**: process is explicit, AI is embedded under policy, and infrastructure is reproducible. Default cloud region: **`europe-central2`**. Canonical code layout: [architecture](/en/architecture) — this page is the **narrative entry** (LEVEL 0).
-
----
-
-## What the system is
-
-- **Process orchestration** — Camunda 8 (BPMN for stages, **DMN** for deterministic rules).
-- **Application & graph** — FastAPI, LangGraph, Vertex (Gemini) in `backend/`.
-- **Execution** — PyZeebe **workers** in `worker/` (job types tied to the process).
-- **Infrastructure** — **GCP** (GKE Standard, GCS, BigQuery, optional Cloud SQL, etc.) with **Pulumi** split stacks (`stackRole` / `infra-core` · `infra-data` · `infra-runtime`).
-
-> Business logic, process definition, and infrastructure **evolve independently** by design.
+## A controlled credit decisioning system built for regulated environments
 
 ---
 
-## Why it exists
+## 1. What this system is
 
-Credit and scoring contexts need **traceability**: who changed a rule, which process version ran, what the model saw (without raw PII in logs). This stack optimises for **control and auditability** over minimal moving parts. That implies deliberate trade-offs (slower to change than a single microservice, more concepts than a script).
+This platform is a **credit scoring and decision orchestration system** built on Camunda, GCP, and a strict governance model.
+
+It is designed to ensure that every credit decision is:
+
+- **deterministic**
+- **auditable**
+- **traceable**
+- **controlled through explicit permissions**
 
 ---
 
-## Two-minute mental model
+## 2. What happens in the system
+
+A credit application follows a fully observable workflow:
 
 ```text
-Applicant / channel
-        │
-        ▼
-   HTTP API (FastAPI) ──► LangGraph / Vertex (RAG + LLM, policy-bound)
-        │
-        ▼
-   Zeebe / Camunda (BPMN state, human tasks, incidents)
-        │
-        ├─► DMN (deterministic rules, fewer non-deterministic calls)
-        ├─► Workers (PyZeebe) ↔ services, data stores
-        └─► Observability, BigQuery, logs (PII policy: mask before external LLM)
-        │
-        ▼
-   GKE + Pulumi (IaC), Artifact Registry, Secret Manager, IAM
+Customer Application
+        ↓
+API Layer
+        ↓
+Camunda Process Engine
+        ↓
+Business Rules (DMN)
+        ↓
+External Services / Workers
+        ↓
+Decision Engine
+        ↓
+Final Credit Decision
 ```
 
-**Separation to preserve (do not blur in docs or code):**
+At every step:
 
-| Layer | Responsibility |
-|--------|-----------------|
-| **DMN** | Deterministic business rules. |
-| **BPMN / Camunda** | Process orchestration, human tasks, audit trail of steps. |
-| **Services / workers** | Integration, scoring calls, job handlers. |
-| **GCP + Pulumi** | Networks, cluster, data plane, identity — **IaC SoT** in `infra/pulumi/`. |
+- the state is persisted;
+- the decision is traceable;
+- the responsible role is defined.
 
 ---
 
-## Where to go next (layered path)
+## 3. Why this system exists
+
+Credit scoring systems in regulated environments require:
+
+- strict auditability (who changed what and why);
+- controlled execution (no implicit logic);
+- separation of concerns;
+- reproducible infrastructure.
+
+This system enforces these constraints by design.
+
+---
+
+## 4. Core architecture principles
+
+### 4.1 Separation of concerns
+
+The system is divided into independent layers:
+
+- **Decision layer (DMN)** → business rules;
+- **Process layer (Camunda)** → orchestration;
+- **Execution layer (services/workers)** → implementation;
+- **Infrastructure layer (GCP + Pulumi)** → runtime environment.
+
+Detailed layer mapping: [architecture](/en/architecture).
+
+---
+
+### 4.2 Controlled change model
+
+No change is applied directly to production.
+
+All changes move through a controlled pipeline:
+
+```text
+feature/* → develop → release/* → main
+```
+
+Each stage represents a higher level of validation and trust.
+
+Workflow policy details: [git-workflow](/en/git-workflow).
+
+---
+
+### 4.3 Unified governance model
+
+Access across all system components is governed by a single model:
+
+- GitHub (code & workflow);
+- GCP (infrastructure);
+- Camunda (process execution).
+
+Access is defined by roles and enforced consistently across all layers.
+
+See: [gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6).
+
+---
+
+## 5. System components
+
+### Camunda (Process Orchestration)
+
+Executes BPMN workflows and coordinates system behavior.
+
+### DMN (Decision Engine)
+
+Encodes credit scoring rules as versioned, deterministic decision logic.
+
+### Workers (Execution Layer)
+
+Implements integrations and business logic.
+
+### GCP (Infrastructure Layer)
+
+Provides compute, networking, storage, and runtime services.
+
+### Pulumi (Infrastructure as Code)
+
+Defines and manages all cloud resources in a reproducible way.
+
+---
+
+## 6. Infrastructure model
+
+All infrastructure is managed via Pulumi with centralized state:
+
+```text
+gs://credit-scoring-camunda-project-pulumi-state-euc2
+```
+
+Stack details and commands: [infra-pulumi-iac](/en/infra-pulumi-iac).
+
+### Stack structure
+
+- **infra-core**
+  - VPC
+  - subnetting
+  - Private Service Access (PSA)
+- **infra-data**
+  - GCS buckets
+  - BigQuery datasets
+  - optional Cloud SQL (via core stack reference)
+- **infra-runtime**
+  - GKE (private nodes)
+  - Workload Identity
+  - Artifact Registry
+  - Vertex AI integrations
+
+---
+
+## 7. Governance model (high-level)
+
+The system uses a **role-based responsibility model (11 × 6)**:
+
+- Roles define **what can be changed**;
+- Users define **where it applies**;
+- Permissions are consistent across:
+  - GitHub
+  - GCP
+  - Camunda
+
+This ensures:
+
+- segregation of duties;
+- controlled production access;
+- full auditability of changes.
+
+---
+
+## 8. Key design principle
+
+> The system is not organized around services.  
+> It is organized around responsibilities.
+
+Every change must be:
+
+- explicitly owned;
+- traceable;
+- validated through a controlled lifecycle.
+
+---
+
+## 9. Summary
+
+This platform demonstrates how a regulated credit scoring system can be built with:
+
+- explicit governance;
+- strict change control;
+- separation of system layers;
+- reproducible cloud infrastructure;
+- observable business logic.
+
+It is designed for environments where correctness and auditability are more important than speed of change.
+
+---
+
+## Next reading (layered path)
 
 | Level | Document | You get |
 |-------|----------|--------|
@@ -65,10 +215,8 @@ Applicant / channel
 | 3 | [plan & roadmap](/en/plan) | Phases, evolution, scaling mental model, links to the infra track. |
 | 4 | [appendix index](/en/appendix) | Personas, matrices, long `prompt` §9, CLI, RAG details. |
 
-**One page — everything at a glance:** [system summary](/en/system-summary).
-
-**Governance (full text):** [system philosophy & governance](/en/system-philosophy-governance) · [GCP access matrix 11×6](/en/gcp-saas-access-matrix-11x6).
-
-**Implementation track (operator checklist):** [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION).
+**One-page view:** [system summary](/en/system-summary)  
+**Governance text:** [system philosophy & governance](/en/system-philosophy-governance)  
+**Implementation track:** [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION)
 
 > Other languages: [Русский (полный)](/ru/main) · [Polski (pełny)](/pl/main)

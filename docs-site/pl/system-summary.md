@@ -1,9 +1,9 @@
 ---
-title: "Podsumowanie systemu (jedna strona)"
+title: "Podsumowanie systemu"
 description: "Architektura, governance i odpowiedzialności — HBG Credit Scoring."
 ---
 
-# Podsumowanie systemu (jedna strona)
+# Podsumowanie systemu
 
 **HBG Credit Scoring** to **monorepo** do **demonstracji / szkolenia** **zautomatyzowanego obiegu kredytowego**: **Camunda 8** (BPMN/DMN) orkiestruje; **FastAPI + LangGraph** i **Vertex AI** dają warstwę poznawczą (RAG + LLM w polityce); **workery PyZeebe** obsługują zadania; **GCP** (domyślnie **europe-central2**) i **Pulumi** (stosy **infra-core** / **infra-data** / **infra-runtime**) to odtwarzalna infrastruktura. **VitePress** w `docs-site/` to SoT dokumentacji; `doc/_archive/` tylko **archiwum**.
 

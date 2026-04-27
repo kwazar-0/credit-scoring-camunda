@@ -1,7 +1,7 @@
 ---
 layout: page
 title: System Philosophy and Governance Model
-description: Credit Scoring Camunda - governance-first architecture model
+description: Governance-first operating model for auditable credit decisioning.
 outline: [2, 3]
 ---
 
@@ -9,199 +9,132 @@ outline: [2, 3]
 
 ## System Philosophy and Governance Model
 
----
-
-## 1. Why This System Exists
-
-This platform is designed for one purpose:
-
-> **Make business decisions explicit, controlled, and auditable.**
-
-In a credit scoring system:
-
-- decisions affect risk and compliance
-- changes must be traceable
-- responsibility must be clearly assigned
-
-This system enforces those constraints by design.
+This page defines how the platform is governed, why it is structured this way, and how changes move safely from idea to production.
 
 ---
 
-## 2. Core Principle
+## 1. Purpose
 
-> **The system is governed by responsibility boundaries, not by code structure.**
+The platform exists to make credit decisioning:
 
-Instead of allowing any engineer to modify any part of the system, we define:
+- explicit;
+- controlled;
+- auditable.
 
-- **who can change decisions**
-- **who can change processes**
-- **who can change infrastructure**
-
-Each action is intentional and controlled.
-
----
-
-## 3. Layered Architecture
-
-The platform is divided into independent layers:
-
-| Layer | Responsibility | Change Frequency |
-| --- | --- | --- |
-| Decision (DMN) | Business rules | High |
-| Process (BPMN) | Orchestration | Medium |
-| Services | Execution logic | Controlled |
-| Infrastructure | Cloud platform (GCP) | Low |
-
-### Key Rule
-
-> Each layer evolves independently and is owned by different roles.
-
-This prevents:
-
-- hidden logic
-- accidental cross-layer changes
-- uncontrolled deployments
+In regulated environments, correctness and traceability matter more than delivery speed.  
+The architecture is intentionally designed around this constraint.
 
 ---
 
-## 4. Role-Based Governance (11 x 6 Model)
+## 2. Governing Principle
 
-The system uses a **two-dimensional governance model**:
+> The system is organized by **responsibility boundaries**, not only by code modules.
 
-- **11 roles** -> define responsibilities
-- **6 user domains** -> define scope of operation
+The platform explicitly defines:
 
-### What this means
+- who can change decision logic;
+- who can change process orchestration;
+- who can change runtime infrastructure.
 
-A role does not represent a job title.  
-A role represents a **controlled capability** within the system.
-
-Example:
-
-- A user may modify decision rules
-- But cannot deploy infrastructure
-- And cannot promote code to production
-
-### Why this exists
-
-To enforce:
-
-- segregation of duties
-- auditability
-- minimal privilege access
+No layer is changed “by convenience”.
 
 ---
 
-## 5. Unified Access Model
+## 3. Responsibility Layers
 
-The same role model is applied consistently across:
+| Layer | Primary concern | Typical owner | Change profile |
+|---|---|---|---|
+| Decision (DMN) | Business decision rules | Business + Engineering | Frequent |
+| Process (BPMN/Camunda) | Process flow and control points | Process / Platform | Moderate |
+| Execution (Services/Workers) | Integrations and implementation logic | Engineering | Moderate |
+| Infrastructure (GCP/Pulumi) | Runtime, identity, networking, data plane | Platform | Slower, high impact |
 
-- GitHub (source code and workflow)
-- GCP (infrastructure and data)
-- Camunda (processes and decisions)
-
-### Principle
-
-> Access is defined once and enforced everywhere.
-
-This avoids:
-
-- inconsistent permissions
-- hidden access paths
-- security gaps
+**Integrity rule:** do not flatten these layers into each other.
 
 ---
 
-## 6. Git Workflow as Control Mechanism
+## 4. Governance Model (11 × 6)
 
-The Git workflow is not just a development process.  
-It is a **control pipeline for system changes**:
+Governance is two-dimensional:
 
-| Stage | Purpose |
-| --- | --- |
-| feature | change creation |
-| develop | integration |
-| release | validation |
-| main | production state |
+- **11 roles** define what can be changed;
+- **6 operational domains/accounts** define where that authority applies.
 
-### Key Rule
+This creates enforceable separation of duties and limits privilege spread.
 
-> Moving code between branches requires validation and approval.
-
-This ensures that:
-
-- no change reaches production without control
-- all changes are traceable
+Detailed matrix: [gcp-saas-access-matrix-11x6](/en/gcp-saas-access-matrix-11x6)
 
 ---
 
-## 7. Infrastructure as Code (Pulumi)
+## 5. Unified Access Across Control Surfaces
 
-All infrastructure is managed via Pulumi with a shared state:
+The same governance model applies to:
 
-```text
-gs://credit-scoring-camunda-project-pulumi-state-euc2
-```
+- GitHub (source and review flow);
+- GCP (infrastructure and data resources);
+- Camunda (processes and decision execution).
 
-Infrastructure is split into independent stacks:
+> Access should be defined once and enforced consistently.
 
-### infra-core
-
-- VPC, subnets, Private Service Access
-- foundational networking layer
-
-### infra-data
-
-- storage (GCS), analytics (BigQuery), optional Cloud SQL
-- data lifecycle management
-
-### infra-runtime
-
-- GKE (private nodes), Workload Identity
-- execution environment for services and Camunda
-
-### Principle
-
-> Infrastructure is versioned, reproducible, and isolated by layer.
+This avoids policy drift and hidden privilege paths.
 
 ---
 
-## 8. System Behavior
+## 6. Controlled Change Lifecycle
 
-A typical change follows this path:
+System changes follow a controlled path:
 
-1. Decision or code is modified within a defined role
-2. Change is committed via controlled Git workflow
-3. Infrastructure or process is updated via Pulumi / Camunda
-4. Change becomes visible and auditable in the system
+1. A role-scoped change is created.
+2. The change passes review and policy checks in Git workflow.
+3. Process and/or infrastructure are updated through declared mechanisms.
+4. The result is observable, attributable, and auditable.
 
----
-
-## 9. What This System Optimizes For
-
-This platform is designed for:
-
-- **auditability**
-- **controlled change management**
-- **clear ownership boundaries**
-
-It is not optimized for:
-
-- rapid prototyping
-- minimal process overhead
+Reference workflow: [git-workflow](/en/git-workflow)
 
 ---
 
-## 10. Summary
+## 7. Infrastructure Governance (Pulumi)
 
-The system enforces three constraints:
+Infrastructure is declared and versioned via Pulumi.  
+The platform uses split stacks (`infra-core`, `infra-data`, `infra-runtime`) to reduce blast radius and isolate lifecycle concerns.
 
-1. **Separation of responsibilities across layers**
-2. **Explicit access control via role model (11 x 6)**
-3. **Controlled change flow via Git and infrastructure pipelines**
+Implementation reference: [infra-pulumi-iac](/en/infra-pulumi-iac)
 
-> If a change cannot be explained, traced, and attributed,  
-> it should not exist in the system.
+---
 
+## 8. Design Trade-off
+
+The platform optimizes for:
+
+- auditability;
+- controlled change;
+- explicit ownership.
+
+It does **not** optimize for:
+
+- fastest prototyping;
+- minimal operational process.
+
+This trade-off is intentional.
+
+---
+
+## 9. Operating Rules (Short Form)
+
+1. Keep decision logic, process logic, execution logic, and infrastructure separate.
+2. Enforce role-scoped access (11 × 6) across all control surfaces.
+3. Promote changes only through validated lifecycle stages.
+4. Reject changes that cannot be explained, traced, and attributed.
+
+---
+
+## Related Docs
+
+- [Entry (2-minute)](/en/main)
+- [Simplified model](/en/simplified)
+- [Architecture](/en/architecture)
+- [Plan & roadmap](/en/plan)
+- [Appendix](/en/appendix)
+- [System summary (1 page)](/en/system-summary)
 
 **Languages:** [Русский](/ru/system-philosophy-governance) · [Polski](/pl/system-philosophy-governance)

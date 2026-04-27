@@ -1,9 +1,9 @@
 ---
-title: "System summary (one page)"
+title: "System summary"
 description: "One-page view: architecture, governance, and responsibility structure for HBG Credit Scoring."
 ---
 
-# System summary (one page)
+# System summary
 
 **HBG Credit Scoring** — a **monorepo** for a **demonstration / training** **automated credit flow**: **Camunda 8** (BPMN/DMN) orchestrates; **FastAPI + LangGraph** and **Vertex AI** provide the cognitive path (RAG + LLM under policy); **PyZeebe workers** run jobs; **GCP** (default **europe-central2**) and **Pulumi** (split **infra-core** / **infra-data** / **infra-runtime** stacks) provide reproducible infrastructure. **VitePress** in `docs-site/` is the documentation source of truth; `doc/_archive/` is **historical only**.
 

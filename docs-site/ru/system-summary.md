@@ -1,9 +1,9 @@
 ---
-title: "Сводка системы (одна страница)"
+title: "Сводка системы"
 description: "Архитектура, governance и ответственность в одном месте — HBG Credit Scoring."
 ---
 
-# Сводка системы (одна страница)
+# Сводка системы 
 
 **HBG Credit Scoring** — **монорепо** **демо/тренинга** **автоматизированного кредитного контура**: **Camunda 8** (BPMN/DMN) оркестрирует; **FastAPI + LangGraph** и **Vertex AI** — когнитивный путь (RAG + LLM в рамках политики); **воркеры PyZeebe** исполняют задания; **GCP** (по умолчанию **europe-central2**) и **Pulumi** (стеки **infra-core** / **infra-data** / **infra-runtime**) — воспроизводимая инфраструктура. **VitePress** в `docs-site/` — SoT по документации; `doc/_archive/` **только история**.
 
