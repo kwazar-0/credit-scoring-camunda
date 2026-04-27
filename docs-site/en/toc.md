@@ -1,6 +1,6 @@
 # Documentation — table of contents
 
-**Layered narrative (recommended):** [main.md](main.md) → [simplified.md](simplified.md) → [architecture.md](architecture.md) → [plan.md](plan.md) → [appendix.md](appendix.md) · [system-summary.md](system-summary.md)
+**Layered narrative (recommended):** [main.md](main.md) → [simplified.md](simplified.md) → [architecture.md](architecture.md) → [process-flow-camunda.md](process-flow-camunda.md) → [decision-model-dmn.md](decision-model-dmn.md) → [plan.md](plan.md) → [appendix.md](appendix.md) · [system-summary.md](system-summary.md)
 
 **Implementation track:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — single roadmap: Camunda + AI scoring, phases, what to read, what to defer.
 

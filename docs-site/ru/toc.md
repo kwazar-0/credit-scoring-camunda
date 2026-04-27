@@ -1,6 +1,6 @@
 # Документация — оглавление
 
-**Слойная схема (рекомендуется):** [main](/ru/main) → [simplified](/ru/simplified) → [architecture](architecture.md) → [plan](/ru/plan) → [приложение](/ru/appendix) · [сводка](/ru/system-summary)
+**Слойная схема (рекомендуется):** [main](/ru/main) → [simplified](/ru/simplified) → [architecture](architecture.md) → [process-flow-camunda](process-flow-camunda.md) → [decision-model-dmn](decision-model-dmn.md) → [plan](/ru/plan) → [приложение](/ru/appendix) · [сводка](/ru/system-summary)
 
 **Практическая дорожка:** **[INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md)** — единая дорожная карта: Camunda + AI scoring, фазы, что читать, что отложить.
 
