@@ -127,6 +127,6 @@ Use **separate GCP projects** or rename before running both, to avoid clashing *
 
 - Quota: SSD, IPs, GKE CPU. Cloud SQL: slow to create. PSA: ensure peering is ready before the SQL instance.
 - **No** public SQL; access from the internet to the database requires a deliberate jump host / VPN / proxy path — by design.
-- No SA JSON keys in Git; use WIF and [prompt](/en/prompt) §9 for hardening.
+- No SA JSON keys in Git; use WIF and [system-philosophy-governance](/en/system-philosophy-governance) for hardening posture.
 
 *Aligned with `infra/pulumi/gke-infra/__main__.py`; re-read the file if the code changes.*

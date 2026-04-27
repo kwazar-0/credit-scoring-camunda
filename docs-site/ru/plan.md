@@ -16,7 +16,7 @@ description: "Стратегия эволюции, фазы поставки и 
 3. **Рантайм** — GKE (Standard), нагрузки, Workload Identity, namespace в духе `k8s/hbg/` и `k8s/camunda/`.
 4. **Данные и когнитив** — RAG (GCS → ingest → эмбеддинги / vector search), чтобы поведение backend соответствовало реальным задержкам и лимитам, а не только мокам.
 5. **Процесс в облаке** — BPMN/DMN, Zeebe, воркеры, секреты; сквозные тесты процесса.
-6. **Зрелость** — observability, матрица доступа, CODEOWNERS, hardening (см. `prompt` §9 в [appendix](/ru/appendix)).
+6. **Зрелость** — observability, матрица доступа, CODEOWNERS, hardening (см. [system-philosophy-governance](/ru/system-philosophy-governance) и [appendix](/ru/appendix)).
 
 **Отклонённый «шорткат»:** сначала Camunda и воркеры, RAG в конце — **высокий риск рефакторинга** при смене контрактов retrieval. В репозитории сначала **согласованный data path**, затем «готовность» процесса.
 

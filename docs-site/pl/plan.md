@@ -17,7 +17,7 @@ description: "Strategia ewolucji, fazy wdrożenia i cykl życia komponentów; li
 3. **Runtime** — GKE (Standard), workloady, Workload Identity, namespace zgodne z `k8s/hbg/` i `k8s/camunda/`.
 4. **Dane i warstwa poznawcza** — RAG (GCS → ingest → embeddingi / vector search), by zachowanie backendu odpowiadało realnym opóźnieniom, nie tylko mockom.
 5. **Proces w chmurze** — BPMN/DMN, Zeebe, workery, sekrety; testy E2E procesu.
-6. **Dojrzałość** — obserwowalność, macierz dostępu, CODEOWNERS, hardening (zob. `prompt` §9 w [appendix](/pl/appendix)).
+6. **Dojrzałość** — obserwowalność, macierz dostępu, CODEOWNERS, hardening (zob. [system-philosophy-governance](/pl/system-philosophy-governance) i [appendix](/pl/appendix)).
 
 **Odrzucony skrót:** najpierw Camunda i workery, RAG na końcu — wysokie **ryzyko refaktoru** przy zmianie kontraktów retrieval. W repozytorium najpierw **wiarygodna ścieżka danych**, potem uznajemy proces za „zamknięty”.
 

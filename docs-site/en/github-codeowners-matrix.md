@@ -1,6 +1,6 @@
 # CODEOWNERS: 11 roles and 6 GitHub accounts
 
-This doc maps **logical roles** (see [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) and [prompt.md](prompt.md) §9) to **six GitHub users** in [`.github/CODEOWNERS`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.github/CODEOWNERS) reviews. Full lifecycle by **persona** (ok-admin, gw-devops, …): [team-11x6-organization](/en/team-11x6-organization).
+This doc maps **logical roles** (see [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) and [system-philosophy-governance.md](system-philosophy-governance.md)) to **six GitHub users** in [`.github/CODEOWNERS`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/.github/CODEOWNERS) reviews. Full lifecycle by **persona** (ok-admin, gw-devops, …): [team-11x6-organization](/en/team-11x6-organization).
 
 Example fork: [kwazar-0/credit-scoring-camunda](https://github.com/kwazar-0/credit-scoring-camunda). Logins must match real `@username` values; if you rename, update this file and `CODEOWNERS`.
 

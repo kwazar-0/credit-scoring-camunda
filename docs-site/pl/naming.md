@@ -1,6 +1,6 @@
 # Nazwy: repozytorium, gałęzie, katalog
 
-**`Credit-Scoring-V2`** nie jest «oficjalną» nazwą produktu — to przestarzały etykiet techniczny. Publiczna nazwa konturu: **Handlowy Bank Galicyjski (HBG)** (zob. `prompt.md`).
+**`Credit-Scoring-V2`** nie jest «oficjalną» nazwą produktu — to przestarzały etykiet techniczny. Publiczna nazwa konturu: **Handlowy Bank Galicyjski (HBG)** (zob. [main.md](main.md)).
 
 ## Co uznajemy za kanon
 

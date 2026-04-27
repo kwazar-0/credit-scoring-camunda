@@ -17,7 +17,7 @@ This file is the **single roadmap** for focus. Other docs are references; index:
 | **5** | **Camunda in stack** | BPMN/DMN deployed, Zeebe/Tasklist secrets from Secret Manager, `ai-loan-analysis` worker stable calling backend | `bpmn/`, `worker/`, processes |
 | **6** | **Observability / policy** | Logs, BQ analytics without raw PII, roles matrix if needed | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) |
 
-**MVP product (from [prompt.md](prompt.md) §5):** phases **1 → 4** (ingestion, index, turn off mock) → then **5** and worker ↔ backend tests.
+**MVP product (from [plan.md](plan.md) — phased delivery):** phases **1 → 4** (ingestion, index, turn off mock) → then **5** and worker ↔ backend tests.
 
 ---
 
@@ -35,19 +35,19 @@ This file is the **single roadmap** for focus. Other docs are references; index:
 
 ## Minimum reading (1–2 hours, then code)
 
-1. **[prompt.md](prompt.md) — §1–5, §7–8** — product, repo layout, **phase plan**, E2E.  
+1. **[main.md](main.md)** — entry narrative; **[plan.md](plan.md)** — **phase plan** and evolution; **[appendix.md](appendix.md)** — deep index.  
 2. **[infra-pulumi-iac.md](infra-pulumi-iac.md)** — Pulumi, `stackRole`, OIDC, stack split.  
 3. **[`infra/README.md`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md)** (repo) — pet bootstrap: billing, ADC/quota, IAM, state bucket, `infra-core`, split stacks, common errors.  
 4. **`infra/pulumi/__main__.py`** (repo) — stack selection.  
 5. **[cli-console.md](cli-console.md)** — Pulumi, `gcloud`, enabling APIs.
 
-**Defer to a follow-up task** (to stay focused): detailed 11×6 roles ([gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)), CODEOWNERS, [prompt.md](prompt.md) **§9.6** hardening — mature enterprise, **not** blocking **phase 1–2**.
+**Defer to a follow-up task** (to stay focused): detailed 11×6 roles ([gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)), CODEOWNERS, [system-philosophy-governance.md](system-philosophy-governance.md) (operational hardening) — mature enterprise, **not** blocking **phase 1–2**.
 
 ---
 
 ## Enterprise spec (when you need it)
 
-Full target (VPC, multi-pool GKE, OPA, Binary Authorization) — **[prompt.md](prompt.md) from §9**. Read **after** a working MVP; land in Pulumi as requirements appear.
+Full target (VPC, multi-pool GKE, OPA, Binary Authorization) — see **[system-philosophy-governance.md](system-philosophy-governance.md)** and **[gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)** (enterprise IAM and hardening). Read **after** a working MVP; land in Pulumi as requirements appear.
 
 ---
 

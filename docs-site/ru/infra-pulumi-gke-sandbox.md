@@ -120,6 +120,6 @@ docker push europe-central2-docker.pkg.dev/PROJECT_ID/cs-sandbox-docker/my-app:1
 
 - Квоты: SSD, IP, GKE. Медленное создание **Cloud SQL** и выделение **PSA**.
 - Публичного IP у SQL **нет**; доступ из интернета к БД — только с явной схемой (VPN, bastion, и т.д.).
-- Ключи SA не хранить в git; WIF, Secret Manager, политика — см. [prompt](prompt.md) §9.
+- Ключи SA не хранить в git; WIF, Secret Manager, политика — см. [system-philosophy-governance](system-philosophy-governance.md).
 
 *Текст согласован с `infra/pulumi/gke-infra/__main__.py` на момент публикации; при изменениях в коде сверяйтесь с репозиторием.*

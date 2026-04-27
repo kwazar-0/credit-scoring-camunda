@@ -1,6 +1,6 @@
 # Names: repository, branches, folder
 
-**`Credit-Scoring-V2`** is not the “official” product name — it is a legacy technical label. Public name: **Handlowy Bank Galicyjski (HBG)** (see `prompt.md`).
+**`Credit-Scoring-V2`** is not the “official” product name — it is a legacy technical label. Public name: **Handlowy Bank Galicyjski (HBG)** (see [main.md](main.md)).
 
 ## What counts as canonical
 

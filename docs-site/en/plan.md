@@ -16,7 +16,7 @@ description: "Evolution strategy, delivery phases, and lifecycle of major compon
 3. **Runtime** — GKE (Standard), workloads, Workload Identity, namespaces aligned with `k8s/hbg/` and `k8s/camunda/`.
 4. **Data & cognition** — RAG path (GCS → ingest → embeddings / vector search) so backend behaviour matches real latency and limits, not only mocks.
 5. **Process in cloud** — BPMN/DMN, Zeebe, workers, secrets; end-to-end process tests.
-6. **Maturity** — observability, access matrix, CODEOWNERS, hardening (see `prompt` §9 in [appendix](/en/appendix)).
+6. **Maturity** — observability, access matrix, CODEOWNERS, hardening (see [system-philosophy-governance](/en/system-philosophy-governance) and [appendix](/en/appendix)).
 
 **Rejected shortcut:** “Camunda and workers first, RAG last” — high **refactor risk** when the retrieval path changes contracts and SLOs. The repo’s order prefers a **credible data path** before treating the process as “done”.
 

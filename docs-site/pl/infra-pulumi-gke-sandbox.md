@@ -31,6 +31,6 @@ pulumi config set gcp:region europe-central2
 pulumi up
 ```
 
-`kubectl`: `gcloud container clusters get-credentials cs-sandbox-cluster --region europe-central2` — szczegóły: [EN →](/en/infra-pulumi-gke-sandbox). API: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh), mapa: [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION), role: [gcp-saas-access-matrix-11x6.md](/pl/gcp-saas-access-matrix-11x6) i [prompt](/pl/prompt) §9.
+`kubectl`: `gcloud container clusters get-credentials cs-sandbox-cluster --region europe-central2` — szczegóły: [EN →](/en/infra-pulumi-gke-sandbox). API: [`scripts/gcp-enable-apis-iam.sh`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/scripts/gcp-enable-apis-iam.sh), mapa: [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION), role: [gcp-saas-access-matrix-11x6.md](/pl/gcp-saas-access-matrix-11x6) i [system-philosophy-governance](/pl/system-philosophy-governance).
 
 Główne różnice wobec głównego `infra/pulumi/`: ten plik to **osobna** piaskownica z prefiksem `cs-sandbox-*` — nadal unikaj dwóch `pulumi up` w jednym projekcie bez planu (kolizje **VPC, PSA, SQL**).

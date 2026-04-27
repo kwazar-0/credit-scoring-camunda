@@ -1,6 +1,6 @@
 # Чистовая матрица: 11 ролей доступа к сервисам GCP и 6 учёток
 
-Согласовано с [`prompt.md`](prompt.md) §9.1–9.2 (в т.ч. **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC) и hardening §9.6. Регион по умолчанию: **`europe-central2`**.
+Согласовано с [system-philosophy-governance.md](system-philosophy-governance.md) и слоями IAM для Vertex, BigQuery, GCS, Vector Search, Cloud SQL и IaC. Регион по умолчанию: **`europe-central2`**.
 
 **Организация команды (концепция + 6 персон, полный SDLC):** [team-11x6-organization](team-11x6-organization.md).
 
@@ -8,7 +8,7 @@
 
 Да. **11** — это *логические роли* (обязанности и границы). **6** — это *люди* (учётки Google / членство в группах). Каждая учётка **несёт пакет** из нескольких ролей; роли **UAT** и **App** (прод) в основном **без** консоли GCP; **BG** (break-glass) — **событийная**, не постоянный профиль.
 
-В **проде** (см. `prompt.md` §9.6) права в IAM и RBAC лучше выдавать **Google Groups** (одна учётка → одна или несколько групп), а не вешать 11 `roles/*` на одного человека вручную. Этот документ — **чистовая схема «что какая роль может в GCP»**; внедрение — через **группы** с такими же семантиками.
+В **проде** (см. [system-philosophy-governance.md](system-philosophy-governance.md) — постановка hardening) права в IAM и RBAC лучше выдавать **Google Groups** (одна учётка → одна или несколько групп), а не вешать 11 `roles/*` на одного человека вручную. Этот документ — **чистовая схема «что какая роль может в GCP»**; внедрение — через **группы** с такими же семантиками.
 
 ## 2. 11 ролей × ключевые «слои» GCP (SaaS-облако)
 
@@ -49,7 +49,7 @@
 - **UAT** и **App** в таблице пусты: нет роли в GCP Console (доступ в продукте).
 - Соответствие **примеров логинов** (в т.ч. **U1–U6** в `github-codeowners-matrix`) ↔ GitHub: [`github-codeowners-matrix.md`](github-codeowners-matrix.md).
 
-## 4. Соответствие «4 GitHub Teams» из `prompt.md` §2
+## 4. Соответствие «4 GitHub Teams» (см. [git-workflow.md](git-workflow.md))
 
 В System Prompt (matrix 11) предложено **4 группы** GitHub. Их удобно **наложить** на 6 людей: каждый входит в 1–2 team.
 

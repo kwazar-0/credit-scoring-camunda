@@ -45,7 +45,7 @@ PDF → GCS (raw) → chunk → embed (text-embedding-004) → JSONL / batch →
 
 ## 4. Роли (расширение)
 
-См. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [prompt](prompt.md) §9: **ML Engineer**, **Data Engineer** — доступ к Vertex, BigQuery, бакетам; без `container.admin`, если не нужен GKE.
+См. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [system-philosophy-governance.md](system-philosophy-governance.md): **ML Engineer**, **Data Engineer** — доступ к Vertex, BigQuery, бакетам; без `container.admin`, если не нужен GKE.
 
 ---
 
@@ -53,7 +53,7 @@ PDF → GCS (raw) → chunk → embed (text-embedding-004) → JSONL / batch →
 
 - Данные и индексы в **EU** (`europe-central2`).
 - PII не в логах BigQuery в открытом виде — только хеши/псевдонимы.
-- Обоснование решений на польском — для audytu (см. основной `prompt.md`).
+- Обоснование решений на польском — для audytu (см. [system-philosophy-governance.md](system-philosophy-governance.md)).
 
 ---
 

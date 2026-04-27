@@ -13,7 +13,8 @@ Use this when you need **depth**: personas, CLI, RAG, long handoff, enterprise h
 
 | Page | Use when |
 |------|----------|
-| [prompt](/en/prompt) | Full handoff; **§1–8** = linear read; **§9+** = extended enterprise / hardening. |
+| [main](/en/main) | Entry narrative: production flow, trade-offs, and operations links. |
+| [system-philosophy-governance](/en/system-philosophy-governance) | Full governance philosophy; enterprise / hardening context. |
 | [INFRA-IMPLEMENTATION](/en/INFRA-IMPLEMENTATION) | **Single implementation track** — phases, commands, what to read first. |
 
 ---

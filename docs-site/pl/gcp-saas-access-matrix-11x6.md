@@ -1,6 +1,6 @@
 # Czysta macierz: 11 ról vs usługi GCP i 6 kont
 
-Zgodne z [`prompt.md`](prompt.md) §9.1–9.2 (w tym **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) i hardening §9.6. Region domyślny: **`europe-central2`**.
+Zgodne z [system-philosophy-governance.md](system-philosophy-governance.md) oraz warstwami IAM dla Vertex, BigQuery, GCS, Vector Search, Cloud SQL i IaC. Region domyślny: **`europe-central2`**.
 
 **Organizacja zespołu (koncepcja + sześć person, pełny SDLC):** [team-11x6-organization](/pl/team-11x6-organization).
 
@@ -8,7 +8,7 @@ Zgodne z [`prompt.md`](prompt.md) §9.1–9.2 (w tym **§9.2.1** — Vertex, Big
 
 Tak. **11** to *role logiczne*. **6** to *ludzie* (konta Google / grupy). Jedna osoba **nosi pakiet** ról; **UAT** i **App** zwykle **bez** konsoli GCP; **BG** (break-glass) to rola **zdarzeniowa**, nie stały profil.
 
-W **prod** (zob. `prompt.md` §9.6) lepiej **Google Groups** w IAM/RBAC, niż 11 `roles/*` na jedną osobę. Ten dokument to **mapa** „co dana rola może w GCP”; wdrożenie — przez **grupy** o tym samym znaczeniu.
+W **prod** (zob. [system-philosophy-governance.md](system-philosophy-governance.md) — postawa hardeningu) lepiej **Google Groups** w IAM/RBAC, niż 11 `roles/*` na jedną osobę. Ten dokument to **mapa** „co dana rola może w GCP”; wdrożenie — przez **grupy** o tym samym znaczeniu.
 
 ## 2. 11 ról × warstwy GCP (chmura SaaS)
 
@@ -46,7 +46,7 @@ Jeden wiersz = jedna osoba. **Kolumny** — te same **sloty** co w §2. **•** 
 - **UAT** / **App** puste: brak roli konsoli (dostęp przez produkt).
 - Zgodność przykładowych loginów: [`github-codeowners-matrix.md`](github-codeowners-matrix.md).
 
-## 4. Cztery zespoły Git z `prompt.md` §2
+## 4. Cztery zespoły Git (zgodnie z [git-workflow.md](git-workflow.md))
 
 | Team | Sloty ról |
 |------|-----------|

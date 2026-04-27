@@ -17,7 +17,7 @@
 | **5** | **Camunda в контуре** | BPMN/DMN задеплоены, секреты Zeebe/Tasklist из Secret Manager, worker `ai-loan-analysis` стабильно зовёт backend | `bpmn/`, `worker/`, процессы |
 | **6** | **Наблюдаемость / политика** | Логи, BQ-аналитика без сырого PII, при необходимости матрица ролей | [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) |
 
-**MVP по продукту (из [prompt.md](prompt.md) §5):** фазы **1 → 4** (ingestion, индекс, выключить mock) → затем **5** и тесты worker ↔ backend.
+**MVP по продукту (из [plan.md](plan.md) — фазы поставки):** фазы **1 → 4** (ingestion, индекс, выключить mock) → затем **5** и тесты worker ↔ backend.
 
 ---
 
@@ -35,19 +35,19 @@
 
 ## Минимальный набор чтения (1–2 часа, потом — код)
 
-1. **[prompt.md](prompt.md) — §1–5, §7–8** — продукт, структура репо, **план этапов**, E2E.  
+1. **[main.md](main.md)** — вход и операции; **[plan.md](plan.md)** — **план этапов** и эволюция; **[appendix.md](appendix.md)** — глубокий индекс.  
 2. **[infra-pulumi-iac.md](infra-pulumi-iac.md)** — Pulumi, `stackRole`, OIDC, split стеков.  
 3. **[`infra/README.md`](https://github.com/kwazar-0/credit-scoring-camunda/blob/develop/infra/README.md)** (репо) — pet-bootstrap: billing, ADC/quota, IAM, bucket для state, `infra-core`, split, типовые ошибки.  
 4. **`infra/pulumi/__main__.py`** (репо) — что выбирает стек.  
 5. **[cli-console.md](cli-console.md)** — Pulumi, `gcloud`, включение API.
 
-**Отложить до отдельной задачи** (чтобы не распыляться): детальная матрица 11 ролей × 6 учёток ([gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)), CODEOWNERS, [prompt.md](prompt.md) **§9.6** hardening — это про зрелый enterprise-контур, не блокирует **фазу 1–2**.
+**Отложить до отдельной задачи** (чтобы не распыляться): детальная матрица 11 ролей × 6 учёток ([gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)), CODEOWNERS, [system-philosophy-governance.md](system-philosophy-governance.md) (операционный hardening) — это про зрелый enterprise-контур, не блокирует **фазу 1–2**.
 
 ---
 
 ## Enterprise-спека (когда понадобится)
 
-Полная цель (VPC, мульти-пул GKE, OPA, Binary Authorization) — **[prompt.md](prompt.md) с §9**. Читать **после** рабочего MVP, переносить в Pulumi по мере появления требований.
+Полная цель (VPC, мульти-пул GKE, OPA, Binary Authorization) — **[system-philosophy-governance.md](system-philosophy-governance.md)** и **[gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md)** (enterprise IAM и hardening). Читать **после** рабочего MVP, переносить в Pulumi по мере появления требований.
 
 ---
 

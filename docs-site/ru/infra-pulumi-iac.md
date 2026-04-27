@@ -47,7 +47,7 @@ pulumi up
 - [cli-console.md](cli-console.md) — Pulumi, `gcloud`, `kubectl`.
 - [infra-pulumi-gke-sandbox.md](infra-pulumi-gke-sandbox.md) — отдельный Pulumi‑проект `gke-infra` (другой регион/имена; не смешивать `up` в одном project без плана).
 - [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) — роли и доступ к сервисам GCP (чистовая матрица).
-- [prompt.md](prompt.md) — handoff, §9+ enterprise.
+- [main.md](main.md) — вход; [appendix.md](appendix.md) — индекс; [system-philosophy-governance.md](system-philosophy-governance.md) — governance и enterprise hardening.
 
 ## Опциональный GitHub → GCP (OIDC)
 

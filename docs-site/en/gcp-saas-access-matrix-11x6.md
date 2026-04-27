@@ -1,6 +1,6 @@
 # Polished matrix: 11 roles vs GCP services and 6 accounts
 
-Aligned with [`prompt.md`](prompt.md) §9.1–9.2 (including **§9.2.1** — Vertex, BigQuery, GCS, Vector Search, Cloud SQL, IaC) and hardening §9.6. Default region: **`europe-central2`**.
+Aligned with [system-philosophy-governance.md](system-philosophy-governance.md) and IAM layers for Vertex, BigQuery, GCS, Vector Search, Cloud SQL, and IaC. Default region: **`europe-central2`**.
 
 **Team organisation (concept + six personas, full SDLC):** [team-11x6-organization](/en/team-11x6-organization).
 
@@ -8,7 +8,7 @@ Aligned with [`prompt.md`](prompt.md) §9.1–9.2 (including **§9.2.1** — Ver
 
 Yes. **11** are *logical* roles. **6** are *people* (Google accounts / group membership). Each account **carries a bundle** of roles; roles **UAT** and **App** usually have **no** GCP console; **BG** (break-glass) is **event**-based, not a standing profile.
 
-In **prod** (see `prompt.md` §9.6) prefer **Google Groups** for IAM/RBAC, not 11 `roles/*` on one person. This document is a **polished** “what a role can do in GCP”; implement via **groups** with the same meaning.
+In **prod** (see [system-philosophy-governance.md](system-philosophy-governance.md) for hardening posture) prefer **Google Groups** for IAM/RBAC, not 11 `roles/*` on one person. This document is a **polished** “what a role can do in GCP”; implement via **groups** with the same meaning.
 
 ## 2. 11 roles × key GCP “layers” (SaaS cloud)
 
@@ -46,7 +46,7 @@ One row = one person. **•** = primary **logical** role; **○** = shared; **on
 - **UAT** and **App** are empty: no GCP console path (access via product).
 - Example logins and **U1–U6** in [`github-codeowners-matrix.md`](github-codeowners-matrix.md).
 
-## 4. Four “GitHub Teams” from `prompt.md` §2
+## 4. Four “GitHub Teams” (aligned with [git-workflow.md](git-workflow.md))
 
 | Team (example) | Logical role slots |
 |----------------|-------------------|

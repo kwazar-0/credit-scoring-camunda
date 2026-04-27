@@ -13,7 +13,8 @@ Gdy potrzebujesz **głębi**: persony, CLI, RAG, długi handoff, hardening. **Na
 
 | Strona | Kiedy |
 |------|--------|
-| [prompt](/pl/prompt) | Pełny handoff; **§1–8** czytaj liniowo; **§9+** enterprise / hardening. |
+| [main](/pl/main) | Wejście operacyjne: przepływ produkcyjny, kompromisy, linki do ops. |
+| [system-philosophy-governance](/pl/system-philosophy-governance) | Pełna filozofia governance; kontekst enterprise / hardening. |
 | [INFRA-IMPLEMENTATION](/pl/INFRA-IMPLEMENTATION) | **Jedna ścieżka wdrożeniowa** — fazy, komendy, co czytać najpierw. |
 
 

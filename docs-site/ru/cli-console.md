@@ -13,7 +13,7 @@
 
 Путь к клону: **корень репозитория** (ниже — `$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")` или ваша папка, напр. `~/src/hbg-worktree`).
 
-Дополнительно: [prompt](prompt.md), [git-workflow](git-workflow.md), [naming](naming.md), [ml-data-rag](ml-data-rag.md), [infra-pulumi-iac](infra-pulumi-iac.md).
+Дополнительно: [main](main.md), [git-workflow](git-workflow.md), [naming](naming.md), [ml-data-rag](ml-data-rag.md), [infra-pulumi-iac](infra-pulumi-iac.md).
 
 ---
 
@@ -121,7 +121,7 @@ chmod +x scripts/gcp-enable-apis-iam.sh   # при необходимости
 ./scripts/gcp-enable-apis-iam.sh my-camunda8-project
 ```
 
-После запуска скрипт печатает **подсказки** по `gcloud projects add-iam-policy-binding` (группы, SA) — **не** хранить личные email в репо; SoT в IaC по [`prompt.md`](prompt.md) §9.2.1, §9.6.
+После запуска скрипт печатает **подсказки** по `gcloud projects add-iam-policy-binding` (группы, SA) — **не** хранить личные email в репо; SoT в IaC по [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) и [system-philosophy-governance.md](system-philosophy-governance.md).
 
 ---
 

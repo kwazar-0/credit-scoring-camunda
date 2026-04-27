@@ -46,6 +46,6 @@ For `infra-data` with `createCloudSql: true`, set an instance name: `pulumi conf
 - [INFRA-IMPLEMENTATION.md](INFRA-IMPLEMENTATION.md) — delivery phases.  
 - [cli-console.md](cli-console.md) — CLI.  
 - [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) — roles × GCP.  
-- [prompt.md](prompt.md) — handoff and §9+.
+- [main.md](main.md) — entry narrative; [appendix.md](appendix.md) — deep index; [system-philosophy-governance.md](system-philosophy-governance.md) — governance and hardening context.
 
 RUS: [ /infra-pulumi-iac ](/ru/infra-pulumi-iac).

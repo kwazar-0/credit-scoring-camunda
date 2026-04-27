@@ -45,7 +45,7 @@ PDF → GCS (raw) → chunk → embed (text-embedding-004) → JSONL / batch →
 
 ## 4. Role (rozszerzenie)
 
-Zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt](prompt.md) §9: **ML Engineer**, **Data Engineer** — dostęp do Vertex, BigQuery, bucketów; bez `container.admin`, jeśli GKE nie jest wymagany.
+Zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [system-philosophy-governance.md](system-philosophy-governance.md): **ML Engineer**, **Data Engineer** — dostęp do Vertex, BigQuery, bucketów; bez `container.admin`, jeśli GKE nie jest wymagany.
 
 ---
 
@@ -53,7 +53,7 @@ Zob. [gcp-saas-access-matrix-11x6.md](gcp-saas-access-matrix-11x6.md) i [prompt]
 
 - Dane i indeksy w **UE** (`europe-central2`).
 - Bez surowych PII w logach BQ — tylko hashe / pseudonimy.
-- Uzasadnienia decyzji po polsku — pod audyt (główny `prompt.md`).
+- Uzasadnienia decyzji po polsku — pod audyt (zob. [system-philosophy-governance.md](system-philosophy-governance.md)).
 
 ---
 

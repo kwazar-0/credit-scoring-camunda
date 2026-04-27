@@ -13,7 +13,8 @@ description: "Индекс глубинных и справочных стран
 
 | Страница | Когда |
 |------|--------|
-| [prompt](/ru/prompt) | Полный handoff; **§1–8** — линейное чтение; **§9+** — расширенный enterprise / hardening. |
+| [main](/ru/main) | Вход: производственный поток, компромиссы, ссылки на ops. |
+| [system-philosophy-governance](/ru/system-philosophy-governance) | Полный текст governance; enterprise / hardening. |
 | [INFRA-IMPLEMENTATION](/ru/INFRA-IMPLEMENTATION) | **Единая** дорожка внедрения: фазы, команды, с чего начать. |
 
 ---
